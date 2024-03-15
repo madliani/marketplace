@@ -1,45 +1,46 @@
-# marketplace
+# Marketplace
 
-This template should help get you started developing with Vue 3 in Vite.
+<p align="center">
+    <img src="./src/assets/icons/marketplace-logo.png" alt="Marketplace logo" />
 
-## Recommended IDE Setup
+    A modern marketplace for modern ladies
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+</p>
 
-## Type Support for `.vue` Imports in TS
+![Built with TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Built with Vue](https://img.shields.io/badge/Vue.js-4FC08D.svg?style=for-the-badge&logo=vuedotjs&logoColor=white)
+![Built with Vuetify](https://img.shields.io/badge/Vuetify-1867C0.svg?style=for-the-badge&logo=Vuetify&logoColor=white)
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Screenshots
 
-## Customize configuration
+![Homepage](./src/assets/images/marketplace-homepage.png)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## Usage
 
 ```sh
-npm install
+yarn install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
+yarn run dev
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-npm run build
+yarn run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Run Unit Tests
 
 ```sh
-npm run test:unit
+yarn run test:unit
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Lint
 
 ```sh
-npm run lint
+yarn run lint
 ```
