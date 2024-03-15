@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <MainLayout>
+    <template #content>
+      <p class="text-center text-h3">
+        <span class="d-none d-sm-inline">Your products</span>
+      </p>
+    </template>
+  </MainLayout>
 </template>
