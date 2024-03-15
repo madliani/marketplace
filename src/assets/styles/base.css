@@ -1,0 +1,20 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, 'Droid Sans', 'Fira Sans', 'Helvetica Neue', 'Segoe UI',
+    BlinkMacSystemFont, Cantarell, Inter, Oxygen, Roboto, sans-serif, Ubuntu;
+  font-size: medium;
+  font-weight: normal;
+  min-height: 100vh;
+  min-width: 100vw;
+  text-rendering: optimizeLegibility;
+}
