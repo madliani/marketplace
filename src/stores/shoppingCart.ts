@@ -12,7 +12,7 @@ type State = {
 type Getters = {}
 
 type Actions = Readonly<{
-  addItem: (count: Item['count'], product: Item['product']) => void
+  addItem: (product: Item['product']) => void
   clear: () => void
   deleteItem: (id: Product['id']) => void
 }>
@@ -22,9 +22,8 @@ export const useProductsStore = defineStore<Id, State, Getters, Actions>('shoppi
     shoppingCart: []
   }),
   actions: {
-    addItem(count, product) {
+    addItem(product) {
       const item: Item = {
-        count,
         id: uuid(),
         product
       }
