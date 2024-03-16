@@ -14,16 +14,18 @@ type Actions = Readonly<{
   clear: () => void
 }>
 
+const products: Products = []
+
 export const useProductsStore = defineStore<Id, State, Getters, Actions>('products', {
   state: () => ({
-    products: []
+    products
   }),
   actions: {
     addProducts(products) {
       this.products = products
     },
     clear() {
-      this.products = []
+      this.products = products
     }
   },
   persist: true
