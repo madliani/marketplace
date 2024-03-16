@@ -17,7 +17,7 @@ type Actions = Readonly<{
 /** Product store default value. */
 const products: Products = []
 
-export const useProductsStore = defineStore<Id, State, Getters, Actions>('products', {
+export const useProductStore = defineStore<Id, State, Getters, Actions>('products', {
   state: () => ({
     products
   }),
