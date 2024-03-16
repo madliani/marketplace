@@ -23,9 +23,9 @@ const { clear } = userStore
       <v-avatar size="32">
         <v-img
           :src="user.avatar"
+          :title="`${user.firstName} ${user.lastName}`"
           alt="User avatar"
           class="d-none d-sm-inline-block"
-          :title="`${user.firstName} ${user.lastName}`"
         />
       </v-avatar>
 
