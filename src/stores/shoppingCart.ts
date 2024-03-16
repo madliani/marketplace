@@ -17,9 +17,11 @@ type Actions = Readonly<{
   deleteItem: (id: Product['id']) => void
 }>
 
-export const useProductsStore = defineStore<Id, State, Getters, Actions>('shoppingCart', {
+const shoppingCart: ShoppingCart = []
+
+export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('shoppingCart', {
   state: () => ({
-    shoppingCart: []
+    shoppingCart
   }),
   actions: {
     addItem(product) {
@@ -31,7 +33,7 @@ export const useProductsStore = defineStore<Id, State, Getters, Actions>('shoppi
       this.shoppingCart = [...this.shoppingCart, item]
     },
     clear() {
-      this.shoppingCart = []
+      this.shoppingCart = shoppingCart
     },
     deleteItem(id) {
       this.shoppingCart = this.shoppingCart.filter((item) => item.id !== id)
