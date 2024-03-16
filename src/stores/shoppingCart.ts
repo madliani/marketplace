@@ -1,18 +1,20 @@
-import type { Product, Products } from '@/types/products'
+import type { Product } from '@/types/products'
+import type { Item, ShoppingCart } from '@/types/shoppingCart'
 import { defineStore } from 'pinia'
+import { v4 as uuid } from 'uuid'
 
 type Id = 'shoppingCart'
 
 type State = {
-  shoppingCart: Products
+  shoppingCart: ShoppingCart
 }
 
 type Getters = {}
 
 type Actions = Readonly<{
-  addProduct: (product: Product) => void
+  addItem: (count: Item['count'], product: Item['product']) => void
   clear: () => void
-  deleteProduct: (id: Product['id']) => void
+  deleteItem: (id: Product['id']) => void
 }>
 
 export const useProductsStore = defineStore<Id, State, Getters, Actions>('shoppingCart', {
@@ -20,14 +22,20 @@ export const useProductsStore = defineStore<Id, State, Getters, Actions>('shoppi
     shoppingCart: []
   }),
   actions: {
-    addProduct(product) {
-      this.shoppingCart = [...this.shoppingCart, product]
+    addItem(count, product) {
+      const item: Item = {
+        count,
+        id: uuid(),
+        product
+      }
+
+      this.shoppingCart = [...this.shoppingCart, item]
     },
     clear() {
       this.shoppingCart = []
     },
-    deleteProduct(id) {
-      this.shoppingCart = this.shoppingCart.filter((product) => product.id !== id)
+    deleteItem(id) {
+      this.shoppingCart = this.shoppingCart.filter((item) => item.id !== id)
     }
   },
   persist: true
