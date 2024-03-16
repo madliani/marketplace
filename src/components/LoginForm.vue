@@ -23,10 +23,10 @@ const { handleReset, handleSubmit } = useForm({
 
 const userId = useField('userId')
 
-const submit = handleSubmit((values) => {
+const submit = handleSubmit(async (values) => {
   const { userId: id } = values
 
-  fetchUser(id)
+  await fetchUser(id)
   handleReset()
 })
 </script>
