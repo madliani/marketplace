@@ -7,11 +7,11 @@ type State = {
   products: Products
 }
 
-type Getters = Readonly<{}>
+type Getters = {}
 
 type Actions = Readonly<{
   addProducts: (products: Products) => void
-  clearProducts: () => void
+  clear: () => void
 }>
 
 export const useProductsStore = defineStore<Id, State, Getters, Actions>('products', {
@@ -22,7 +22,7 @@ export const useProductsStore = defineStore<Id, State, Getters, Actions>('produc
     addProducts(products) {
       this.products = products
     },
-    clearProducts() {
+    clear() {
       this.products = []
     }
   },
