@@ -22,7 +22,7 @@ const purchaseOrder: Readonly<PurchaseOrder> = {
   totalCost: 0
 }
 
-export const useProductsStore = defineStore<Id, State, Getters, Actions>('purchaseOrder', {
+export const usePurchaseOrdersStore = defineStore<Id, State, Getters, Actions>('purchaseOrder', {
   state: () => ({
     purchaseOrder
   }),
