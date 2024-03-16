@@ -7,23 +7,26 @@ type State = {
   products: Products
 }
 
-type Getters = Readonly<{}>
+type Getters = {}
 
 type Actions = Readonly<{
   addProducts: (products: Products) => void
-  clearProducts: () => void
+  clear: () => void
 }>
 
-export const useProductsStore = defineStore<Id, State, Getters, Actions>('products', {
+/** Product store default value. */
+const products: Products = []
+
+export const useProductStore = defineStore<Id, State, Getters, Actions>('products', {
   state: () => ({
-    products: []
+    products
   }),
   actions: {
     addProducts(products) {
       this.products = products
     },
-    clearProducts() {
-      this.products = []
+    clear() {
+      this.products = products
     }
   },
   persist: true
