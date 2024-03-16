@@ -28,7 +28,7 @@ const { clear } = userStore
         title="User avatar"
       />
 
-      <span class="mx-2 d-none d-sm-inline" title="User name"
+      <span class="d-none d-sm-inline mx-2" title="User name"
         >{{ user.firstName }} {{ user.lastName }}</span
       >
 
