@@ -10,7 +10,7 @@ type State = {
 type Getters = {}
 
 type Actions = Readonly<{
-  fetchUser: (id: User['id']) => void
+  fetchUser: (id: User['id']) => Promise<void>
   clear: () => void
 }>
 
