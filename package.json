@@ -9,6 +9,7 @@
     "vue-router": "^4.3.0",
     "vuetify": "^3.5.9"
   },
+  "description": "A modern marketplace for modern ladies.",
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.7.2",
     "@tsconfig/node20": "^20.1.2",
