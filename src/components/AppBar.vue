@@ -13,26 +13,29 @@ const { clear } = userStore
   <v-app-bar>
     <template v-slot:prepend>
       <RouterLink :to="Routes.HOME">
-        <v-img :src="MarketplaceLogo" :width="48" alt="Marketplace logo" title="Marketplace logo" />
+        <v-img :src="MarketplaceLogo" :width="48" alt="Marketplace logo" title="Marketplace" />
       </RouterLink>
     </template>
 
     <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
 
     <template v-if="user" v-slot:append>
-      <v-img
-        :src="user.avatar"
-        :width="24"
-        alt="User avatar"
-        class="d-none d-sm-inline-block"
-        title="User avatar"
-      />
+      <v-avatar size="32">
+        <v-img
+          :src="user.avatar"
+          alt="User avatar"
+          class="d-none d-sm-inline-block"
+          :title="`${user.firstName} ${user.lastName}`"
+        />
+      </v-avatar>
 
-      <span class="d-none d-sm-inline mx-2" title="User name"
+      <span :title="`${user.firstName} ${user.lastName}`" class="d-none d-sm-inline mx-2"
         >{{ user.firstName }} {{ user.lastName }}</span
       >
 
-      <span class="d-none d-sm-inline" title="Balance">{{ user.balance.toFixed(2) }}$</span>
+      <span :title="`Balance: ${user.balance} $`" class="d-none d-sm-inline"
+        >{{ user.balance }} &dollar;</span
+      >
 
       <v-btn @click="clear" class="ml-2" color="red" title="Logout" variant="tonal">Logout</v-btn>
     </template>
