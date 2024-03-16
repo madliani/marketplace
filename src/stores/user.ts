@@ -10,13 +10,17 @@ type State = {
 type Getters = {}
 
 type Actions = Readonly<{
-  fetchUser: (id: User['id']) => Promise<void>
   clear: () => void
+  fetchUser: (id: User['id']) => Promise<void>
+  updateBalance: (balance: User['balance']) => void
 }>
 
 /** Getting a random integer between two values. */
 const getRandomNumber = (min: number, max: number) => {
-  return Math.random() * (max - min) + min
+  const randomNumber = Math.random() * (max - min) + min
+  const fixedPoint = randomNumber.toFixed(2)
+
+  return parseFloat(fixedPoint)
 }
 
 /** Backend user validating. */
@@ -37,6 +41,16 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
     user
   }),
   actions: {
+    clear() {
+      this.user = user
+    },
+    updateBalance(balance) {
+      const user = this.user
+
+      if (user) {
+        this.user = { ...user, balance }
+      }
+    },
     async fetchUser(id) {
       try {
         const userResponse = await fetch(`https://dummyjson.com/users/${id}`)
@@ -58,9 +72,6 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
       } catch (exception: unknown) {
         console.error(exception)
       }
-    },
-    clear() {
-      this.user = user
     }
   },
   persist: true
