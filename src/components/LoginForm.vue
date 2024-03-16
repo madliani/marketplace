@@ -16,7 +16,7 @@ const { handleReset, handleSubmit } = useForm({
         return true
       }
 
-      return 'The user id must be an integer.'
+      return 'The user id must be an integer in the range from 1 to 100.'
     }
   }
 })
