@@ -23,7 +23,7 @@ const getRandomNumber = (min: number, max: number) => {
 const isValidUser = (user: BackendUser) => {
   return (
     typeof user.firstName === 'string' &&
-    typeof user.id === 'string' &&
+    typeof user.id === 'number' &&
     typeof user.image === 'string' &&
     typeof user.lastName === 'string'
   )
@@ -50,7 +50,7 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
               avatar: user.image,
               balance: getRandomNumber(0, 1_000),
               firstName: user.firstName,
-              id: user.id,
+              id: user.id.toString(),
               lastName: user.lastName
             }
           }

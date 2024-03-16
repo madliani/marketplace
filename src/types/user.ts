@@ -1,6 +1,6 @@
 export type BackendUser = {
   firstName: string
-  id: string
+  id: number
   image: string
   lastName: string
 }
