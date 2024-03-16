@@ -1,7 +1,7 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <slot name="app-bar"></slot>
-    <slot name="router-view"></slot>
+    <slot name="header"></slot>
+    <slot name="content"></slot>
   </v-layout>
 </template>
 

@@ -5,10 +5,10 @@ import AppLayout from '@/layouts/AppLayout.vue'
 
 <template>
   <AppLayout>
-    <template #app-bar>
+    <template #header>
       <AppBar />
     </template>
-    <template #router-view>
+    <template #content>
       <RouterView />
     </template>
   </AppLayout>
