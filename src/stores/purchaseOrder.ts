@@ -16,6 +16,7 @@ type Actions = Readonly<{
   deleteItem: (id: Item['id']) => void
 }>
 
+/** Purchase order default value. */
 const purchaseOrder: Readonly<PurchaseOrder> = {
   items: [],
   totalCost: 0

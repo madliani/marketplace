@@ -17,6 +17,7 @@ type Actions = Readonly<{
   deleteItem: (id: Product['id']) => void
 }>
 
+/** Shopping cart default value. */
 const shoppingCart: ShoppingCart = []
 
 export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('shoppingCart', {
