@@ -96,7 +96,7 @@ const reset = () => {
   width: 75%;
 }
 
-@media screen and (width <= 360px) {
+@media only screen and (width <= 360px) {
   .v-card {
     flex-direction: column;
 

@@ -66,7 +66,7 @@ const submit = handleSubmit(async (values) => {
   width: 50%;
 }
 
-@media screen and (width <= 360px) {
+@media only screen and (width <= 360px) {
   .v-card {
     width: 75%;
   }
