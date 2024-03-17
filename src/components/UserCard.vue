@@ -69,8 +69,8 @@ const submit = handleSubmit((values) => {
 })
 
 const reset = () => {
-  if (user) {
-    userBalance.value.value = user.value?.balance
+  if (user.value) {
+    userBalance.value.value = user.value.balance
   }
 }
 </script>
