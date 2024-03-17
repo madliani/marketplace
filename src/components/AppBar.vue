@@ -1,9 +1,26 @@
 <template>
+  <v-navigation-drawer v-model="drawer">
+    <v-list>
+      <v-list-item @click="handleHomeClick" prepend-icon="mdi-home-city" title="Home"></v-list-item>
+      <v-list-item
+        @click="handleProductsClick"
+        prepend-icon="mdi-shopping"
+        title="Products"
+      ></v-list-item>
+    </v-list>
+  </v-navigation-drawer>
+
   <v-app-bar>
     <template v-slot:prepend>
-      <RouterLink :to="Routes.HOME">
-        <v-img :src="MarketplaceLogo" :width="48" alt="Marketplace logo" title="Marketplace" />
-      </RouterLink>
+      <v-img
+        @click="drawMenu"
+        :src="MarketplaceLogo"
+        alt="Marketplace logo"
+        class="cursor-pointer"
+        height="48"
+        title="Marketplace"
+        width="48"
+      />
     </template>
 
     <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
@@ -33,11 +50,26 @@
 
 <script lang="ts" setup>
 import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
+import { gotoMarketplace, gotoProductsPage } from '@/router/router'
 import { useUserStore } from '@/stores/user'
-import { Routes } from '@/types/routes'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 const { clear } = userStore
+
+const drawer = ref(false)
+
+const drawMenu = () => (drawer.value = !drawer.value)
+
+const handleHomeClick = () => {
+  drawMenu()
+  gotoMarketplace()
+}
+
+const handleProductsClick = () => {
+  drawMenu()
+  gotoProductsPage()
+}
 </script>
