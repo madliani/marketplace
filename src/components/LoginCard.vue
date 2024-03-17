@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="elevated">
+  <v-card v-if="!userLoading" variant="elevated">
     <v-card-item>
       <form @submit.prevent="submit">
         <span class="d-block text-center text-h5 mb-2" title="Authorization">Authorization</span>
@@ -25,13 +25,19 @@
       </form>
     </v-card-item>
   </v-card>
+
+  <ProgressCircular v-if="userLoading" />
 </template>
 
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
+import ProgressCircular from './ProgressCircular.vue'
 
-const { fetchUser } = useUserStore()
+const userStore = useUserStore()
+const { userLoading } = storeToRefs(userStore)
+const { fetchUser } = userStore
 
 const { handleReset, handleSubmit } = useForm({
   initialValues: {
