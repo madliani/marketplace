@@ -1,15 +1,19 @@
 <template>
   <MainLayout>
     <template #content>
-      <LoginForm v-if="!user" />
+      <Suspense>
+        <LoginCard v-if="!user" />
+      </Suspense>
 
-      <UserCard v-if="user" />
+      <Suspense>
+        <UserCard v-if="user" />
+      </Suspense>
     </template>
   </MainLayout>
 </template>
 
 <script lang="ts" setup>
-import LoginForm from '@/components/LoginForm.vue'
+import LoginCard from '@/components/LoginCard.vue'
 import UserCard from '@/components/UserCard.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 import { useUserStore } from '@/stores/user'
