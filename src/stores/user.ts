@@ -31,7 +31,7 @@ const isValidUser = (user: BackendUser) =>
   typeof user.lastName === 'string'
 
 /** User default value. */
-const user: User | null = null
+const user: Readonly<User | null> = null
 
 export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
   state: () => ({
