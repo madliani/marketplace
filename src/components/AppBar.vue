@@ -1,15 +1,4 @@
 <template>
-  <v-navigation-drawer v-model="drawer">
-    <v-list>
-      <v-list-item @click="handleHomeClick" prepend-icon="mdi-home-city" title="Home"></v-list-item>
-      <v-list-item
-        @click="handleProductsClick"
-        prepend-icon="mdi-shopping"
-        title="Products"
-      ></v-list-item>
-    </v-list>
-  </v-navigation-drawer>
-
   <v-app-bar>
     <template v-slot:prepend>
       <v-img
@@ -29,15 +18,13 @@
       <v-avatar size="32">
         <v-img
           :src="user.avatar"
-          :title="`${user.firstName} ${user.lastName}`"
+          :title="fullName"
           alt="User avatar"
           class="d-none d-sm-inline-block"
         />
       </v-avatar>
 
-      <span :title="`${user.firstName} ${user.lastName}`" class="d-none d-sm-inline mx-2"
-        >{{ user.firstName }} {{ user.lastName }}</span
-      >
+      <span :title="fullName" class="d-none d-sm-inline mx-2">{{ fullName }}</span>
 
       <span :title="`Balance: ${user.balance} $`" class="d-none d-sm-inline"
         >{{ user.balance }} &dollar;</span
@@ -46,6 +33,13 @@
       <v-btn @click="clear" class="ml-2" color="red" title="Logout" variant="tonal">Logout</v-btn>
     </template>
   </v-app-bar>
+
+  <v-navigation-drawer v-model="drawer">
+    <v-list>
+      <v-list-item @click="handleHomeClick" prepend-icon="mdi-home-city" title="Home" />
+      <v-list-item @click="handleProductsClick" prepend-icon="mdi-shopping" title="Products" />
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script lang="ts" setup>
@@ -59,17 +53,17 @@ const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 const { clear } = userStore
 
-const drawer = ref(false)
+const fullName = user.value ? `${user.value.firstName} ${user.value.lastName}` : ''
+
+const drawer = ref(true)
 
 const drawMenu = () => (drawer.value = !drawer.value)
 
 const handleHomeClick = () => {
-  drawMenu()
   gotoMarketplace()
 }
 
 const handleProductsClick = () => {
-  drawMenu()
   gotoProductsPage()
 }
 </script>
