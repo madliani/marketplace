@@ -1,6 +1,7 @@
 import App from '@/App.vue'
 import '@/assets/styles/main.css'
 import router from '@/router/router'
+import '@mdi/font/css/materialdesignicons.css'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createApp } from 'vue'
