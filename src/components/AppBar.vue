@@ -6,7 +6,7 @@
       </RouterLink>
     </template>
 
-    <v-app-bar-title class="cursor-pointer" title="Marketplace">Marketplace</v-app-bar-title>
+    <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
 
     <template v-if="user" v-slot:append>
       <v-avatar size="32">
