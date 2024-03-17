@@ -35,7 +35,7 @@
   </v-app-bar>
 
   <v-navigation-drawer v-model="drawer">
-    <v-list>
+    <v-list nav>
       <v-list-item @click="handleHomeClick" prepend-icon="mdi-home-city" title="Home" />
       <v-list-item @click="handleProductsClick" prepend-icon="mdi-shopping" title="Products" />
     </v-list>
