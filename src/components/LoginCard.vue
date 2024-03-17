@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="!userLoading" variant="elevated">
+  <v-card v-if="!loading" variant="elevated">
     <v-card-item>
       <form @submit.prevent="submit">
         <span class="d-block text-center text-h5 mb-2" title="Authorization">Authorization</span>
@@ -26,7 +26,7 @@
     </v-card-item>
   </v-card>
 
-  <ProgressCircular v-if="userLoading" />
+  <ProgressCircular v-if="loading" />
 </template>
 
 <script lang="ts" setup>
@@ -36,7 +36,7 @@ import { useField, useForm } from 'vee-validate'
 import ProgressCircular from './ProgressCircular.vue'
 
 const userStore = useUserStore()
-const { userLoading } = storeToRefs(userStore)
+const { loading } = storeToRefs(userStore)
 const { fetchUser } = userStore
 
 const { handleReset, handleSubmit } = useForm({

@@ -5,7 +5,7 @@ type Id = 'user'
 
 type State = {
   user: User | null
-  userLoading: boolean
+  loading: boolean
 }
 
 type Getters = {}
@@ -37,7 +37,7 @@ const user: User | null = null
 export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
   state: () => ({
     user,
-    userLoading: false
+    loading: false
   }),
   actions: {
     clear() {
@@ -52,7 +52,7 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
     },
     async fetchUser(id) {
       try {
-        this.userLoading = true
+        this.loading = true
 
         const userResponse = await fetch(`https://dummyjson.com/users/${id}`)
         const userJson = await userResponse.json()
@@ -73,7 +73,7 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
       } catch (exception: unknown) {
         console.error(exception)
       } finally {
-        this.userLoading = false
+        this.loading = false
       }
     }
   },

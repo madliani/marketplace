@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="!productListLoading" fluid>
+  <v-container v-if="!loading" fluid>
     <v-row>
       <v-col v-for="product in productList" :key="product.id">
         <ProductCard :product="product" />
@@ -7,7 +7,7 @@
     </v-row>
   </v-container>
 
-  <ProgressCircular v-if="productListLoading" />
+  <ProgressCircular v-if="loading" />
 </template>
 
 <script lang="ts" setup>
@@ -18,7 +18,7 @@ import ProductCard from './ProductCard.vue'
 import ProgressCircular from './ProgressCircular.vue'
 
 const productListStore = useProductListStore()
-const { productList, productListLoading } = storeToRefs(productListStore)
+const { productList, loading } = storeToRefs(productListStore)
 const { fetchProducts } = productListStore
 
 onMounted(async () => await fetchProducts())

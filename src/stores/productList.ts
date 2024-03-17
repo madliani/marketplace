@@ -5,7 +5,7 @@ type Id = 'productList'
 
 type State = {
   productList: Products
-  productListLoading: boolean
+  loading: boolean
 }
 
 type Getters = {}
@@ -35,12 +35,12 @@ const productList: Products = []
 export const useProductListStore = defineStore<Id, State, Getters, Actions>('productList', {
   state: () => ({
     productList,
-    productListLoading: false
+    loading: false
   }),
   actions: {
     async fetchProducts() {
       try {
-        this.productListLoading = true
+        this.loading = true
 
         const productsResponse = await fetch(`https://dummyjson.com/products`)
         const productsJson = await productsResponse.json()
@@ -60,7 +60,7 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
       } catch (exception: unknown) {
         console.error(exception)
       } finally {
-        this.productListLoading = false
+        this.loading = false
       }
     },
     clear() {
