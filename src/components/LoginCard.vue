@@ -1,5 +1,5 @@
 <template>
-  <v-card class="w-50" variant="elevated">
+  <v-card variant="elevated">
     <v-card-item>
       <form @submit.prevent="submit">
         <span class="d-block text-center text-h5 mb-2" title="Authorization">Authorization</span>
@@ -15,11 +15,13 @@
           variant="outlined"
         />
 
-        <v-btn class="mr-4" color="primary" title="Login" type="submit" variant="elevated"
+        <v-btn class="mr-4 mb-2" color="primary" title="Login" type="submit" variant="elevated"
           >Login</v-btn
         >
 
-        <v-btn @click="handleReset" color="secondary" title="Clear" variant="elevated">Clear</v-btn>
+        <v-btn @click="handleReset" class="mb-2" color="secondary" title="Clear" variant="elevated"
+          >Clear</v-btn
+        >
       </form>
     </v-card-item>
   </v-card>
@@ -58,3 +60,15 @@ const submit = handleSubmit(async (values) => {
   handleReset()
 })
 </script>
+
+<style scoped>
+.v-card {
+  width: 50%;
+}
+
+@media screen and (width <= 360px) {
+  .v-card {
+    width: 75%;
+  }
+}
+</style>
