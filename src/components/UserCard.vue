@@ -1,7 +1,13 @@
 <template>
-  <v-card class="d-flex align-items justify-content" v-if="user" variant="elevated">
+  <v-card class="d-flex align-center justify-content" v-if="user" variant="elevated">
     <v-card-item class="v-card__item-avatar">
-      <v-img :src="user.avatar" :width="128" alt="User avatar" title="User avatar" />
+      <v-img
+        :src="user.avatar"
+        alt="User avatar"
+        height="128px"
+        title="User avatar"
+        width="128px"
+      />
     </v-card-item>
     <v-card-item class="v-card__item-info">
       <form @submit.prevent="submit">
@@ -93,6 +99,7 @@ const reset = () => {
 @media screen and (width <= 360px) {
   .v-card {
     flex-direction: column;
+
     width: 75%;
   }
 
