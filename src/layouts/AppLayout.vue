@@ -1,6 +1,7 @@
 <template>
   <v-layout class="rounded rounded-md">
     <slot name="header"></slot>
+
     <slot name="content"></slot>
   </v-layout>
 </template>

@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import LoginForm from '@/components/LoginForm.vue'
-import UserCard from '@/components/UserCard.vue'
-import MainLayout from '@/layouts/MainLayout.vue'
-import { useUserStore } from '@/stores/user'
-import { storeToRefs } from 'pinia'
-
-const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
-</script>
-
 <template>
   <MainLayout>
     <template #content>
@@ -18,3 +7,14 @@ const { user } = storeToRefs(userStore)
     </template>
   </MainLayout>
 </template>
+
+<script lang="ts" setup>
+import LoginForm from '@/components/LoginForm.vue'
+import UserCard from '@/components/UserCard.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
+
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
+</script>

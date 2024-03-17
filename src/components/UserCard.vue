@@ -1,4 +1,40 @@
-<script setup lang="ts">
+<template>
+  <v-card class="d-flex align-items justify-content" v-if="user" variant="elevated">
+    <v-card-item class="v-card__item-avatar">
+      <v-img :src="user.avatar" :width="128" alt="User avatar" title="User avatar" />
+    </v-card-item>
+    <v-card-item class="v-card__item-info">
+      <form @submit.prevent="submit">
+        <span class="d-block mb-4" :title="`${user.firstName} ${user.lastName}`"
+          >{{ user.firstName }} {{ user.lastName }}</span
+        >
+
+        <v-text-field
+          :counter="10"
+          :error-messages="userBalance.errorMessage.value"
+          :title="`Balance: ${userBalance.value.value} $`"
+          class="mb-2"
+          label="Balance"
+          v-model="userBalance.value.value"
+          variant="outlined"
+        />
+
+        <v-btn
+          :title="`${user.firstName} ${user.lastName}`"
+          class="mr-4"
+          color="primary"
+          type="submit"
+          variant="elevated"
+          >Update</v-btn
+        >
+
+        <v-btn @click="reset" color="secondary" title="Reset" variant="elevated">Reset</v-btn>
+      </form>
+    </v-card-item>
+  </v-card>
+</template>
+
+<script lang="ts" setup>
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
@@ -38,42 +74,6 @@ const reset = () => {
   }
 }
 </script>
-
-<template>
-  <v-card class="d-flex align-items justify-content" v-if="user" variant="elevated">
-    <v-card-item class="v-card__item-avatar">
-      <v-img :src="user.avatar" :width="128" alt="User avatar" title="User avatar" />
-    </v-card-item>
-    <v-card-item class="v-card__item-info">
-      <form @submit.prevent="submit">
-        <span class="d-block mb-4" :title="`${user.firstName} ${user.lastName}`"
-          >{{ user.firstName }} {{ user.lastName }}</span
-        >
-
-        <v-text-field
-          :counter="10"
-          :error-messages="userBalance.errorMessage.value"
-          :title="`Balance: ${userBalance.value.value} $`"
-          class="mb-2"
-          label="Balance"
-          v-model="userBalance.value.value"
-          variant="outlined"
-        />
-
-        <v-btn
-          :title="`${user.firstName} ${user.lastName}`"
-          class="mr-4"
-          color="primary"
-          type="submit"
-          variant="elevated"
-          >Update</v-btn
-        >
-
-        <v-btn @click="reset" color="secondary" title="Reset" variant="elevated">Reset</v-btn>
-      </form>
-    </v-card-item>
-  </v-card>
-</template>
 
 <style scoped>
 .v-card {

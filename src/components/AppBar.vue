@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
-import { useUserStore } from '@/stores/user'
-import { Routes } from '@/types/routes'
-import { storeToRefs } from 'pinia'
-
-const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
-const { clear } = userStore
-</script>
-
 <template>
   <v-app-bar>
     <template v-slot:prepend>
@@ -41,3 +30,14 @@ const { clear } = userStore
     </template>
   </v-app-bar>
 </template>
+
+<script lang="ts" setup>
+import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
+import { useUserStore } from '@/stores/user'
+import { Routes } from '@/types/routes'
+import { storeToRefs } from 'pinia'
+
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
+const { clear } = userStore
+</script>
