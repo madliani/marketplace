@@ -1,7 +1,23 @@
-export type Product = {
-  id: string
-  name: string
+export type BackendProduct = {
+  description: string
+  id: number
+  images: string[]
   price: number
+  thumbnail: string
+  title: string
+}
+
+export type BackendProducts = {
+  products: BackendProduct[]
+}
+
+export type Product = {
+  description: string
+  id: string
+  images: string[]
+  price: number
+  thumbnail: string
+  title: string
 }
 
 export type Products = Product[]
