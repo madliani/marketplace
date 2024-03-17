@@ -34,7 +34,9 @@
             >Update</v-btn
           >
 
-          <v-btn @click="reset" color="secondary" title="Reset" variant="elevated">Reset</v-btn>
+          <v-btn @click="handleReset" color="secondary" title="Reset" variant="elevated"
+            >Reset</v-btn
+          >
         </v-card-actions>
       </form>
     </v-card-item>
@@ -75,7 +77,7 @@ const submit = handleSubmit((values) => {
   updateBalance(balance)
 })
 
-const reset = () => {
+const handleReset = () => {
   if (user.value) {
     userBalance.value.value = user.value.balance
   }
