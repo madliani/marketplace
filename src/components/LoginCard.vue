@@ -50,8 +50,6 @@ const { handleReset, handleSubmit } = useForm({
   }
 })
 
-const userId = useField('userId')
-
 const submit = handleSubmit(async (values) => {
   const { userId: id } = values
 
@@ -59,6 +57,8 @@ const submit = handleSubmit(async (values) => {
 
   handleReset()
 })
+
+const userId = useField('userId')
 </script>
 
 <style scoped>

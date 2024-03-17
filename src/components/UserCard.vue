@@ -11,9 +11,7 @@
     </v-card-item>
     <v-card-item class="v-card__item-info">
       <form @submit.prevent="submit">
-        <span class="d-block mb-4" :title="`${user.firstName} ${user.lastName}`"
-          >{{ user.firstName }} {{ user.lastName }}</span
-        >
+        <span class="d-block mb-4" :title="fullName">{{ fullName }}</span>
 
         <v-text-field
           :counter="10"
@@ -26,13 +24,7 @@
         />
 
         <v-card-actions>
-          <v-btn
-            :title="`${user.firstName} ${user.lastName}`"
-            color="primary"
-            type="submit"
-            variant="elevated"
-            >Update</v-btn
-          >
+          <v-btn :title="fullName" color="primary" type="submit" variant="elevated">Update</v-btn>
 
           <v-btn @click="handleReset" color="secondary" title="Reset" variant="elevated"
             >Reset</v-btn
@@ -52,6 +44,8 @@ const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 const { updateBalance } = userStore
 
+const fullName = user.value ? `${user.value.firstName} ${user.value.lastName}` : ''
+
 const { handleSubmit } = useForm({
   initialValues: {
     userBalance: user.value?.balance ?? 0
@@ -69,13 +63,13 @@ const { handleSubmit } = useForm({
   }
 })
 
-const userBalance = useField('userBalance')
-
 const submit = handleSubmit((values) => {
   const { userBalance: balance } = values
 
   updateBalance(balance)
 })
+
+const userBalance = useField('userBalance')
 
 const handleReset = () => {
   if (user.value) {
