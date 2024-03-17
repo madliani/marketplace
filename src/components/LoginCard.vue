@@ -15,13 +15,13 @@
           variant="outlined"
         />
 
-        <v-btn class="mr-4 mb-2" color="primary" title="Login" type="submit" variant="elevated"
-          >Login</v-btn
-        >
+        <v-card-actions>
+          <v-btn color="primary" title="Login" type="submit" variant="elevated">Login</v-btn>
 
-        <v-btn @click="handleReset" class="mb-2" color="secondary" title="Clear" variant="elevated"
-          >Clear</v-btn
-        >
+          <v-btn @click="handleReset" color="secondary" title="Clear" variant="elevated"
+            >Clear</v-btn
+          >
+        </v-card-actions>
       </form>
     </v-card-item>
   </v-card>

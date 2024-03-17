@@ -25,16 +25,17 @@
           variant="outlined"
         />
 
-        <v-btn
-          :title="`${user.firstName} ${user.lastName}`"
-          class="mr-4"
-          color="primary"
-          type="submit"
-          variant="elevated"
-          >Update</v-btn
-        >
+        <v-card-actions>
+          <v-btn
+            :title="`${user.firstName} ${user.lastName}`"
+            color="primary"
+            type="submit"
+            variant="elevated"
+            >Update</v-btn
+          >
 
-        <v-btn @click="reset" color="secondary" title="Reset" variant="elevated">Reset</v-btn>
+          <v-btn @click="reset" color="secondary" title="Reset" variant="elevated">Reset</v-btn>
+        </v-card-actions>
       </form>
     </v-card-item>
   </v-card>
