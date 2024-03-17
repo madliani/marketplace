@@ -1,9 +1,7 @@
 <template>
   <MainLayout>
     <template #content>
-      <Suspense>
-        <ProductGrid />
-      </Suspense>
+      <ProductGrid />
     </template>
   </MainLayout>
 </template>

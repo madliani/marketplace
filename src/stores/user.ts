@@ -5,6 +5,7 @@ type Id = 'user'
 
 type State = {
   user: User | null
+  loading: boolean
 }
 
 type Getters = {}
@@ -35,7 +36,8 @@ const user: Readonly<User | null> = null
 
 export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
   state: () => ({
-    user
+    user,
+    loading: false
   }),
   actions: {
     clear() {
@@ -50,6 +52,8 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
     },
     async fetchUser(id) {
       try {
+        this.loading = true
+
         const userResponse = await fetch(`https://dummyjson.com/users/${id}`)
         const userJson = await userResponse.json()
 
@@ -68,6 +72,8 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
         }
       } catch (exception: unknown) {
         console.error(exception)
+      } finally {
+        this.loading = false
       }
     }
   },

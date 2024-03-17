@@ -1,13 +1,9 @@
 <template>
   <MainLayout>
     <template #content>
-      <Suspense>
-        <LoginCard v-if="!user" />
-      </Suspense>
+      <LoginCard v-if="!user" />
 
-      <Suspense>
-        <UserCard v-if="user" />
-      </Suspense>
+      <UserCard v-if="user" />
     </template>
   </MainLayout>
 </template>

@@ -12,6 +12,7 @@
   },
   "description": "A modern marketplace for modern ladies.",
   "devDependencies": {
+    "@mdi/font": "^7.4.47",
     "@rushstack/eslint-patch": "^1.7.2",
     "@tsconfig/node20": "^20.1.2",
     "@types/jsdom": "^21.1.6",
