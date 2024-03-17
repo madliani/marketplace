@@ -6,7 +6,9 @@
       </RouterLink>
     </template>
 
-    <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
+    <v-app-bar-title @click="gotoMarketplace" class="cursor-pointer" title="Marketplace"
+      >Marketplace</v-app-bar-title
+    >
 
     <template v-if="user" v-slot:append>
       <v-avatar size="32">
@@ -33,6 +35,7 @@
 
 <script lang="ts" setup>
 import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
+import { gotoMarketplace } from '@/router/router'
 import { useUserStore } from '@/stores/user'
 import { Routes } from '@/types/routes'
 import { storeToRefs } from 'pinia'
