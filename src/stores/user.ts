@@ -11,7 +11,7 @@ type Getters = {}
 
 type Actions = Readonly<{
   clear: () => void
-  fetchUser: (id: User['id']) => Promise<void>
+  fetchUser: (id: User['id']) => Promise<void> | never
   updateBalance: (balance: User['balance']) => void
 }>
 
@@ -24,14 +24,11 @@ const getRandomNumber = (min: number, max: number) => {
 }
 
 /** Backend user validating. */
-const isValidUser = (user: BackendUser) => {
-  return (
-    typeof user.firstName === 'string' &&
-    typeof user.id === 'number' &&
-    typeof user.image === 'string' &&
-    typeof user.lastName === 'string'
-  )
-}
+const isValidUser = (user: BackendUser) =>
+  typeof user.firstName === 'string' &&
+  typeof user.id === 'number' &&
+  typeof user.image === 'string' &&
+  typeof user.lastName === 'string'
 
 /** User default value. */
 const user: User | null = null
