@@ -52,8 +52,12 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
 
           if (isValidProducts(products.products)) {
             const productList = products.products.map<Product>((product) => ({
-              ...product,
-              id: product.id.toString()
+              description: product.description,
+              id: product.id.toString(),
+              images: product.images,
+              price: product.price,
+              thumbnail: product.thumbnail,
+              title: product.title
             }))
 
             this.productList = productList
