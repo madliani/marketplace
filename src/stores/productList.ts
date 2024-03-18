@@ -20,8 +20,10 @@ const isValidImages = (images: string[]) => images.every((image) => typeof image
 
 /** Backend products validating. */
 const isValidProducts = (products: BackendProduct[]) =>
+  typeof products === 'object' &&
   products.every(
     (product) =>
+      typeof product === 'object' &&
       typeof product.description === 'string' &&
       typeof product.id === 'number' &&
       typeof product.thumbnail === 'string' &&
