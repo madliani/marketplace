@@ -62,11 +62,11 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
 
           if (isValidUser(user)) {
             this.user = {
-              avatar: user.image,
+              avatar: user.image as string,
               balance: getRandomNumber(0, 1_000),
-              firstName: user.firstName,
-              id: user.id.toString(),
-              lastName: user.lastName
+              firstName: user.firstName as string,
+              id: (user.id as number).toString(),
+              lastName: user.lastName as string
             }
           }
         }
