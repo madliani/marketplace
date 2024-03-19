@@ -10,15 +10,15 @@ type State = {
   loading: boolean
 }
 
-type Getters = Readonly<{
+type Getters = {
   username: (state: Readonly<State>) => string | null
-}>
+}
 
-type Actions = Readonly<{
+type Actions = {
   clear: () => void
   fetchUser: (id: Readonly<User['id']>, onError: ErrorHandler) => Promise<void> | never
   updateBalance: (balance: Readonly<User['balance']>) => void
-}>
+}
 
 /** Getting a random integer between two values. */
 const getRandomNumber = (min: Readonly<number>, max: Readonly<number>) => {
