@@ -1,20 +1,13 @@
 <template>
-  <v-card class="d-flex align-center justify-content" v-if="user" variant="elevated">
+  <v-card class="d-flex align-center justify-content" v-if="user && username" variant="elevated">
     <v-card-item class="v-card__item-avatar">
-      <v-img
-        :src="user.avatar"
-        alt="User avatar"
-        height="128px"
-        title="User avatar"
-        width="128px"
-      />
+      <v-img :alt="username" :src="user.avatar" :title="username" height="128px" width="128px" />
     </v-card-item>
     <v-card-item class="v-card__item-info">
       <form @submit.prevent="submit">
-        <span class="d-block mb-4" :title="fullName">{{ fullName }}</span>
+        <span :title="username" class="d-block mb-4">{{ username }}</span>
 
         <v-text-field
-          :counter="10"
           :error-messages="userBalance.errorMessage.value"
           :title="`Balance: ${userBalance.value.value} $`"
           class="mb-2"
@@ -24,7 +17,7 @@
         />
 
         <v-card-actions>
-          <v-btn :title="fullName" color="primary" type="submit" variant="elevated">Update</v-btn>
+          <v-btn color="primary" type="submit" title="Update" variant="elevated">Update</v-btn>
 
           <v-btn @click="handleReset" color="secondary" title="Reset" variant="elevated"
             >Reset</v-btn
@@ -36,40 +29,43 @@
 </template>
 
 <script lang="ts" setup>
+import type { User } from '@/types/user'
+
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 
+type Form = Readonly<{
+  userBalance: User['balance']
+}>
+
 const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
+
+const { user, username } = storeToRefs(userStore)
 const { updateBalance } = userStore
 
-const fullName = user.value ? `${user.value.firstName} ${user.value.lastName}` : ''
-
-const { handleSubmit } = useForm({
+const { handleSubmit } = useForm<Form>({
   initialValues: {
     userBalance: user.value?.balance ?? 0
   },
   validationSchema: {
-    userBalance(value: string) {
-      const balance = parseFloat(value)
-
-      if (!Number.isNaN(balance)) {
+    userBalance(value: Readonly<number>) {
+      if (!Number.isNaN(value)) {
         return true
       }
 
-      return 'The user balance must be a float number.'
+      return 'The user balance must be a floating-point number.'
     }
   }
 })
+
+const userBalance = useField<User['balance']>('userBalance')
 
 const submit = handleSubmit((values) => {
   const { userBalance: balance } = values
 
   updateBalance(balance)
 })
-
-const userBalance = useField('userBalance')
 
 const handleReset = () => {
   if (user.value) {
