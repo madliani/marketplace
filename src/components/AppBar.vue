@@ -2,7 +2,7 @@
   <v-app-bar>
     <template v-slot:prepend>
       <v-img
-        @click="drawMenu"
+        @click="draw"
         :src="MarketplaceLogo"
         alt="Marketplace logo"
         class="cursor-pointer"
@@ -14,17 +14,17 @@
 
     <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
 
-    <template v-if="user" v-slot:append>
+    <template v-if="user && username" v-slot:append>
       <v-avatar size="32">
         <v-img
           :src="user.avatar"
-          :title="fullName"
+          :title="username"
           alt="User avatar"
           class="d-none d-sm-inline-block"
         />
       </v-avatar>
 
-      <span :title="fullName" class="d-none d-sm-inline mx-2">{{ fullName }}</span>
+      <span :title="username" class="d-none d-sm-inline mx-2">{{ username }}</span>
 
       <span :title="`Balance: ${user.balance} $`" class="d-none d-sm-inline"
         >{{ user.balance }} &dollar;</span
@@ -36,8 +36,8 @@
 
   <v-navigation-drawer v-model="drawer">
     <v-list nav>
-      <v-list-item @click="handleHomeClick" prepend-icon="mdi-home-city" title="Home" />
-      <v-list-item @click="handleProductsClick" prepend-icon="mdi-shopping" title="Products" />
+      <v-list-item @click="gotoMarketplace" prepend-icon="mdi-home-city" title="Home" />
+      <v-list-item @click="gotoProductsPage" prepend-icon="mdi-shopping" title="Products" />
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -50,20 +50,10 @@ import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
 const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
+const { user, username } = storeToRefs(userStore)
 const { clear } = userStore
-
-const fullName = user.value ? `${user.value.firstName} ${user.value.lastName}` : ''
 
 const drawer = ref(true)
 
-const drawMenu = () => (drawer.value = !drawer.value)
-
-const handleHomeClick = () => {
-  gotoMarketplace()
-}
-
-const handleProductsClick = () => {
-  gotoProductsPage()
-}
+const draw = () => (drawer.value = !drawer.value)
 </script>
