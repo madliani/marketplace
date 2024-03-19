@@ -52,13 +52,15 @@ import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import { ref } from 'vue'
 
-import { useUserStore } from '@/stores/user'
-
 import ErrorAlert from '@/components/ErrorAlert.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 
+import type { User } from '@/types/user'
+
+import { useUserStore } from '@/stores/user'
+
 type Form = Readonly<{
-  userId: number
+  userId: User['id'] | null
 }>
 
 const userStore = useUserStore()
@@ -71,14 +73,14 @@ const error = ref<Error | null>(null)
 
 const { handleReset, handleSubmit } = useForm<Form>({
   initialValues: {
-    userId: 0
+    userId: null
   },
   validationSchema: {
-    userId(value: Readonly<number>) {
+    userId(value: Readonly<Form['userId']>) {
       const minValue = 1
       const maxValue = 100
 
-      if (!Number.isNaN(value) && value >= minValue && value <= maxValue) {
+      if (value && !Number.isNaN(value) && value >= minValue && value <= maxValue) {
         isDisabled.value = false
 
         return true
@@ -91,7 +93,7 @@ const { handleReset, handleSubmit } = useForm<Form>({
   }
 })
 
-const userId = useField<number>('userId')
+const userId = useField<Form['userId']>('userId')
 
 const handleError = (msg: string) => {
   error.value = new Error(msg)
@@ -104,9 +106,11 @@ const handleClose = () => {
 const submit = handleSubmit(async (values) => {
   const { userId: id } = values
 
-  await fetchUser(id, handleError)
+  if (id) {
+    await fetchUser(id, handleError)
 
-  handleReset()
+    handleReset()
+  }
 })
 </script>
 

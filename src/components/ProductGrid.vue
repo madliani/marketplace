@@ -18,17 +18,17 @@
 </template>
 
 <script lang="ts" setup>
-import { gotoMarketplace } from '@/router/router'
-import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
-import { useProductListStore } from '@/stores/productList'
-import { Routes } from '@/types/routes'
-
 import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref } from 'vue'
 
 import ErrorAlert from '@/components/ErrorAlert.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
+
+import { gotoMarketplace } from '@/router/router'
+import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
+import { useProductListStore } from '@/stores/productList'
+import { Routes } from '@/types/routes'
 
 const productListStore = useProductListStore()
 

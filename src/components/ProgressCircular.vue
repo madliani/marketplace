@@ -1,3 +1,3 @@
 <template>
-  <v-progress-circular indeterminate size="50" />
+  <v-progress-circular indeterminate size="50px" />
 </template>

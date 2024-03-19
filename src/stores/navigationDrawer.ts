@@ -1,5 +1,6 @@
-import { Routes } from '@/types/routes'
 import { defineStore } from 'pinia'
+
+import { Routes } from '@/types/routes'
 
 type GoToHandler = () => void
 
