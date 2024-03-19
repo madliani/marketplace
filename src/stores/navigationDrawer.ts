@@ -11,10 +11,10 @@ type State = {
 
 type Getters = {}
 
-type Actions = Readonly<{
+type Actions = {
   selectItem: (item: Readonly<Routes>, goto: GoToHandler) => void
   clear: () => void
-}>
+}
 
 /** Navigation drawer store default value. */
 const selectedItem: Readonly<Routes> = Routes.HOME
