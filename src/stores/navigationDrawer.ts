@@ -1,6 +1,8 @@
 import { Routes } from '@/types/routes'
 import { defineStore } from 'pinia'
 
+type GoToHandler = () => void
+
 type Id = 'navigationDrawer'
 
 type State = {
@@ -10,7 +12,7 @@ type State = {
 type Getters = {}
 
 type Actions = Readonly<{
-  selectItem: (item: Routes, goto: () => void) => void
+  selectItem: (item: Readonly<Routes>, goto: GoToHandler) => void
   clear: () => void
 }>
 
