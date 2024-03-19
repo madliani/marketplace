@@ -10,7 +10,7 @@
   <ProgressCircular v-if="loading" />
 
   <ErrorAlert
-    :on-close="gotoMarketplace"
+    :on-close="handleClose"
     :text="error.message"
     title="Connection error!"
     v-if="error"
@@ -19,7 +19,9 @@
 
 <script lang="ts" setup>
 import { gotoMarketplace } from '@/router/router'
+import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductListStore } from '@/stores/productList'
+import { Routes } from '@/types/routes'
 import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref, type Ref } from 'vue'
 import ErrorAlert from './ErrorAlert.vue'
@@ -30,9 +32,19 @@ const productListStore = useProductListStore()
 const { productList, loading } = storeToRefs(productListStore)
 const { fetchProducts } = productListStore
 
+const { selectItem } = useNavigationDrawerStore()
+
 const error: Ref<Error | null> = ref(null)
 
-const handleError = (msg: string) => (error.value = new Error(msg))
+const handleClose = () => {
+  selectItem(Routes.HOME, gotoMarketplace)
+}
 
-onBeforeMount(async () => await fetchProducts(handleError))
+const handleError = (msg: string) => {
+  error.value = new Error(msg)
+}
+
+onBeforeMount(async () => {
+  await fetchProducts(handleError)
+})
 </script>
