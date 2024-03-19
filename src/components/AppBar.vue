@@ -6,16 +6,16 @@
         :src="MarketplaceLogo"
         alt="Marketplace logo"
         class="cursor-pointer"
-        height="48"
+        height="48px"
         title="Marketplace"
-        width="48"
+        width="48px"
       />
     </template>
 
     <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
 
     <template v-if="user && username" v-slot:append>
-      <v-avatar size="32">
+      <v-avatar size="32px">
         <v-img
           :src="user.avatar"
           :title="username"
@@ -53,14 +53,15 @@
 </template>
 
 <script lang="ts" setup>
-import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
-import { gotoMarketplace, gotoProductsPage } from '@/router/router'
+import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
+import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
+
+import { gotoMarketplace, gotoProductsPage } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useUserStore } from '@/stores/user'
 import { Routes } from '@/types/routes'
-import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
 
 const userStore = useUserStore()
 
