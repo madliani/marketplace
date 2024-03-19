@@ -1,6 +1,8 @@
 import type { BackendProduct, BackendProducts, Product, Products } from '@/types/products'
 import { defineStore } from 'pinia'
 
+type ErrorHandler = (msg: string) => void
+
 type Id = 'productList'
 
 type State = {
@@ -11,7 +13,7 @@ type State = {
 type Getters = {}
 
 type Actions = Readonly<{
-  fetchProducts: () => Promise<void> | never
+  fetchProducts: (onError: ErrorHandler) => Promise<void> | never
   clear: () => void
 }>
 
@@ -40,7 +42,7 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
     loading: false
   }),
   actions: {
-    async fetchProducts() {
+    async fetchProducts(onError) {
       try {
         this.loading = true
 
@@ -64,6 +66,10 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
           }
         }
       } catch (exception: unknown) {
+        this.productList = productList
+
+        onError('Check your Internet connection or contact technical support.')
+
         console.error(exception)
       } finally {
         this.loading = false

@@ -1,6 +1,8 @@
 import type { BackendUser, User } from '@/types/user'
 import { defineStore } from 'pinia'
 
+type ErrorHandler = (msg: string) => void
+
 type Id = 'user'
 
 type State = {
@@ -12,7 +14,7 @@ type Getters = {}
 
 type Actions = Readonly<{
   clear: () => void
-  fetchUser: (id: User['id']) => Promise<void> | never
+  fetchUser: (id: User['id'], onError: ErrorHandler) => Promise<void> | never
   updateBalance: (balance: User['balance']) => void
 }>
 
@@ -51,7 +53,7 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
         this.user = { ...user, balance }
       }
     },
-    async fetchUser(id) {
+    async fetchUser(id, onError) {
       try {
         this.loading = true
 
@@ -72,6 +74,10 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
           }
         }
       } catch (exception: unknown) {
+        this.user = user
+
+        onError('Check your Internet connection or contact technical support.')
+
         console.error(exception)
       } finally {
         this.loading = false
