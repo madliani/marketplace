@@ -9,11 +9,11 @@ type State = {
 
 type Getters = {}
 
-type Actions = Readonly<{
+type Actions = {
   addItem: (count: Readonly<Item['count']>, product: Readonly<Item['product']>) => void
   clear: () => void
   deleteItem: (id: Readonly<Item['id']>) => void
-}>
+}
 
 /** Purchase order default value. */
 const purchaseOrder: Readonly<PurchaseOrder> = {
