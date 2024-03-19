@@ -1,4 +1,4 @@
-import type { Item, PurchaseOrder } from '@/types/purchaseOrder'
+import { type Item, type PurchaseOrder } from '@/types/purchaseOrder'
 import { defineStore } from 'pinia'
 import { v4 as uuid } from 'uuid'
 
@@ -11,9 +11,9 @@ type State = {
 type Getters = {}
 
 type Actions = Readonly<{
-  addItem: (count: Item['count'], product: Item['product']) => void
+  addItem: (count: Readonly<Item['count']>, product: Readonly<Item['product']>) => void
   clear: () => void
-  deleteItem: (id: Item['id']) => void
+  deleteItem: (id: Readonly<Item['id']>) => void
 }>
 
 /** Purchase order default value. */
@@ -28,7 +28,7 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
   }),
   actions: {
     addItem(count, product) {
-      const item: Item = {
+      const item: Readonly<Item> = {
         count,
         cost: product.price * count,
         id: uuid(),
