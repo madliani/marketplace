@@ -1,5 +1,6 @@
-import type { BackendProduct, BackendProducts, Product, Products } from '@/types/products'
 import { defineStore } from 'pinia'
+
+import type { BackendProduct, BackendProducts, Product, Products } from '@/types/products'
 
 type ErrorHandler = (msg: Readonly<string>) => void
 
