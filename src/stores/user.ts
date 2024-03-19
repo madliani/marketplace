@@ -1,7 +1,7 @@
-import type { BackendUser, User } from '@/types/user'
+import { type BackendUser, type User } from '@/types/user'
 import { defineStore } from 'pinia'
 
-type ErrorHandler = (msg: string) => void
+type ErrorHandler = (msg: Readonly<string>) => void
 
 type Id = 'user'
 
@@ -16,12 +16,12 @@ type Getters = Readonly<{
 
 type Actions = Readonly<{
   clear: () => void
-  fetchUser: (id: User['id'], onError: ErrorHandler) => Promise<void> | never
-  updateBalance: (balance: User['balance']) => void
+  fetchUser: (id: Readonly<User['id']>, onError: ErrorHandler) => Promise<void> | never
+  updateBalance: (balance: Readonly<User['balance']>) => void
 }>
 
 /** Getting a random integer between two values. */
-const getRandomNumber = (min: number, max: number) => {
+const getRandomNumber = (min: Readonly<number>, max: Readonly<number>) => {
   const randomNumber = Math.random() * (max - min) + min
   const fixedPoint = randomNumber.toFixed(2)
 
@@ -29,7 +29,7 @@ const getRandomNumber = (min: number, max: number) => {
 }
 
 /** Backend user validating. */
-const isValidUser = (user: BackendUser) =>
+const isValidUser = (user: Readonly<BackendUser>) =>
   typeof user === 'object' &&
   typeof user.firstName === 'string' &&
   typeof user.id === 'number' &&
