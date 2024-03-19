@@ -12,10 +12,10 @@ type State = {
 
 type Getters = {}
 
-type Actions = Readonly<{
+type Actions = {
   fetchProducts: (onError: ErrorHandler) => Promise<void> | never
   clear: () => void
-}>
+}
 
 /** Backend product images validating. */
 const isValidImages = (images: Readonly<string[]>) =>
