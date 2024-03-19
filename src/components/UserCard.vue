@@ -29,11 +29,12 @@
 </template>
 
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
+import { useField, useForm } from 'vee-validate'
+
 import type { User } from '@/types/user'
 
 import { useUserStore } from '@/stores/user'
-import { storeToRefs } from 'pinia'
-import { useField, useForm } from 'vee-validate'
 
 type Form = Readonly<{
   userBalance: User['balance']
@@ -61,17 +62,17 @@ const { handleSubmit } = useForm<Form>({
 
 const userBalance = useField<User['balance']>('userBalance')
 
-const submit = handleSubmit((values) => {
-  const { userBalance: balance } = values
-
-  updateBalance(balance)
-})
-
 const handleReset = () => {
   if (user.value) {
     userBalance.value.value = user.value.balance
   }
 }
+
+const submit = handleSubmit((values) => {
+  const { userBalance: balance } = values
+
+  updateBalance(balance)
+})
 </script>
 
 <style scoped>
