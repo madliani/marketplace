@@ -1,6 +1,7 @@
+import { defineStore } from 'pinia'
+
 import type { Product } from '@/types/products'
 import type { Item, ShoppingCart } from '@/types/shoppingCart'
-import { defineStore } from 'pinia'
 
 type Id = 'shoppingCart'
 
