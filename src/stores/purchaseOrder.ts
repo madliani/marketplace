@@ -1,4 +1,4 @@
-import { type Item, type PurchaseOrder } from '@/types/purchaseOrder'
+import type { Item, PurchaseOrder } from '@/types/purchaseOrder'
 import { defineStore } from 'pinia'
 import { v4 as uuid } from 'uuid'
 
