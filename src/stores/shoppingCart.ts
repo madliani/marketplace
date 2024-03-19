@@ -1,5 +1,5 @@
-import { type Product } from '@/types/products'
-import { type Item, type ShoppingCart } from '@/types/shoppingCart'
+import type { Product } from '@/types/products'
+import type { Item, ShoppingCart } from '@/types/shoppingCart'
 import { defineStore } from 'pinia'
 import { v4 as uuid } from 'uuid'
 
