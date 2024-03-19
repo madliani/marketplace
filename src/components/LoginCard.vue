@@ -60,7 +60,7 @@ import type { User } from '@/types/user'
 import { useUserStore } from '@/stores/user'
 
 type Form = Readonly<{
-  userId: number | null
+  userId: User['id'] | null
 }>
 
 const userStore = useUserStore()
@@ -76,7 +76,7 @@ const { handleReset, handleSubmit } = useForm<Form>({
     userId: null
   },
   validationSchema: {
-    userId(value: Readonly<number | null>) {
+    userId(value: Readonly<Form['userId']>) {
       const minValue = 1
       const maxValue = 100
 
@@ -93,7 +93,7 @@ const { handleReset, handleSubmit } = useForm<Form>({
   }
 })
 
-const userId = useField<User['id'] | null>('userId')
+const userId = useField<Form['userId']>('userId')
 
 const handleError = (msg: string) => {
   error.value = new Error(msg)
