@@ -1,6 +1,5 @@
 import type { Item, PurchaseOrder } from '@/types/purchaseOrder'
 import { defineStore } from 'pinia'
-import { v4 as uuid } from 'uuid'
 
 type Id = 'purchaseOrder'
 
@@ -31,7 +30,7 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
       const item: Readonly<Item> = {
         count,
         cost: product.price * count,
-        id: uuid(),
+        id: product.id,
         product
       }
 
