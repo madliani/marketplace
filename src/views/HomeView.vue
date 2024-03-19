@@ -12,9 +12,11 @@
 import LoginCard from '@/components/LoginCard.vue'
 import UserCard from '@/components/UserCard.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
+
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 
 const userStore = useUserStore()
+
 const { user } = storeToRefs(userStore)
 </script>
