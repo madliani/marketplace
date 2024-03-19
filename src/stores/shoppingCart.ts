@@ -1,5 +1,5 @@
-import type { Product } from '@/types/products'
-import type { Item, ShoppingCart } from '@/types/shoppingCart'
+import { type Product } from '@/types/products'
+import { type Item, type ShoppingCart } from '@/types/shoppingCart'
 import { defineStore } from 'pinia'
 import { v4 as uuid } from 'uuid'
 
@@ -12,9 +12,9 @@ type State = {
 type Getters = {}
 
 type Actions = Readonly<{
-  addItem: (product: Item['product']) => void
+  addItem: (product: Readonly<Item['product']>) => void
   clear: () => void
-  deleteItem: (id: Product['id']) => void
+  deleteItem: (id: Readonly<Product['id']>) => void
 }>
 
 /** Shopping cart default value. */
@@ -26,7 +26,7 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
   }),
   actions: {
     addItem(product) {
-      const item: Item = {
+      const item: Readonly<Item> = {
         id: uuid(),
         product
       }
