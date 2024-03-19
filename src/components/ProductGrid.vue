@@ -1,7 +1,7 @@
 <template>
-  <v-container v-if="!loading && !error" fluid>
+  <v-container fluid v-if="!loading && !error">
     <v-row>
-      <v-col v-for="product in productList" :key="product.id">
+      <v-col :key="product.id" v-for="product in productList">
         <ProductCard :product="product" />
       </v-col>
     </v-row>
@@ -22,19 +22,22 @@ import { gotoMarketplace } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductListStore } from '@/stores/productList'
 import { Routes } from '@/types/routes'
+
 import { storeToRefs } from 'pinia'
-import { onBeforeMount, ref, type Ref } from 'vue'
-import ErrorAlert from './ErrorAlert.vue'
-import ProductCard from './ProductCard.vue'
-import ProgressCircular from './ProgressCircular.vue'
+import { onBeforeMount, ref } from 'vue'
+
+import ErrorAlert from '@/components/ErrorAlert.vue'
+import ProductCard from '@/components/ProductCard.vue'
+import ProgressCircular from '@/components/ProgressCircular.vue'
 
 const productListStore = useProductListStore()
+
 const { productList, loading } = storeToRefs(productListStore)
 const { fetchProducts } = productListStore
 
 const { selectItem } = useNavigationDrawerStore()
 
-const error: Ref<Error | null> = ref(null)
+const error = ref<Error | null>(null)
 
 const handleClose = () => {
   selectItem(Routes.HOME, gotoMarketplace)
