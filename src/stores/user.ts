@@ -10,7 +10,9 @@ type State = {
   loading: boolean
 }
 
-type Getters = {}
+type Getters = Readonly<{
+  username: (state: Readonly<State>) => string | null
+}>
 
 type Actions = Readonly<{
   clear: () => void
@@ -82,6 +84,11 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
       } finally {
         this.loading = false
       }
+    }
+  },
+  getters: {
+    username(state) {
+      return state.user ? `${state.user.firstName} ${state.user.lastName}` : null
     }
   },
   persist: true
