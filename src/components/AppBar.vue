@@ -36,8 +36,18 @@
 
   <v-navigation-drawer v-model="drawer">
     <v-list nav>
-      <v-list-item @click="gotoMarketplace" prepend-icon="mdi-home-city" title="Home" />
-      <v-list-item @click="gotoProductsPage" prepend-icon="mdi-shopping" title="Products" />
+      <v-list-item
+        :active="selectedItem === Routes.HOME"
+        @click="handleHomepageClick"
+        prepend-icon="mdi-home-city"
+        title="Home"
+      />
+      <v-list-item
+        :active="selectedItem === Routes.PRODUCTS"
+        @click="handleMarketplaceClick"
+        prepend-icon="mdi-shopping"
+        title="Products"
+      />
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -45,15 +55,34 @@
 <script lang="ts" setup>
 import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
 import { gotoMarketplace, gotoProductsPage } from '@/router/router'
+
+import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useUserStore } from '@/stores/user'
+import { Routes } from '@/types/routes'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
 const userStore = useUserStore()
+
 const { user, username } = storeToRefs(userStore)
 const { clear } = userStore
 
+const navigationDrawerStore = useNavigationDrawerStore()
+
+const { selectedItem } = storeToRefs(navigationDrawerStore)
+const { selectItem } = navigationDrawerStore
+
 const drawer = ref(true)
 
-const draw = () => (drawer.value = !drawer.value)
+const handleHomepageClick = () => {
+  selectItem(Routes.HOME, gotoMarketplace)
+}
+
+const handleMarketplaceClick = () => {
+  selectItem(Routes.PRODUCTS, gotoProductsPage)
+}
+
+const draw = () => {
+  drawer.value = !drawer.value
+}
 </script>
