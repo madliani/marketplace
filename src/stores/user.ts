@@ -1,4 +1,4 @@
-import { type BackendUser, type User } from '@/types/user'
+import type { BackendUser, User } from '@/types/user'
 import { defineStore } from 'pinia'
 
 type ErrorHandler = (msg: Readonly<string>) => void
