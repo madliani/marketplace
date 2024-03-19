@@ -1,7 +1,7 @@
 import type { BackendProduct, BackendProducts, Product, Products } from '@/types/products'
 import { defineStore } from 'pinia'
 
-type ErrorHandler = (msg: string) => void
+type ErrorHandler = (msg: Readonly<string>) => void
 
 type Id = 'productList'
 
@@ -18,10 +18,11 @@ type Actions = Readonly<{
 }>
 
 /** Backend product images validating. */
-const isValidImages = (images: string[]) => images.every((image) => typeof image === 'string')
+const isValidImages = (images: Readonly<string[]>) =>
+  images.every((image) => typeof image === 'string')
 
 /** Backend products validating. */
-const isValidProducts = (products: BackendProduct[]) =>
+const isValidProducts = (products: Readonly<BackendProduct[]>) =>
   typeof products === 'object' &&
   products.every(
     (product) =>
@@ -46,11 +47,11 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
       try {
         this.loading = true
 
-        const productsResponse = await fetch(`https://dummyjson.com/products`)
-        const productsJson = await productsResponse.json()
+        const productResponse = await fetch(`https://dummyjson.com/products`)
+        const productJson = await productResponse.json()
 
-        if (productsJson) {
-          const products = productsJson as unknown as BackendProducts
+        if (productJson) {
+          const products = productJson as unknown as BackendProducts
 
           if (isValidProducts(products.products)) {
             const productList = products.products.map<Product>((product) => ({
