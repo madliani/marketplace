@@ -70,7 +70,7 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
               avatar: user.image,
               balance: getRandomNumber(0, 1_000),
               firstName: user.firstName,
-              id: user.id.toString(),
+              id: user.id,
               lastName: user.lastName
             }
           }

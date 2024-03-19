@@ -9,6 +9,6 @@ export type User = {
   avatar: string
   balance: number
   firstName: string
-  id: string
+  id: number
   lastName: string
 }

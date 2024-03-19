@@ -5,7 +5,6 @@
         <v-card-title class="text-center" title="Authorization">Authorization</v-card-title>
 
         <v-text-field
-          :counter="10"
           :error-messages="userId.errorMessage.value"
           class="mb-2"
           clearable
@@ -43,37 +42,43 @@
   <ErrorAlert
     :on-close="handleClose"
     :text="error.message"
-    title="Authorization failed"
+    title="Authorization failed!"
     v-if="error"
   />
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
-import { ref, type Ref } from 'vue'
-import ErrorAlert from './ErrorAlert.vue'
-import ProgressCircular from './ProgressCircular.vue'
+import { ref } from 'vue'
+
+import { useUserStore } from '@/stores/user'
+
+import ErrorAlert from '@/components/ErrorAlert.vue'
+import ProgressCircular from '@/components/ProgressCircular.vue'
+
+type Form = Readonly<{
+  userId: number
+}>
 
 const userStore = useUserStore()
+
 const { loading } = storeToRefs(userStore)
 const { fetchUser } = userStore
 
 const isDisabled = ref(true)
-const error: Ref<Error | null> = ref(null)
+const error = ref<Error | null>(null)
 
-const { handleReset, handleSubmit } = useForm({
+const { handleReset, handleSubmit } = useForm<Form>({
   initialValues: {
-    userId: ''
+    userId: 0
   },
   validationSchema: {
-    userId(value: string) {
-      const id = parseInt(value)
+    userId(value: Readonly<number>) {
       const minValue = 1
       const maxValue = 100
 
-      if (!Number.isNaN(id) && id >= minValue && id <= maxValue) {
+      if (!Number.isNaN(value) && value >= minValue && value <= maxValue) {
         isDisabled.value = false
 
         return true
@@ -86,10 +91,15 @@ const { handleReset, handleSubmit } = useForm({
   }
 })
 
-const userId = useField('userId')
+const userId = useField<number>('userId')
 
-const handleError = (msg: string) => (error.value = new Error(msg))
-const handleClose = () => (error.value = null)
+const handleError = (msg: string) => {
+  error.value = new Error(msg)
+}
+
+const handleClose = () => {
+  error.value = null
+}
 
 const submit = handleSubmit(async (values) => {
   const { userId: id } = values
