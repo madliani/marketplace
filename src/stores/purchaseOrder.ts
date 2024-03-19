@@ -1,5 +1,6 @@
-import type { Item, PurchaseOrder } from '@/types/purchaseOrder'
 import { defineStore } from 'pinia'
+
+import type { Item, PurchaseOrder } from '@/types/purchaseOrder'
 
 type Id = 'purchaseOrder'
 
