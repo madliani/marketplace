@@ -1,7 +1,11 @@
-import { Routes } from '@/types/routes'
+import type { RouteRecordRaw, RouterHistory, RouterOptions } from 'vue-router'
+
+import { createRouter, createWebHistory } from 'vue-router'
+
 import HomeView from '@/views/HomeView.vue'
 import ProductsView from '@/views/ProductsView.vue'
-import { createRouter, createWebHistory, type RouteRecordRaw, type RouterHistory } from 'vue-router'
+
+import { Routes } from '@/types/routes'
 
 const history: Readonly<RouterHistory> = createWebHistory(import.meta.env.BASE_URL)
 
@@ -18,10 +22,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
   }
 ]
 
-const router = createRouter({
+const options: Readonly<RouterOptions> = {
   history,
   routes
-})
+}
+
+const router = createRouter(options)
 
 const goto = (path: Readonly<Routes>) => () => router.push(path)
 
