@@ -1,4 +1,4 @@
-import type { Product } from '@/types/products'
+import { type Product } from '@/types/products'
 
 /**
  * Purchase order item.
