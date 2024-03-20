@@ -64,7 +64,7 @@ const { handleSubmit } = useForm<Form>({
   },
   validationSchema: {
     userBalance(value: Readonly<Form['userBalance']>) {
-      const balance = parseFloat(value)
+      const balance = Number(value)
 
       if (!Number.isNaN(balance)) {
         isDisabled.value = false
