@@ -1,6 +1,6 @@
 <template>
   <v-card variant="elevated">
-    <v-img :src="product.thumbnail" :title="product.title" cover height="200px" width="100%" />
+    <v-img :src="product.thumbnail" :title="product.title" cover height="25vh" />
 
     <v-card-title :title="product.title">{{ product.title }}</v-card-title>
 
@@ -32,3 +32,17 @@ const handleCardClick = () => {
   gotoProductPage(product.id)
 }
 </script>
+
+<style scoped>
+.v-card,
+.v-image {
+  width: 25vw;
+}
+
+@media only screen and (width <= 360px) {
+  .v-card,
+  .v-image {
+    width: 100%;
+  }
+}
+</style>
