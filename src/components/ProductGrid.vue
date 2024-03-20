@@ -39,12 +39,12 @@ const { selectItem } = useNavigationDrawerStore()
 
 const error = ref<Error | null>(null)
 
-const handleClose = () => {
-  selectItem(Routes.HOME, gotoMarketplace)
-}
-
 const handleError = (msg: string) => {
   error.value = new Error(msg)
+}
+
+const handleClose = () => {
+  selectItem(Routes.HOME, gotoMarketplace)
 }
 
 onBeforeMount(async () => {
