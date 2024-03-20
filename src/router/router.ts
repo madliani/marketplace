@@ -4,6 +4,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeView from '@/views/HomeView.vue'
 import ProductsView from '@/views/ProductsView.vue'
+import ProductView from '@/views/ProductView.vue'
+
+import type { Product } from '@/types/products'
 
 import { Routes } from '@/types/routes'
 
@@ -19,6 +22,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
     component: ProductsView,
     name: 'products',
     path: Routes.PRODUCTS
+  },
+  {
+    component: ProductView,
+    name: 'product',
+    path: `${Routes.PRODUCTS}/:id`,
+    props: true
   }
 ]
 
@@ -33,5 +42,9 @@ const goto = (path: Readonly<Routes>) => () => router.push(path)
 
 export const gotoMarketplace = goto(Routes.HOME)
 export const gotoProductsPage = goto(Routes.PRODUCTS)
+
+export const gotoProductPage = (id: Product['id']) => {
+  router.push(`${Routes.PRODUCTS}/${id}`)
+}
 
 export default router

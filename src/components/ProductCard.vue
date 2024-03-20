@@ -10,6 +10,9 @@
 
     <v-card-actions>
       <v-btn color="primary" title="Buy" variant="tonal">Buy</v-btn>
+      <v-btn @click="handleCardClick" color="secondary" title="Details" variant="tonal"
+        >Details</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
@@ -17,9 +20,15 @@
 <script lang="ts" setup>
 import type { Product } from '@/types/products'
 
+import { gotoProductPage } from '@/router/router'
+
 type Props = Readonly<{
   product: Product
 }>
 
-defineProps<Props>()
+const { product } = defineProps<Props>()
+
+const handleCardClick = () => {
+  gotoProductPage(product.id)
+}
 </script>
