@@ -15,14 +15,7 @@
     <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
 
     <template v-if="user && username" v-slot:append>
-      <v-avatar size="32px">
-        <v-img
-          :src="user.avatar"
-          :title="username"
-          alt="User avatar"
-          class="d-none d-sm-inline-block"
-        />
-      </v-avatar>
+      <v-avatar :image="user.avatar" :title="username" alt="User avatar" size="32px" />
 
       <span :title="username" class="d-none d-sm-inline mx-2">{{ username }}</span>
 
