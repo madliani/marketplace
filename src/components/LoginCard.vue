@@ -55,12 +55,10 @@ import { ref } from 'vue'
 import AlertError from '@/components/AlertError.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 
-import type { User } from '@/types/user'
-
 import { useUserStore } from '@/stores/user'
 
 type Form = Readonly<{
-  userId: User['id'] | null
+  userId: string
 }>
 
 const userStore = useUserStore()
@@ -74,14 +72,15 @@ const error = ref<Error | null>(null)
 
 const { handleReset, handleSubmit } = useForm<Form>({
   initialValues: {
-    userId: null
+    userId: ''
   },
   validationSchema: {
     userId(value: Readonly<Form['userId']>) {
+      const id = parseInt(value)
       const minValue = 1
       const maxValue = 100
 
-      if (value && !Number.isNaN(value) && value >= minValue && value <= maxValue) {
+      if (!Number.isNaN(id) && id >= minValue && id <= maxValue) {
         isDisabled.value = false
 
         return true
@@ -105,13 +104,11 @@ const handleClose = () => {
 }
 
 const submit = handleSubmit(async (values) => {
-  const { userId: id } = values
+  const id = parseInt(values.userId)
 
-  if (id) {
-    await fetchUser(id, handleError)
+  await fetchUser(id, handleError)
 
-    handleReset()
-  }
+  handleReset()
 })
 </script>
 
