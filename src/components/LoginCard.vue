@@ -116,12 +116,12 @@ const submit = handleSubmit(async (values) => {
 
 <style scoped>
 .v-card {
-  width: 50%;
+  width: 50vw;
 }
 
 @media only screen and (width <= 360px) {
   .v-card {
-    width: 75%;
+    width: 75vw;
   }
 }
 </style>
