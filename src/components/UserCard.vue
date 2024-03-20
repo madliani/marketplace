@@ -1,7 +1,7 @@
 <template>
   <v-card class="d-flex align-center justify-content" v-if="user && username" variant="elevated">
     <v-card-item class="v-card__item-avatar">
-      <v-img :src="user.avatar" :title="username" alt="User avatar" height="128px" width="128px" />
+      <v-avatar :image="user.avatar" :title="username" alt="User avatar" size="128px" />
     </v-card-item>
     <v-card-item class="v-card__item-info">
       <form @submit.prevent="submit">
