@@ -48,7 +48,7 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
       try {
         this.loading = true
 
-        const productResponse = await fetch(`https://dummyjson.com/products`)
+        const productResponse = await fetch('https://dummyjson.com/products')
         const productJson = await productResponse.json()
 
         if (productJson) {
