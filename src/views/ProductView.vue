@@ -45,7 +45,7 @@ import type { Product } from '@/types/products'
 import { gotoMarketplace } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductStore } from '@/stores/product'
-import { Routes } from '@/types/routes'
+import { Route } from '@/types/route'
 
 type Props = Readonly<{
   id: Product['id']
@@ -67,7 +67,7 @@ const handleError = (msg: string) => {
 }
 
 const handleClose = () => {
-  selectItem(Routes.HOME, gotoMarketplace)
+  selectItem(Route.HOME, gotoMarketplace)
 }
 
 onBeforeMount(async () => {

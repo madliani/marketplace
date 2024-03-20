@@ -28,7 +28,7 @@ import ProgressCircular from '@/components/ProgressCircular.vue'
 import { gotoMarketplace } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductListStore } from '@/stores/productList'
-import { Routes } from '@/types/routes'
+import { Route } from '@/types/route'
 
 const productListStore = useProductListStore()
 
@@ -44,7 +44,7 @@ const handleError = (msg: string) => {
 }
 
 const handleClose = () => {
-  selectItem(Routes.HOME, gotoMarketplace)
+  selectItem(Route.HOME, gotoMarketplace)
 }
 
 onBeforeMount(async () => {

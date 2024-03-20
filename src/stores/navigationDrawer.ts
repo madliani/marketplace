@@ -1,24 +1,24 @@
 import { defineStore } from 'pinia'
 
-import { Routes } from '@/types/routes'
+import { Route } from '@/types/route'
 
 type GoToHandler = () => void
 
 type Id = 'navigationDrawer'
 
 type State = {
-  selectedItem: Routes
+  selectedItem: Route
 }
 
 type Getters = {}
 
 type Actions = {
-  selectItem: (item: Readonly<Routes>, goto: GoToHandler) => void
+  selectItem: (item: Readonly<Route>, goto: GoToHandler) => void
   clear: () => void
 }
 
 /** Navigation drawer store default value. */
-const selectedItem: Readonly<Routes> = Routes.HOME
+const selectedItem: Readonly<Route> = Route.HOME
 
 export const useNavigationDrawerStore = defineStore<Id, State, Getters, Actions>(
   'navigationDrawer',

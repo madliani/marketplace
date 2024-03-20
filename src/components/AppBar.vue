@@ -30,13 +30,13 @@
   <v-navigation-drawer v-model="drawer">
     <v-list nav>
       <v-list-item
-        :active="selectedItem === Routes.HOME"
+        :active="selectedItem === Route.HOME"
         @click="handleHomepageClick"
         prepend-icon="mdi-home-city"
         title="Home"
       />
       <v-list-item
-        :active="selectedItem === Routes.PRODUCTS"
+        :active="selectedItem === Route.PRODUCTS"
         @click="handleMarketplaceClick"
         prepend-icon="mdi-shopping"
         title="Products"
@@ -54,7 +54,7 @@ import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
 import { gotoMarketplace, gotoProductsPage } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useUserStore } from '@/stores/user'
-import { Routes } from '@/types/routes'
+import { Route } from '@/types/route'
 
 const userStore = useUserStore()
 
@@ -69,11 +69,11 @@ const { selectItem } = navigationDrawerStore
 const drawer = ref(true)
 
 const handleHomepageClick = () => {
-  selectItem(Routes.HOME, gotoMarketplace)
+  selectItem(Route.HOME, gotoMarketplace)
 }
 
 const handleMarketplaceClick = () => {
-  selectItem(Routes.PRODUCTS, gotoProductsPage)
+  selectItem(Route.PRODUCTS, gotoProductsPage)
 }
 
 const draw = () => {
