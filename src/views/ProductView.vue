@@ -42,11 +42,10 @@
 import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref } from 'vue'
 
-import MainLayout from '@/layouts/MainLayout.vue'
-
 import CarouselCycle from '@/components/CarouselCycle.vue'
 import ErrorAlert from '@/components/ErrorAlert.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
 
 import type { Product } from '@/types/products'
 
