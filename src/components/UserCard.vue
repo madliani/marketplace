@@ -5,7 +5,7 @@
     </v-card-item>
     <v-card-item class="v-card__item-info">
       <form @submit.prevent="submit">
-        <span :title="username" class="d-block mb-4">{{ username }}</span>
+        <v-card-title :title="username" class="text-center mb-2">{{ username }}</v-card-title>
 
         <v-text-field
           :error-messages="userBalance.errorMessage.value"

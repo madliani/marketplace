@@ -2,7 +2,7 @@
   <v-card v-if="!loading && !error" variant="elevated">
     <v-card-item>
       <form @submit.prevent="submit">
-        <v-card-title class="text-center" title="Authorization">Authorization</v-card-title>
+        <v-card-title class="text-center mb-2" title="Authorization">Authorization</v-card-title>
 
         <v-text-field
           :error-messages="userId.errorMessage.value"
