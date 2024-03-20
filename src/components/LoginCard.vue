@@ -76,7 +76,7 @@ const { handleReset, handleSubmit } = useForm<Form>({
   },
   validationSchema: {
     userId(value: Readonly<Form['userId']>) {
-      const id = parseInt(value)
+      const id = Number(value)
       const minValue = 1
       const maxValue = 100
 
