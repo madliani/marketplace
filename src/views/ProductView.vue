@@ -21,7 +21,7 @@
 
       <ProgressCircular v-if="loading && !error" />
 
-      <ErrorAlert
+      <AlertError
         :on-close="handleClose"
         :text="error.message"
         title="Connection error!"
@@ -35,8 +35,8 @@
 import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref } from 'vue'
 
+import AlertError from '@/components/AlertError.vue'
 import CarouselCycle from '@/components/CarouselCycle.vue'
-import ErrorAlert from '@/components/ErrorAlert.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 

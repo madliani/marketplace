@@ -39,7 +39,7 @@
 
   <ProgressCircular v-if="loading" />
 
-  <ErrorAlert
+  <AlertError
     :on-close="handleClose"
     :text="error.message"
     title="Authorization failed!"
@@ -52,7 +52,7 @@ import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import { ref } from 'vue'
 
-import ErrorAlert from '@/components/ErrorAlert.vue'
+import AlertError from '@/components/AlertError.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 
 import type { User } from '@/types/user'
