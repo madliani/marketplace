@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex align-center justify-content" v-if="user && username" variant="elevated">
+  <v-card v-if="user && username" variant="elevated">
     <v-card-item class="v-card__item-avatar">
       <v-avatar :image="user.avatar" :title="username" alt="User avatar" size="128px" />
     </v-card-item>
@@ -79,9 +79,12 @@ const submit = handleSubmit((values) => {
 
 <style scoped>
 .v-card {
+  display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
-  width: 50%;
+  width: 50vw;
 }
 
 .v-card__item-avatar {
@@ -96,7 +99,7 @@ const submit = handleSubmit((values) => {
   .v-card {
     flex-direction: column;
 
-    width: 75%;
+    width: 75vw;
   }
 
   .v-card__item-avatar {
