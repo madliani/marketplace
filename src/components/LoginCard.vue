@@ -37,13 +37,13 @@
     </v-card-item>
   </v-card>
 
-  <ProgressCircular v-if="loading" />
+  <ProgressCircular v-if="loading && !error" />
 
   <AlertError
     :on-close="handleClose"
     :text="error.message"
     title="Authorization failed!"
-    v-if="error"
+    v-if="error && !loading"
   />
 </template>
 
@@ -69,6 +69,7 @@ const { loading } = storeToRefs(userStore)
 const { fetchUser } = userStore
 
 const isDisabled = ref(true)
+
 const error = ref<Error | null>(null)
 
 const { handleReset, handleSubmit } = useForm<Form>({
