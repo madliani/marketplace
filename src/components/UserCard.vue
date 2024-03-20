@@ -17,9 +17,21 @@
         />
 
         <v-card-actions>
-          <v-btn color="primary" type="submit" title="Update" variant="elevated">Update</v-btn>
+          <v-btn
+            :disabled="isDisabled"
+            color="primary"
+            type="submit"
+            title="Update"
+            variant="elevated"
+            >Update</v-btn
+          >
 
-          <v-btn @click="handleReset" color="secondary" title="Reset" variant="elevated"
+          <v-btn
+            :disabled="isDisabled"
+            @click="handleReset"
+            color="secondary"
+            title="Reset"
+            variant="elevated"
             >Reset</v-btn
           >
         </v-card-actions>
@@ -32,12 +44,11 @@
 import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 
-import type { User } from '@/types/user'
-
 import { useUserStore } from '@/stores/user'
+import { ref } from 'vue'
 
 type Form = Readonly<{
-  userBalance: User['balance'] | null
+  userBalance: string
 }>
 
 const userStore = useUserStore()
@@ -45,15 +56,23 @@ const userStore = useUserStore()
 const { user, username } = storeToRefs(userStore)
 const { updateBalance } = userStore
 
+const isDisabled = ref(false)
+
 const { handleSubmit } = useForm<Form>({
   initialValues: {
-    userBalance: user.value?.balance
+    userBalance: user.value?.balance.toString() ?? ''
   },
   validationSchema: {
     userBalance(value: Readonly<Form['userBalance']>) {
-      if (!Number.isNaN(value)) {
+      const balance = parseFloat(value)
+
+      if (!Number.isNaN(balance)) {
+        isDisabled.value = false
+
         return true
       }
+
+      isDisabled.value = true
 
       return 'The user balance must be a floating-point number.'
     }
@@ -64,16 +83,14 @@ const userBalance = useField<Form['userBalance']>('userBalance')
 
 const handleReset = () => {
   if (user.value) {
-    userBalance.value.value = user.value.balance
+    userBalance.value.value = user.value.balance.toString()
   }
 }
 
 const submit = handleSubmit((values) => {
-  const { userBalance: balance } = values
+  const balance = parseFloat(values.userBalance)
 
-  if (balance) {
-    updateBalance(balance)
-  }
+  updateBalance(balance)
 })
 </script>
 
