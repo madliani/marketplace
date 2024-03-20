@@ -2,14 +2,7 @@
   <MainLayout>
     <template #content>
       <v-card class="h-80 w-75" v-if="product && !loading && !error" variant="elevated">
-        <CarouselCycle
-          :images="product.images"
-          :title="product.title"
-          cycle
-          height="350px"
-          hide-delimiter-background
-          show-arrows="hover"
-        />
+        <CarouselCycle :images="product.images" :title="product.title" height="350px" />
 
         <v-card-title :title="product.title">{{ product.title }}</v-card-title>
 
