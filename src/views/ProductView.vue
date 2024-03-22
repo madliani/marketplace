@@ -15,7 +15,13 @@
         </v-card-item>
 
         <v-card-actions>
-          <v-btn color="primary" title="Buy" variant="tonal">Buy</v-btn>
+          <v-btn
+            :title="getTitleByStatus(product.status)"
+            @click="handleBuyClick"
+            color="primary"
+            variant="tonal"
+            >{{ getTitleByStatus(product.status) }}</v-btn
+          >
         </v-card-actions>
       </v-card>
 
@@ -40,11 +46,12 @@ import CarouselCycle from '@/components/CarouselCycle.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 
-import type { Product } from '@/types/products'
+import { Status, type Product } from '@/types/products'
 
 import { gotoMarketplace } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductStore } from '@/stores/product'
+import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { Route } from '@/types/route'
 
 type Props = Readonly<{
@@ -55,12 +62,20 @@ const { id } = defineProps<Props>()
 
 const productStore = useProductStore()
 
-const { loading, product } = storeToRefs(productStore)
-const { fetchProduct } = productStore
+const { product } = storeToRefs(productStore)
+const { getProduct } = productStore
 
 const { selectItem } = useNavigationDrawerStore()
 
+const { addItem, deleteItem } = useShoppingCartStore()
+
+const loading = ref(false)
+
 const error = ref<Error | null>(null)
+
+const changeLoading = () => {
+  loading.value = !loading.value
+}
 
 const handleError = (msg: string) => {
   error.value = new Error(msg)
@@ -70,7 +85,48 @@ const handleClose = () => {
   selectItem(Route.HOME, gotoMarketplace)
 }
 
+const handleBuyClick = () => {
+  if (product.value) {
+    switch (product.value.status) {
+      case Status.FREE: {
+        addItem(product.value.id)
+
+        return
+      }
+      case Status.IN_CART: {
+        deleteItem(product.value.id)
+
+        return
+      }
+      case Status.ORDERED: {
+        return
+      }
+      case Status.PURCHASED: {
+        return
+      }
+    }
+  }
+}
+
+/** Getting button title by product status. */
+const getTitleByStatus = (status: Readonly<Status>) => {
+  switch (status) {
+    case Status.FREE: {
+      return 'Buy'
+    }
+    case Status.IN_CART: {
+      return 'In cart'
+    }
+    case Status.ORDERED: {
+      return 'Ordered'
+    }
+    case Status.PURCHASED: {
+      return 'Purchased'
+    }
+  }
+}
+
 onBeforeMount(async () => {
-  await fetchProduct(id, handleError)
+  await getProduct(id, handleError, changeLoading)
 })
 </script>

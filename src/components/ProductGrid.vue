@@ -32,12 +32,18 @@ import { Route } from '@/types/route'
 
 const productListStore = useProductListStore()
 
-const { productList, loading } = storeToRefs(productListStore)
-const { fetchProducts } = productListStore
+const { productList } = storeToRefs(productListStore)
+const { getProducts } = productListStore
 
 const { selectItem } = useNavigationDrawerStore()
 
+const loading = ref(false)
+
 const error = ref<Error | null>(null)
+
+const changeLoading = () => {
+  loading.value = !loading.value
+}
 
 const handleError = (msg: string) => {
   error.value = new Error(msg)
@@ -48,6 +54,6 @@ const handleClose = () => {
 }
 
 onBeforeMount(async () => {
-  await fetchProducts(handleError)
+  await getProducts(handleError, changeLoading)
 })
 </script>

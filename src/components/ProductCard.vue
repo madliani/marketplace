@@ -9,7 +9,13 @@
     >
 
     <v-card-actions>
-      <v-btn color="primary" title="Buy" variant="tonal">Buy</v-btn>
+      <v-btn
+        :title="getTitleByStatus(product.status)"
+        @click="handleBuyClick"
+        color="primary"
+        variant="tonal"
+        >{{ getTitleByStatus(product.status) }}</v-btn
+      >
       <v-btn @click="handleCardClick" color="secondary" title="Details" variant="tonal"
         >Details</v-btn
       >
@@ -18,9 +24,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { Product } from '@/types/products'
+import { Status, type Product } from '@/types/products'
 
 import { gotoProductPage } from '@/router/router'
+import { useShoppingCartStore } from '@/stores/shoppingCart'
 
 type Props = Readonly<{
   product: Product
@@ -28,8 +35,49 @@ type Props = Readonly<{
 
 const { product } = defineProps<Props>()
 
+const { addItem, deleteItem } = useShoppingCartStore()
+
 const handleCardClick = () => {
   gotoProductPage(product.id)
+}
+
+const handleBuyClick = () => {
+  switch (product.status) {
+    case Status.FREE: {
+      addItem(product.id)
+
+      return
+    }
+    case Status.IN_CART: {
+      deleteItem(product.id)
+
+      return
+    }
+    case Status.ORDERED: {
+      return
+    }
+    case Status.PURCHASED: {
+      return
+    }
+  }
+}
+
+/** Getting button title by product status. */
+const getTitleByStatus = (status: Readonly<Status>) => {
+  switch (status) {
+    case Status.FREE: {
+      return 'Buy'
+    }
+    case Status.IN_CART: {
+      return 'In cart'
+    }
+    case Status.ORDERED: {
+      return 'Ordered'
+    }
+    case Status.PURCHASED: {
+      return 'Purchased'
+    }
+  }
 }
 </script>
 

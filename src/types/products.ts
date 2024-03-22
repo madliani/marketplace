@@ -1,3 +1,11 @@
+/** Product status. */
+export const enum Status {
+  FREE,
+  IN_CART,
+  ORDERED,
+  PURCHASED
+}
+
 export type BackendProduct = {
   description: string
   id: number
@@ -16,6 +24,7 @@ export type Product = {
   id: string
   images: string[]
   price: number
+  status: Status
   thumbnail: string
   title: string
 }

@@ -1,8 +1,12 @@
 import { defineStore } from 'pinia'
 
-import type { BackendProduct, BackendProducts, Product, Products } from '@/types/products'
+import type { BackendProduct, BackendProducts, Products } from '@/types/products'
+
+import { Status } from '@/types/products'
+import { useShoppingCartStore } from './shoppingCart'
 
 type ErrorHandler = (msg: Readonly<string>) => void
+type LoadingChanger = () => void
 
 type Id = 'productList'
 
@@ -14,12 +18,13 @@ type State = {
 type Getters = {}
 
 type Actions = {
-  fetchProducts: (onError: ErrorHandler) => Promise<void> | never
   clear: () => void
+  getProducts: (onError: ErrorHandler, changeLoading: LoadingChanger) => Promise<void> | never
+  updateProducts: (products: Products) => void
 }
 
 /** Backend product images validating. */
-const isValidImages = (images: Readonly<string[]>) =>
+const isValidImages = (images: Readonly<BackendProduct['images']>) =>
   images.every((image) => typeof image === 'string')
 
 /** Backend products validating. */
@@ -35,6 +40,44 @@ const isValidProducts = (products: Readonly<BackendProduct[]>) =>
       isValidImages(product.images)
   )
 
+/** Fetching products. */
+const fetchProducts = async (): Promise<Products> | never => {
+  const productResponse = await fetch('https://dummyjson.com/products')
+  const productJson = await productResponse.json()
+
+  const products = productJson as unknown as BackendProducts
+
+  if (!isValidProducts(products.products)) {
+    throw new Error('Products are not valid.')
+  }
+
+  return products.products.map((product) => ({
+    description: product.description,
+    id: product.id.toString(),
+    images: product.images,
+    price: product.price,
+    status: Status.FREE,
+    thumbnail: product.thumbnail,
+    title: product.title
+  }))
+}
+
+/** Injecting statuses into products. */
+const injectStatus = (products: Products) => {
+  const { shoppingCart } = useShoppingCartStore()
+
+  return products.map((product) => {
+    if (shoppingCart.find((item) => item.id === product.id)) {
+      return {
+        ...product,
+        status: Status.IN_CART
+      }
+    }
+
+    return product
+  })
+}
+
 /** Product list store default value. */
 const productList: Products = []
 
@@ -44,29 +87,16 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
     loading: false
   }),
   actions: {
-    async fetchProducts(onError) {
+    clear() {
+      this.productList = productList
+    },
+    async getProducts(onError, changeLoading) {
       try {
-        this.loading = true
+        changeLoading()
 
-        const productResponse = await fetch('https://dummyjson.com/products')
-        const productJson = await productResponse.json()
+        const products = await fetchProducts()
 
-        if (productJson) {
-          const products = productJson as unknown as BackendProducts
-
-          if (isValidProducts(products.products)) {
-            const productList = products.products.map<Product>((product) => ({
-              description: product.description,
-              id: product.id.toString(),
-              images: product.images,
-              price: product.price,
-              thumbnail: product.thumbnail,
-              title: product.title
-            }))
-
-            this.productList = productList
-          }
-        }
+        this.productList = injectStatus(products)
       } catch (exception: unknown) {
         this.productList = productList
 
@@ -74,11 +104,11 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
 
         console.error(exception)
       } finally {
-        this.loading = false
+        changeLoading()
       }
     },
-    clear() {
-      this.productList = productList
+    updateProducts(products) {
+      this.productList = products
     }
   },
   persist: true
