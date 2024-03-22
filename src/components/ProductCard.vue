@@ -1,6 +1,6 @@
 <template>
   <v-card variant="elevated">
-    <v-img :src="product.thumbnail" :title="product.title" cover height="25vh" />
+    <v-img :src="product.thumbnail" :title="product.title" cover />
 
     <v-card-title :title="product.title">{{ product.title }}</v-card-title>
 
@@ -84,7 +84,7 @@ const getTitleByStatus = (status: Readonly<Status>) => {
 <style scoped>
 .v-card,
 .v-image {
-  width: 25vw;
+  width: 20vw;
 }
 
 @media only screen and (width <= 360px) {

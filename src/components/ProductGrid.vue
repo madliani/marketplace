@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid v-if="!loading && !error">
+  <v-container v-if="!loading && !error">
     <v-row>
       <v-col :key="product.id" v-for="product in productList">
         <ProductCard :product="product" />
