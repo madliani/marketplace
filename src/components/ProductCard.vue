@@ -1,6 +1,6 @@
 <template>
   <v-card variant="elevated">
-    <v-img :src="product.thumbnail" :title="product.title" cover />
+    <v-img :src="product.thumbnail" :title="product.title" cover max-height="200px" />
 
     <v-card-title :title="product.title">{{ product.title }}</v-card-title>
 
