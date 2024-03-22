@@ -43,9 +43,9 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
+import { ref } from 'vue'
 
 import { useUserStore } from '@/stores/user'
-import { ref } from 'vue'
 
 type Form = Readonly<{
   userBalance: string

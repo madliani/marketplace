@@ -24,7 +24,9 @@
 </template>
 
 <script lang="ts" setup>
-import { Status, type Product } from '@/types/products'
+import type { Product } from '@/types/products'
+
+import { Status } from '@/types/products'
 
 import { gotoProductPage } from '@/router/router'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
