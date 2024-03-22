@@ -26,10 +26,9 @@
 <script lang="ts" setup>
 import type { Product } from '@/types/products'
 
-import { Status } from '@/types/products'
-
 import { gotoProductPage } from '@/router/router'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
+import { Status } from '@/types/products'
 
 type Props = Readonly<{
   product: Product
