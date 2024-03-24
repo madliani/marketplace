@@ -1,7 +1,7 @@
 <template>
   <template v-if="shoppingCart.length">
     <v-list class="mx-4 mb-4">
-      <template :key="item.id" v-for="(item, index) in shoppingCart">
+      <template :key="item.id" v-for="item in shoppingCart">
         <v-list-item
           :prepend-avatar="item.product.thumbnail"
           :subtitle="item.product.description"
@@ -42,8 +42,10 @@
           </template>
         </v-list-item>
 
-        <v-divider v-if="index !== shoppingCart.length - 1" class="mb-2" />
+        <v-divider class="mb-2" />
       </template>
+
+      <v-list-item class="text-right">Total price: {{ totalPrice }} &dollar;</v-list-item>
     </v-list>
 
     <v-btn @click="handlePlaceClick" color="primary" title="Place an order" variant="elevated"
@@ -70,6 +72,8 @@ const { shoppingCart } = storeToRefs(shoppingCartStore)
 const { deleteItem, updateCount } = shoppingCartStore
 
 const { place } = usePurchaseOrderStore()
+
+const totalPrice = shoppingCart.value.reduce((price, item) => price + item.price, 0)
 
 const handleDeleteItem = (id: Readonly<CartItem['id']>) => {
   deleteItem(id)
