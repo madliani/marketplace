@@ -1,5 +1,8 @@
 import type { Product } from '@/types/products'
 
+/**
+ * Purchase order product.
+ */
 export type OrderProduct = Omit<Omit<Product, 'status'>, 'images'>
 
 /**
