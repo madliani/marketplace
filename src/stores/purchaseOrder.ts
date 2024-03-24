@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia'
 
-import type { Item, PurchaseOrder } from '@/types/purchaseOrder'
+import type { OrderUser, PurchaseOrder } from '@/types/purchaseOrder'
+
+import { useShoppingCartStore } from './shoppingCart'
+import { useUserStore } from './user'
 
 type Id = 'purchaseOrder'
 
@@ -11,15 +14,16 @@ type State = {
 type Getters = {}
 
 type Actions = {
-  addItem: (count: Readonly<Item['count']>, product: Readonly<Item['product']>) => void
   clear: () => void
-  deleteItem: (id: Readonly<Item['id']>) => void
+  place: () => void
 }
 
 /** Purchase order default value. */
 const purchaseOrder: Readonly<PurchaseOrder> = {
-  items: [],
-  totalCost: 0
+  departureDate: null,
+  shoppingCart: [],
+  totalCost: 0,
+  user: null
 }
 
 export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('purchaseOrder', {
@@ -27,32 +31,28 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
     purchaseOrder
   }),
   actions: {
-    addItem(count, product) {
-      const item: Readonly<Item> = {
-        count,
-        cost: product.price * count,
-        id: product.id,
-        product
-      }
-
-      const items = [...this.purchaseOrder.items, item]
-      const totalCost = items.reduce((cost, item) => cost + item.cost, 0)
-
-      this.purchaseOrder = { items, totalCost }
-    },
     clear() {
       this.purchaseOrder = purchaseOrder
     },
-    deleteItem(id) {
-      const target = this.purchaseOrder.items.find((item) => item.id === id)
+    place() {
+      const { shoppingCart, totalCost } = useShoppingCartStore()
 
-      if (target) {
-        const totalCost = this.purchaseOrder.totalCost - target.cost
-        const items = this.purchaseOrder.items.filter((item) => item.id !== id)
+      const { user } = useUserStore()
+
+      if (user) {
+        const departureDate = new Date()
+
+        const orderUser: Readonly<OrderUser> = {
+          firstName: user.firstName,
+          id: user.id,
+          lastName: user.lastName
+        }
 
         this.purchaseOrder = {
-          items,
-          totalCost
+          departureDate,
+          shoppingCart,
+          totalCost,
+          user: orderUser
         }
       }
     }

@@ -1,11 +1,18 @@
 import type { Product } from '@/types/products'
 
 /**
+ * Shopping cart product.
+ */
+export type CartProduct = Omit<Omit<Product, 'status'>, 'images'>
+
+/**
  * Shopping cart item.
  */
-export type Item = {
+export type CartItem = {
+  quantity: number
   id: string
-  product: Product
+  cost: Product['price']
+  product: CartProduct
 }
 
-export type ShoppingCart = Item[]
+export type ShoppingCart = CartItem[]

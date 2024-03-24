@@ -2,14 +2,7 @@
   <MainLayout>
     <template #content>
       <v-card class="h-80 w-75" v-if="product && !loading && !error" variant="elevated">
-        <CarouselCycle
-          :images="product.images"
-          :title="product.title"
-          cycle
-          height="350px"
-          hide-delimiter-background
-          show-arrows="hover"
-        />
+        <CarouselCycle :images="product.images" :title="product.title" height="350px" />
 
         <v-card-title :title="product.title">{{ product.title }}</v-card-title>
 
@@ -22,13 +15,19 @@
         </v-card-item>
 
         <v-card-actions>
-          <v-btn color="primary" title="Buy" variant="tonal">Buy</v-btn>
+          <v-btn
+            :title="getTitleByStatus(product.status)"
+            @click="handleBuyClick"
+            color="primary"
+            variant="tonal"
+            >{{ getTitleByStatus(product.status) }}</v-btn
+          >
         </v-card-actions>
       </v-card>
 
       <ProgressCircular v-if="loading && !error" />
 
-      <ErrorAlert
+      <AlertError
         :on-close="handleClose"
         :text="error.message"
         title="Connection error!"
@@ -42,17 +41,18 @@
 import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref } from 'vue'
 
+import AlertError from '@/components/AlertError.vue'
 import CarouselCycle from '@/components/CarouselCycle.vue'
-import ErrorAlert from '@/components/ErrorAlert.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 
-import type { Product } from '@/types/products'
+import { ProductStatus, type Product } from '@/types/products'
 
 import { gotoMarketplace } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductStore } from '@/stores/product'
-import { Routes } from '@/types/routes'
+import { useShoppingCartStore } from '@/stores/shoppingCart'
+import { Route } from '@/types/route'
 
 type Props = Readonly<{
   id: Product['id']
@@ -62,22 +62,71 @@ const { id } = defineProps<Props>()
 
 const productStore = useProductStore()
 
-const { loading, product } = storeToRefs(productStore)
-const { fetchProduct } = productStore
+const { product } = storeToRefs(productStore)
+const { getProduct } = productStore
 
 const { selectItem } = useNavigationDrawerStore()
 
+const { addItem, deleteItem } = useShoppingCartStore()
+
+const loading = ref(false)
+
 const error = ref<Error | null>(null)
+
+const changeLoading = () => {
+  loading.value = !loading.value
+}
 
 const handleError = (msg: string) => {
   error.value = new Error(msg)
 }
 
 const handleClose = () => {
-  selectItem(Routes.HOME, gotoMarketplace)
+  selectItem(Route.HOME, gotoMarketplace)
+}
+
+const handleBuyClick = () => {
+  if (product.value) {
+    switch (product.value.status) {
+      case ProductStatus.FREE: {
+        addItem(product.value.id)
+
+        return
+      }
+      case ProductStatus.IN_CART: {
+        deleteItem(product.value.id)
+
+        return
+      }
+      case ProductStatus.ORDERED: {
+        return
+      }
+      case ProductStatus.PURCHASED: {
+        return
+      }
+    }
+  }
+}
+
+/** Getting button title by product status. */
+const getTitleByStatus = (status: Readonly<ProductStatus>) => {
+  switch (status) {
+    case ProductStatus.FREE: {
+      return 'Buy'
+    }
+    case ProductStatus.IN_CART: {
+      return 'In cart'
+    }
+    case ProductStatus.ORDERED: {
+      return 'Ordered'
+    }
+    case ProductStatus.PURCHASED: {
+      return 'Purchased'
+    }
+  }
 }
 
 onBeforeMount(async () => {
-  await fetchProduct(id, handleError)
+  await getProduct(id, handleError, changeLoading)
 })
 </script>

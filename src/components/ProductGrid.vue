@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid v-if="!loading && !error">
+  <v-container v-if="!loading && !error">
     <v-row>
       <v-col :key="product.id" v-for="product in productList">
         <ProductCard :product="product" />
@@ -9,7 +9,7 @@
 
   <ProgressCircular v-if="loading" />
 
-  <ErrorAlert
+  <AlertError
     :on-close="handleClose"
     :text="error.message"
     title="Connection error!"
@@ -21,33 +21,39 @@
 import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref } from 'vue'
 
-import ErrorAlert from '@/components/ErrorAlert.vue'
+import AlertError from '@/components/AlertError.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 
 import { gotoMarketplace } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductListStore } from '@/stores/productList'
-import { Routes } from '@/types/routes'
+import { Route } from '@/types/route'
 
 const productListStore = useProductListStore()
 
-const { productList, loading } = storeToRefs(productListStore)
-const { fetchProducts } = productListStore
+const { productList } = storeToRefs(productListStore)
+const { getProducts } = productListStore
 
 const { selectItem } = useNavigationDrawerStore()
 
+const loading = ref(false)
+
 const error = ref<Error | null>(null)
+
+const changeLoading = () => {
+  loading.value = !loading.value
+}
 
 const handleError = (msg: string) => {
   error.value = new Error(msg)
 }
 
 const handleClose = () => {
-  selectItem(Routes.HOME, gotoMarketplace)
+  selectItem(Route.HOME, gotoMarketplace)
 }
 
 onBeforeMount(async () => {
-  await fetchProducts(handleError)
+  await getProducts(handleError, changeLoading)
 })
 </script>

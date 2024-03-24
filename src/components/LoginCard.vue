@@ -2,7 +2,7 @@
   <v-card v-if="!loading && !error" variant="elevated">
     <v-card-item>
       <form @submit.prevent="submit">
-        <v-card-title class="text-center" title="Authorization">Authorization</v-card-title>
+        <v-card-title class="text-center mb-2" title="Authorization">Authorization</v-card-title>
 
         <v-text-field
           :error-messages="userId.errorMessage.value"
@@ -37,13 +37,13 @@
     </v-card-item>
   </v-card>
 
-  <ProgressCircular v-if="loading" />
+  <ProgressCircular v-if="loading && !error" />
 
-  <ErrorAlert
+  <AlertError
     :on-close="handleClose"
     :text="error.message"
     title="Authorization failed!"
-    v-if="error"
+    v-if="error && !loading"
   />
 </template>
 
@@ -52,15 +52,13 @@ import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import { ref } from 'vue'
 
-import ErrorAlert from '@/components/ErrorAlert.vue'
+import AlertError from '@/components/AlertError.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
-
-import type { User } from '@/types/user'
 
 import { useUserStore } from '@/stores/user'
 
 type Form = Readonly<{
-  userId: User['id'] | null
+  userId: string
 }>
 
 const userStore = useUserStore()
@@ -69,18 +67,20 @@ const { loading } = storeToRefs(userStore)
 const { fetchUser } = userStore
 
 const isDisabled = ref(true)
+
 const error = ref<Error | null>(null)
 
 const { handleReset, handleSubmit } = useForm<Form>({
   initialValues: {
-    userId: null
+    userId: ''
   },
   validationSchema: {
     userId(value: Readonly<Form['userId']>) {
+      const id = Number(value)
       const minValue = 1
       const maxValue = 100
 
-      if (value && !Number.isNaN(value) && value >= minValue && value <= maxValue) {
+      if (!Number.isNaN(id) && id >= minValue && id <= maxValue) {
         isDisabled.value = false
 
         return true
@@ -104,24 +104,22 @@ const handleClose = () => {
 }
 
 const submit = handleSubmit(async (values) => {
-  const { userId: id } = values
+  const id = parseInt(values.userId)
 
-  if (id) {
-    await fetchUser(id, handleError)
+  await fetchUser(id, handleError)
 
-    handleReset()
-  }
+  handleReset()
 })
 </script>
 
 <style scoped>
 .v-card {
-  width: 50%;
+  width: 50vw;
 }
 
 @media only screen and (width <= 360px) {
   .v-card {
-    width: 75%;
+    width: 75vw;
   }
 }
 </style>

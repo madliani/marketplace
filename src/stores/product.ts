@@ -1,66 +1,59 @@
 import { defineStore } from 'pinia'
 
-import type { BackendProduct, Product } from '@/types/products'
+import type { Product } from '@/types/products'
+
+import { useProductListStore } from '@/stores/productList'
 
 type ErrorHandler = (msg: Readonly<string>) => void
+type LoadingChanger = () => void
 
 type Id = 'product'
 
 type State = {
   product: Product | null
-  loading: boolean
 }
 
 type Getters = {}
 
 type Actions = {
-  fetchProduct: (id: Readonly<Product['id']>, onError: ErrorHandler) => Promise<void> | never
   clear: () => void
+  getProduct: (
+    id: Readonly<Product['id']>,
+    onError: ErrorHandler,
+    changeLoading: LoadingChanger
+  ) => Promise<void>
+  updateStatus: (id: Readonly<Product['id']>, product: Readonly<Product['status']>) => void
 }
 
-/** Backend product images validating. */
-const isValidImages = (images: Readonly<string[]>) =>
-  images.every((image) => typeof image === 'string')
+/** Fetching product. */
+const fetchProduct = async (id: Product['id']): Promise<Product> | never => {
+  const { productList } = useProductListStore()
 
-/** Backend product validating. */
-const isValidProduct = (product: Readonly<BackendProduct>) =>
-  typeof product === 'object' &&
-  typeof product.description === 'string' &&
-  typeof product.id === 'number' &&
-  typeof product.thumbnail === 'string' &&
-  typeof product.title === 'string' &&
-  isValidImages(product.images)
+  const product = productList.find((item) => item.id === id)
+
+  if (!product) {
+    throw new Error('Product not found.')
+  }
+
+  return Promise.resolve(product)
+}
 
 /** Product store default value. */
 const product: Readonly<Product | null> = null
 
 export const useProductStore = defineStore<Id, State, Getters, Actions>('product', {
   state: () => ({
-    product,
-    loading: false
+    product
   }),
   actions: {
-    async fetchProduct(id, onError) {
+    clear() {
+      this.product = product
+    },
+    async getProduct(id, onError, changeLoading) {
+      changeLoading()
+
       try {
-        this.loading = true
-
-        const productResponse = await fetch(`https://dummyjson.com/products/${id}`)
-        const productJson = await productResponse.json()
-
-        if (productJson) {
-          const product = productJson as unknown as BackendProduct
-
-          if (isValidProduct(product)) {
-            this.product = {
-              description: product.description,
-              id: product.id.toString(),
-              images: product.images,
-              price: product.price,
-              thumbnail: product.thumbnail,
-              title: product.title
-            }
-          }
-        }
+        this.product = await fetchProduct(id)
       } catch (exception: unknown) {
         this.product = product
 
@@ -68,11 +61,21 @@ export const useProductStore = defineStore<Id, State, Getters, Actions>('product
 
         console.error(exception)
       } finally {
-        this.loading = false
+        changeLoading()
       }
     },
-    clear() {
-      this.product = product
+    updateStatus(id, status) {
+      const { productList, updateProducts } = useProductListStore()
+
+      const index = productList.findIndex((item) => item.id === id)
+
+      if (index !== -1) {
+        const products = [...productList]
+
+        products[index].status = status
+
+        updateProducts(products)
+      }
     }
   },
   persist: true
