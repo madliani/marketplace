@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 
 import type { Item, PurchaseOrder } from '@/types/purchaseOrder'
 
+import { useShoppingCartStore } from './shoppingCart'
+
 type Id = 'purchaseOrder'
 
 type State = {
@@ -11,15 +13,14 @@ type State = {
 type Getters = {}
 
 type Actions = {
-  addItem: (count: Readonly<Item['count']>, product: Readonly<Item['product']>) => void
   clear: () => void
-  deleteItem: (id: Readonly<Item['id']>) => void
+  place: () => void
 }
 
 /** Purchase order default value. */
 const purchaseOrder: Readonly<PurchaseOrder> = {
   items: [],
-  totalCost: 0
+  totalPrice: 0
 }
 
 export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('purchaseOrder', {
@@ -27,34 +28,22 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
     purchaseOrder
   }),
   actions: {
-    addItem(count, product) {
-      const item: Readonly<Item> = {
-        count,
-        cost: product.price * count,
-        id: product.id,
-        product
-      }
-
-      const items = [...this.purchaseOrder.items, item]
-      const totalCost = items.reduce((cost, item) => cost + item.cost, 0)
-
-      this.purchaseOrder = { items, totalCost }
-    },
     clear() {
       this.purchaseOrder = purchaseOrder
     },
-    deleteItem(id) {
-      const target = this.purchaseOrder.items.find((item) => item.id === id)
+    place() {
+      const { shoppingCart } = useShoppingCartStore()
 
-      if (target) {
-        const totalCost = this.purchaseOrder.totalCost - target.cost
-        const items = this.purchaseOrder.items.filter((item) => item.id !== id)
+      const items = shoppingCart.map<Item>((item) => ({
+        count: item.count,
+        id: item.id,
+        price: item.price,
+        product: item.product
+      }))
 
-        this.purchaseOrder = {
-          items,
-          totalCost
-        }
-      }
+      const totalPrice = items.reduce((price, item) => price + item.price, 0)
+
+      this.purchaseOrder = { items, totalPrice }
     }
   },
   persist: true

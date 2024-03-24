@@ -4,13 +4,13 @@ import type { Product } from '@/types/products'
  * Purchase order item.
  */
 export type Item = {
-  cost: number
   count: number
   id: string
-  product: Product
+  price: Product['price']
+  product: Omit<Omit<Product, 'status'>, 'images'>
 }
 
 export type PurchaseOrder = {
   items: Item[]
-  totalCost: Item['cost']
+  totalPrice: Item['price']
 }

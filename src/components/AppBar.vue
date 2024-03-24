@@ -41,6 +41,12 @@
         prepend-icon="mdi-shopping"
         title="Products"
       />
+      <v-list-item
+        :active="selectedItem === Route.CART"
+        @click="handleCartClick"
+        prepend-icon="mdi-cart"
+        title="Cart"
+      />
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -51,7 +57,7 @@ import { ref } from 'vue'
 
 import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
 
-import { gotoMarketplace, gotoProductsPage } from '@/router/router'
+import { gotoCartPage, gotoMarketplace, gotoProductsPage } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useUserStore } from '@/stores/user'
 import { Route } from '@/types/route'
@@ -68,6 +74,10 @@ const { selectItem } = navigationDrawerStore
 
 const drawer = ref(true)
 
+const draw = () => {
+  drawer.value = !drawer.value
+}
+
 const handleHomepageClick = () => {
   selectItem(Route.HOME, gotoMarketplace)
 }
@@ -76,7 +86,7 @@ const handleMarketplaceClick = () => {
   selectItem(Route.PRODUCTS, gotoProductsPage)
 }
 
-const draw = () => {
-  drawer.value = !drawer.value
+const handleCartClick = () => {
+  selectItem(Route.CART, gotoCartPage)
 }
 </script>
