@@ -45,7 +45,7 @@
         :active="selectedItem === Route.CART"
         @click="handleCartClick"
         prepend-icon="mdi-cart"
-        title="Cart"
+        title="Shopping cart"
       />
     </v-list>
   </v-navigation-drawer>
