@@ -45,7 +45,7 @@
         <v-divider class="mb-2" />
       </template>
 
-      <v-list-item class="text-right">Total price: {{ totalPrice }} &dollar;</v-list-item>
+      <v-list-item :title="`Total price: ${totalPrice} $`" class="text-right" />
     </v-list>
 
     <v-btn @click="handlePlaceClick" color="primary" title="Place an order" variant="elevated"
@@ -68,12 +68,10 @@ import { useShoppingCartStore } from '@/stores/shoppingCart'
 
 const shoppingCartStore = useShoppingCartStore()
 
-const { shoppingCart } = storeToRefs(shoppingCartStore)
+const { shoppingCart, totalPrice } = storeToRefs(shoppingCartStore)
 const { deleteItem, updateCount } = shoppingCartStore
 
 const { place } = usePurchaseOrderStore()
-
-const totalPrice = shoppingCart.value.reduce((price, item) => price + item.price, 0)
 
 const handleDeleteItem = (id: Readonly<CartItem['id']>) => {
   deleteItem(id)

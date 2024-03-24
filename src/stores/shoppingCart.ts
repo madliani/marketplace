@@ -12,7 +12,9 @@ type State = {
   shoppingCart: ShoppingCart
 }
 
-type Getters = {}
+type Getters = {
+  totalPrice: (state: State) => number
+}
 
 type Actions = {
   addItem: (id: Readonly<CartItem['id']>) => void
@@ -28,6 +30,11 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
   state: () => ({
     shoppingCart
   }),
+  getters: {
+    totalPrice(state) {
+      return state.shoppingCart.reduce((price, item) => price + item.price, 0)
+    }
+  },
   actions: {
     addItem(id) {
       const { productList } = useProductListStore()
@@ -68,8 +75,6 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
       const index = this.shoppingCart.findIndex((item) => item.id === id)
 
       if (index !== -1) {
-        console.log(index)
-
         const cart = [...this.shoppingCart]
 
         cart[index].count = count
