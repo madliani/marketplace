@@ -46,7 +46,7 @@ import CarouselCycle from '@/components/CarouselCycle.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 
-import { Status, type Product } from '@/types/products'
+import { ProductStatus, type Product } from '@/types/products'
 
 import { gotoMarketplace } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
@@ -88,20 +88,20 @@ const handleClose = () => {
 const handleBuyClick = () => {
   if (product.value) {
     switch (product.value.status) {
-      case Status.FREE: {
+      case ProductStatus.FREE: {
         addItem(product.value.id)
 
         return
       }
-      case Status.IN_CART: {
+      case ProductStatus.IN_CART: {
         deleteItem(product.value.id)
 
         return
       }
-      case Status.ORDERED: {
+      case ProductStatus.ORDERED: {
         return
       }
-      case Status.PURCHASED: {
+      case ProductStatus.PURCHASED: {
         return
       }
     }
@@ -109,18 +109,18 @@ const handleBuyClick = () => {
 }
 
 /** Getting button title by product status. */
-const getTitleByStatus = (status: Readonly<Status>) => {
+const getTitleByStatus = (status: Readonly<ProductStatus>) => {
   switch (status) {
-    case Status.FREE: {
+    case ProductStatus.FREE: {
       return 'Buy'
     }
-    case Status.IN_CART: {
+    case ProductStatus.IN_CART: {
       return 'In cart'
     }
-    case Status.ORDERED: {
+    case ProductStatus.ORDERED: {
       return 'Ordered'
     }
-    case Status.PURCHASED: {
+    case ProductStatus.PURCHASED: {
       return 'Purchased'
     }
   }

@@ -28,7 +28,7 @@ import type { Product } from '@/types/products'
 
 import { gotoProductPage } from '@/router/router'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
-import { Status } from '@/types/products'
+import { ProductStatus } from '@/types/products'
 
 type Props = Readonly<{
   product: Product
@@ -44,38 +44,38 @@ const handleCardClick = () => {
 
 const handleBuyClick = () => {
   switch (product.status) {
-    case Status.FREE: {
+    case ProductStatus.FREE: {
       addItem(product.id)
 
       return
     }
-    case Status.IN_CART: {
+    case ProductStatus.IN_CART: {
       deleteItem(product.id)
 
       return
     }
-    case Status.ORDERED: {
+    case ProductStatus.ORDERED: {
       return
     }
-    case Status.PURCHASED: {
+    case ProductStatus.PURCHASED: {
       return
     }
   }
 }
 
 /** Getting button title by product status. */
-const getTitleByStatus = (status: Readonly<Status>) => {
+const getTitleByStatus = (status: Readonly<ProductStatus>) => {
   switch (status) {
-    case Status.FREE: {
+    case ProductStatus.FREE: {
       return 'Buy'
     }
-    case Status.IN_CART: {
+    case ProductStatus.IN_CART: {
       return 'In cart'
     }
-    case Status.ORDERED: {
+    case ProductStatus.ORDERED: {
       return 'Ordered'
     }
-    case Status.PURCHASED: {
+    case ProductStatus.PURCHASED: {
       return 'Purchased'
     }
   }

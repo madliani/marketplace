@@ -59,7 +59,7 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 
-import type { Item } from '@/types/shoppingCart'
+import type { CartItem } from '@/types/shoppingCart'
 
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
@@ -71,15 +71,15 @@ const { deleteItem, updateCount } = shoppingCartStore
 
 const { place } = usePurchaseOrderStore()
 
-const handleDeleteItem = (id: Readonly<Item['id']>) => {
+const handleDeleteItem = (id: Readonly<CartItem['id']>) => {
   deleteItem(id)
 }
 
-const handleLessClick = (id: Readonly<Item['id']>, count: Readonly<Item['count']>) => {
+const handleLessClick = (id: Readonly<CartItem['id']>, count: Readonly<CartItem['count']>) => {
   updateCount(id, count - 1)
 }
 
-const handleMoreClick = (id: Readonly<Item['id']>, count: Readonly<Item['count']>) => {
+const handleMoreClick = (id: Readonly<CartItem['id']>, count: Readonly<CartItem['count']>) => {
   updateCount(id, count + 1)
 }
 

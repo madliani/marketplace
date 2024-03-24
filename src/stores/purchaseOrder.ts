@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import type { Item, PurchaseOrder } from '@/types/purchaseOrder'
+import type { OrderItem, PurchaseOrder } from '@/types/purchaseOrder'
 
 import { useShoppingCartStore } from './shoppingCart'
 
@@ -34,7 +34,7 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
     place() {
       const { shoppingCart } = useShoppingCartStore()
 
-      const items = shoppingCart.map<Item>((item) => ({
+      const items = shoppingCart.map<OrderItem>((item) => ({
         count: item.count,
         id: item.id,
         price: item.price,

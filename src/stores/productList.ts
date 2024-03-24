@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 import type { BackendProduct, BackendProducts, Products } from '@/types/products'
 
-import { Status } from '@/types/products'
+import { ProductStatus } from '@/types/products'
 import { useShoppingCartStore } from './shoppingCart'
 
 type ErrorHandler = (msg: Readonly<string>) => void
@@ -56,7 +56,7 @@ const fetchProducts = async (): Promise<Products> | never => {
     id: product.id.toString(),
     images: product.images,
     price: product.price,
-    status: Status.FREE,
+    status: ProductStatus.FREE,
     thumbnail: product.thumbnail,
     title: product.title
   }))
@@ -70,7 +70,7 @@ const injectStatus = (products: Products) => {
     if (shoppingCart.find((item) => item.id === product.id)) {
       return {
         ...product,
-        status: Status.IN_CART
+        status: ProductStatus.IN_CART
       }
     }
 

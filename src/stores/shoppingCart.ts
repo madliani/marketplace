@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia'
 
-import type { Product } from '@/types/products'
-import type { Item, ShoppingCart } from '@/types/shoppingCart'
+import type { CartItem, ShoppingCart } from '@/types/shoppingCart'
 
 import { useProductStore } from '@/stores/product'
 import { useProductListStore } from '@/stores/productList'
-import { Status } from '@/types/products'
+import { ProductStatus } from '@/types/products'
 
 type Id = 'shoppingCart'
 
@@ -16,10 +15,10 @@ type State = {
 type Getters = {}
 
 type Actions = {
-  addItem: (id: Readonly<Item['id']>) => void
+  addItem: (id: Readonly<CartItem['id']>) => void
   clear: () => void
-  deleteItem: (id: Readonly<Product['id']>) => void
-  updateCount: (id: Readonly<Item['id']>, count: Readonly<Item['count']>) => void
+  deleteItem: (id: Readonly<CartItem['id']>) => void
+  updateCount: (id: Readonly<CartItem['id']>, count: Readonly<CartItem['count']>) => void
 }
 
 /** Shopping cart default value. */
@@ -37,7 +36,7 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
       const product = productList.find((item) => item.id === id)
 
       if (product) {
-        const item: Readonly<Item> = {
+        const item: Readonly<CartItem> = {
           count: 1,
           id,
           price: product.price,
@@ -52,7 +51,7 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
 
         this.shoppingCart = [...this.shoppingCart, item]
 
-        updateStatus(id, Status.IN_CART)
+        updateStatus(id, ProductStatus.IN_CART)
       }
     },
     clear() {
@@ -63,7 +62,7 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
 
       this.shoppingCart = this.shoppingCart.filter((item) => item.id !== id)
 
-      updateStatus(id, Status.FREE)
+      updateStatus(id, ProductStatus.FREE)
     },
     updateCount(id, count) {
       const index = this.shoppingCart.findIndex((item) => item.id === id)
