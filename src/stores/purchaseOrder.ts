@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 
-import type { OrderItem, PurchaseOrder } from '@/types/purchaseOrder'
+import type { OrderItem, OrderUser, PurchaseOrder } from '@/types/purchaseOrder'
 
 import { useShoppingCartStore } from './shoppingCart'
+import { useUserStore } from './user'
 
 type Id = 'purchaseOrder'
 
@@ -19,8 +20,10 @@ type Actions = {
 
 /** Purchase order default value. */
 const purchaseOrder: Readonly<PurchaseOrder> = {
+  departureDate: null,
   items: [],
-  totalPrice: 0
+  totalPrice: 0,
+  user: null
 }
 
 export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('purchaseOrder', {
@@ -32,18 +35,28 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
       this.purchaseOrder = purchaseOrder
     },
     place() {
-      const { shoppingCart } = useShoppingCartStore()
+      const { shoppingCart, totalPrice } = useShoppingCartStore()
 
-      const items = shoppingCart.map<OrderItem>((item) => ({
-        count: item.count,
-        id: item.id,
-        price: item.price,
-        product: item.product
-      }))
+      const { user } = useUserStore()
 
-      const totalPrice = items.reduce((price, item) => price + item.price, 0)
+      if (user) {
+        const departureDate = new Date()
 
-      this.purchaseOrder = { items, totalPrice }
+        const items = shoppingCart.map<OrderItem>((item) => ({
+          count: item.count,
+          id: item.id,
+          price: item.price,
+          product: item.product
+        }))
+
+        const orderUser: Readonly<OrderUser> = {
+          firstName: user.firstName,
+          id: user.id,
+          lastName: user.lastName
+        }
+
+        this.purchaseOrder = { departureDate, items, totalPrice, user: orderUser }
+      }
     }
   },
   persist: true
