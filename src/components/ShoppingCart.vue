@@ -9,8 +9,8 @@
         >
           <template v-slot:append>
             <v-btn
-              :disabled="item.count === 1"
-              @click="() => handleLessClick(item.id, item.count)"
+              :disabled="item.quantity === 1"
+              @click="() => handleLessClick(item.id, item.quantity)"
               class="ml-4"
               color="secondary"
               title="Less"
@@ -18,10 +18,10 @@
               >-</v-btn
             >
 
-            <span :title="`${item.count} piece`" class="ml-2">{{ item.count }} piece</span>
+            <span :title="`${item.quantity} piece`" class="ml-2">{{ item.quantity }} piece</span>
 
             <v-btn
-              @click="() => handleMoreClick(item.id, item.count)"
+              @click="() => handleMoreClick(item.id, item.quantity)"
               class="ml-2"
               color="secondary"
               title="More"
@@ -29,7 +29,7 @@
               >+</v-btn
             >
 
-            <span :title="`Price: ${item.price} $`" class="ml-4">{{ item.price }} &dollar;</span>
+            <span :title="`Price: ${item.cost} $`" class="ml-4">{{ item.cost }} &dollar;</span>
 
             <v-btn
               @click="() => handleDeleteItem(item.id)"
@@ -45,7 +45,7 @@
         <v-divider class="mb-2" />
       </template>
 
-      <v-list-item :title="`Total price: ${totalPrice} $`" class="text-right" />
+      <v-list-item :title="`Total price: ${totalCost} $`" class="text-right" />
     </v-list>
 
     <v-btn @click="handlePlaceClick" color="primary" title="Place an order" variant="elevated"
@@ -68,8 +68,8 @@ import { useShoppingCartStore } from '@/stores/shoppingCart'
 
 const shoppingCartStore = useShoppingCartStore()
 
-const { shoppingCart, totalPrice } = storeToRefs(shoppingCartStore)
-const { deleteItem, updateCount } = shoppingCartStore
+const { shoppingCart, totalCost } = storeToRefs(shoppingCartStore)
+const { deleteItem, updateQuantity } = shoppingCartStore
 
 const { place } = usePurchaseOrderStore()
 
@@ -77,12 +77,12 @@ const handleDeleteItem = (id: Readonly<CartItem['id']>) => {
   deleteItem(id)
 }
 
-const handleLessClick = (id: Readonly<CartItem['id']>, count: Readonly<CartItem['count']>) => {
-  updateCount(id, count - 1)
+const handleLessClick = (id: Readonly<CartItem['id']>, count: Readonly<CartItem['quantity']>) => {
+  updateQuantity(id, count - 1)
 }
 
-const handleMoreClick = (id: Readonly<CartItem['id']>, count: Readonly<CartItem['count']>) => {
-  updateCount(id, count + 1)
+const handleMoreClick = (id: Readonly<CartItem['id']>, count: Readonly<CartItem['quantity']>) => {
+  updateQuantity(id, count + 1)
 }
 
 const handlePlaceClick = () => {

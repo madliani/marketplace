@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import type { CartItem, ShoppingCart } from '@/types/shoppingCart'
+import type { CartItem, CartProduct, ShoppingCart } from '@/types/shoppingCart'
 
 import { useProductStore } from '@/stores/product'
 import { useProductListStore } from '@/stores/productList'
@@ -13,14 +13,14 @@ type State = {
 }
 
 type Getters = {
-  totalPrice: (state: State) => number
+  totalCost: (state: State) => number
 }
 
 type Actions = {
   addItem: (id: Readonly<CartItem['id']>) => void
   clear: () => void
   deleteItem: (id: Readonly<CartItem['id']>) => void
-  updateCount: (id: Readonly<CartItem['id']>, count: Readonly<CartItem['count']>) => void
+  updateQuantity: (id: Readonly<CartItem['id']>, quantity: Readonly<CartItem['quantity']>) => void
 }
 
 /** Shopping cart default value. */
@@ -31,8 +31,8 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
     shoppingCart
   }),
   getters: {
-    totalPrice(state) {
-      return state.shoppingCart.reduce((price, item) => price + item.price, 0)
+    totalCost(state) {
+      return state.shoppingCart.reduce((cost, item) => cost + item.cost, 0)
     }
   },
   actions: {
@@ -43,17 +43,19 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
       const product = productList.find((item) => item.id === id)
 
       if (product) {
-        const item: Readonly<CartItem> = {
-          count: 1,
-          id,
+        const cartProduct: Readonly<CartProduct> = {
+          description: product.description,
+          id: product.id,
           price: product.price,
-          product: {
-            description: product.description,
-            id: product.id,
-            price: product.price,
-            thumbnail: product.thumbnail,
-            title: product.title
-          }
+          thumbnail: product.thumbnail,
+          title: product.title
+        }
+
+        const item: Readonly<CartItem> = {
+          quantity: 1,
+          id,
+          cost: product.price,
+          product: cartProduct
         }
 
         this.shoppingCart = [...this.shoppingCart, item]
@@ -71,14 +73,14 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
 
       updateStatus(id, ProductStatus.FREE)
     },
-    updateCount(id, count) {
+    updateQuantity(id, count) {
       const index = this.shoppingCart.findIndex((item) => item.id === id)
 
       if (index !== -1) {
         const cart = [...this.shoppingCart]
 
-        cart[index].count = count
-        cart[index].price = cart[index].product.price * count
+        cart[index].quantity = count
+        cart[index].cost = cart[index].product.price * count
 
         this.shoppingCart = cart
       }

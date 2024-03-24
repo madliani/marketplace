@@ -9,9 +9,9 @@ export type CartProduct = Omit<Omit<Product, 'status'>, 'images'>
  * Shopping cart item.
  */
 export type CartItem = {
-  count: number
+  quantity: number
   id: string
-  price: Product['price']
+  cost: Product['price']
   product: CartProduct
 }
 
