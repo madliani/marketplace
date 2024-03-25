@@ -2,14 +2,14 @@ import type { RouteRecordRaw, RouterHistory, RouterOptions } from 'vue-router'
 
 import { createRouter, createWebHistory } from 'vue-router'
 
+import CartView from '@/views/CartView.vue'
 import HomeView from '@/views/HomeView.vue'
+import MarketplaceView from '@/views/MarketplaceView.vue'
 import ProductView from '@/views/ProductView.vue'
-import ProductsView from '@/views/ProductsView.vue'
 
 import type { Product } from '@/types/products'
 
 import { Route } from '@/types/route'
-import CartView from '@/views/CartView.vue'
 
 const history: Readonly<RouterHistory> = createWebHistory(import.meta.env.BASE_URL)
 
@@ -20,7 +20,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
     path: Route.HOME
   },
   {
-    component: ProductsView,
+    component: MarketplaceView,
     name: 'products',
     path: Route.PRODUCTS
   },
