@@ -32,14 +32,14 @@
       <v-list-item
         :active="selectedItem === Route.HOMEPAGE"
         @click="handleHomepageClick"
-        prepend-icon="mdi-home-city"
-        title="Home"
+        prepend-icon="mdi-home"
+        title="Homepage"
       />
       <v-list-item
         :active="selectedItem === Route.MARKETPLACE"
         @click="handleMarketplaceClick"
         prepend-icon="mdi-shopping"
-        title="Products"
+        title="Marketplace"
       />
       <v-list-item
         :active="selectedItem === Route.SHOPPING_CART"
