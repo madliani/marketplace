@@ -48,7 +48,7 @@ import MainLayout from '@/layouts/MainLayout.vue'
 
 import { ProductStatus, type Product } from '@/types/products'
 
-import { gotoMarketplace } from '@/router/router'
+import { gotoHomepage } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductStore } from '@/stores/product'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
@@ -82,7 +82,7 @@ const handleError = (msg: string) => {
 }
 
 const handleClose = () => {
-  selectItem(Route.HOME, gotoMarketplace)
+  selectItem(Route.HOMEPAGE, gotoHomepage)
 }
 
 const handleBuyClick = () => {

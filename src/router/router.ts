@@ -16,24 +16,24 @@ const history: Readonly<RouterHistory> = createWebHistory(import.meta.env.BASE_U
 const routes: Readonly<RouteRecordRaw[]> = [
   {
     component: HomepageView,
-    name: 'home',
-    path: Route.HOME
+    name: 'homepage',
+    path: Route.HOMEPAGE
   },
   {
     component: MarketplaceView,
-    name: 'products',
-    path: Route.PRODUCTS
+    name: 'marketplace',
+    path: Route.MARKETPLACE
   },
   {
     component: ProductView,
     name: 'product',
-    path: `${Route.PRODUCTS}/:id`,
+    path: `${Route.MARKETPLACE}/:id`,
     props: true
   },
   {
     component: CartView,
-    name: 'cart',
-    path: Route.CART
+    name: 'shopping-cart',
+    path: Route.SHOPPING_CART
   }
 ]
 
@@ -46,12 +46,12 @@ const router = createRouter(options)
 
 const goto = (path: Readonly<Route>) => () => router.push(path)
 
-export const gotoMarketplace = goto(Route.HOME)
-export const gotoProductsPage = goto(Route.PRODUCTS)
-export const gotoCartPage = goto(Route.CART)
+export const gotoHomepage = goto(Route.HOMEPAGE)
+export const gotoMarketplace = goto(Route.MARKETPLACE)
+export const gotoShoppingCart = goto(Route.SHOPPING_CART)
 
-export const gotoProductPage = (id: Product['id']) => {
-  router.push(`${Route.PRODUCTS}/${id}`)
+export const gotoProduct = (id: Product['id']) => {
+  router.push(`${Route.MARKETPLACE}/${id}`)
 }
 
 export default router

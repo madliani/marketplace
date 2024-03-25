@@ -18,7 +18,7 @@ type Actions = {
 }
 
 /** Navigation drawer store default value. */
-const selectedItem: Readonly<Route> = Route.HOME
+const selectedItem: Readonly<Route> = Route.HOMEPAGE
 
 export const useNavigationDrawerStore = defineStore<Id, State, Getters, Actions>(
   'navigationDrawer',

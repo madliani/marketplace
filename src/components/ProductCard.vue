@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import type { Product } from '@/types/products'
 
-import { gotoProductPage } from '@/router/router'
+import { gotoProduct } from '@/router/router'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { ProductStatus } from '@/types/products'
 
@@ -39,7 +39,7 @@ const { product } = defineProps<Props>()
 const { addItem, deleteItem } = useShoppingCartStore()
 
 const handleCardClick = () => {
-  gotoProductPage(product.id)
+  gotoProduct(product.id)
 }
 
 const handleBuyClick = () => {

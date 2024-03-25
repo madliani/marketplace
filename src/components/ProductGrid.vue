@@ -25,7 +25,7 @@ import AlertError from '@/components/AlertError.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 
-import { gotoMarketplace } from '@/router/router'
+import { gotoHomepage } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductListStore } from '@/stores/productList'
 import { Route } from '@/types/route'
@@ -50,7 +50,7 @@ const handleError = (msg: string) => {
 }
 
 const handleClose = () => {
-  selectItem(Route.HOME, gotoMarketplace)
+  selectItem(Route.HOMEPAGE, gotoHomepage)
 }
 
 onBeforeMount(async () => {

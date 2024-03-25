@@ -30,19 +30,19 @@
   <v-navigation-drawer v-model="drawer">
     <v-list nav>
       <v-list-item
-        :active="selectedItem === Route.HOME"
+        :active="selectedItem === Route.HOMEPAGE"
         @click="handleHomepageClick"
         prepend-icon="mdi-home-city"
         title="Home"
       />
       <v-list-item
-        :active="selectedItem === Route.PRODUCTS"
+        :active="selectedItem === Route.MARKETPLACE"
         @click="handleMarketplaceClick"
         prepend-icon="mdi-shopping"
         title="Products"
       />
       <v-list-item
-        :active="selectedItem === Route.CART"
+        :active="selectedItem === Route.SHOPPING_CART"
         @click="handleCartClick"
         prepend-icon="mdi-cart"
         title="Shopping cart"
@@ -57,7 +57,7 @@ import { ref } from 'vue'
 
 import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
 
-import { gotoCartPage, gotoMarketplace, gotoProductsPage } from '@/router/router'
+import { gotoHomepage, gotoMarketplace, gotoShoppingCart } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useUserStore } from '@/stores/user'
 import { Route } from '@/types/route'
@@ -79,14 +79,14 @@ const draw = () => {
 }
 
 const handleHomepageClick = () => {
-  selectItem(Route.HOME, gotoMarketplace)
+  selectItem(Route.HOMEPAGE, gotoHomepage)
 }
 
 const handleMarketplaceClick = () => {
-  selectItem(Route.PRODUCTS, gotoProductsPage)
+  selectItem(Route.MARKETPLACE, gotoMarketplace)
 }
 
 const handleCartClick = () => {
-  selectItem(Route.CART, gotoCartPage)
+  selectItem(Route.SHOPPING_CART, gotoShoppingCart)
 }
 </script>

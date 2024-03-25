@@ -1,5 +1,5 @@
 export const enum Route {
-  HOME = '/',
-  PRODUCTS = '/products',
-  CART = '/cart'
+  HOMEPAGE = '/',
+  MARKETPLACE = '/marketplace',
+  SHOPPING_CART = '/shopping-cart'
 }
