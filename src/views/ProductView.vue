@@ -15,8 +15,8 @@
         </v-card-item>
 
         <v-card-actions>
-          <v-btn :title="productStatus()" @click="handleBuyClick" color="primary" variant="tonal">{{
-            productStatus()
+          <v-btn :title="productStatus" @click="handleBuyClick" color="primary" variant="tonal">{{
+            productStatus
           }}</v-btn>
         </v-card-actions>
       </v-card>
@@ -57,7 +57,7 @@ const { id } = defineProps<Props>()
 
 const productStore = useProductStore()
 
-const { product } = storeToRefs(productStore)
+const { product, productStatus } = storeToRefs(productStore)
 const { getProduct } = productStore
 
 const { selectRoute } = useNavigationDrawerStore()
@@ -98,26 +98,6 @@ const handleBuyClick = () => {
       }
       case ProductStatus.PURCHASED: {
         return
-      }
-    }
-  }
-}
-
-/** Getting button title by product status. */
-const productStatus = () => {
-  if (product.value) {
-    switch (product.value.status) {
-      case ProductStatus.FREE: {
-        return 'Buy'
-      }
-      case ProductStatus.IN_CART: {
-        return 'In cart'
-      }
-      case ProductStatus.ORDERED: {
-        return 'Ordered'
-      }
-      case ProductStatus.PURCHASED: {
-        return 'Purchased'
       }
     }
   }

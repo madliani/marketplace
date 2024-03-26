@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import type { Product } from '@/types/products'
 
 import { useProductListStore } from '@/stores/productList'
+import { ProductStatus } from '@/types/products'
 
 type ErrorHandler = (msg: Readonly<string>) => void
 type LoadingChanger = () => void
@@ -13,7 +14,9 @@ type State = {
   product: Product | null
 }
 
-type Getters = {}
+type Getters = {
+  productStatus: (state: State) => string | null
+}
 
 type Actions = {
   clear: () => void
@@ -42,6 +45,28 @@ export const useProductStore = defineStore<Id, State, Getters, Actions>('product
   state: () => ({
     product: null
   }),
+  getters: {
+    productStatus(state) {
+      if (state.product) {
+        switch (state.product.status) {
+          case ProductStatus.FREE: {
+            return 'Buy'
+          }
+          case ProductStatus.IN_CART: {
+            return 'In cart'
+          }
+          case ProductStatus.ORDERED: {
+            return 'Ordered'
+          }
+          case ProductStatus.PURCHASED: {
+            return 'Purchased'
+          }
+        }
+      }
+
+      return null
+    }
+  },
   actions: {
     clear() {
       this.product = null
