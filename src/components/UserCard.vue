@@ -4,7 +4,7 @@
       <v-avatar :image="user.avatar" :title="username" alt="User avatar" size="128px" />
     </v-card-item>
     <v-card-item class="v-card__item-info">
-      <form @submit.prevent="submit">
+      <v-form @submit.prevent="submit">
         <v-card-title :title="username" class="text-center mb-2">{{ username }}</v-card-title>
 
         <v-text-field
@@ -30,7 +30,7 @@
             >Reset</v-btn
           >
         </v-card-actions>
-      </form>
+      </v-form>
     </v-card-item>
   </v-card>
 </template>
