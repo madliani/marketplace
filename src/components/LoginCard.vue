@@ -23,10 +23,10 @@
     </v-card-item>
   </v-card>
 
-  <ProgressCircular v-if="loading && !error" />
+  <ProgressCircular v-if="loading" />
 
   <AlertError
-    v-if="error && !loading"
+    v-if="error"
     :on-close="handleClose"
     :text="error.message"
     title="Authorization failed!"
@@ -46,7 +46,7 @@ type Form = Readonly<{
 
 const userStore = useUserStore()
 
-const { fetchUser } = userStore
+const { getUser } = userStore
 
 const isDisabled = ref(true)
 
@@ -98,7 +98,7 @@ const handleClose = () => {
 const submit = handleSubmit(async (values) => {
   const id = parseInt(values.userId)
 
-  await fetchUser(id, handleError, changeLoading)
+  await getUser(id, handleError, changeLoading)
 
   handleReset()
 })

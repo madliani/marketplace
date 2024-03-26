@@ -17,13 +17,23 @@ type Getters = {
 
 type Actions = {
   clear: () => void
-  fetchUser: (
+  getUser: (
     id: Readonly<User['id']>,
     onError: ErrorHandler,
     changeLoading: LoadingChanger
   ) => Promise<void> | never
   restoreBalance: () => void
   updateBalance: (balance: Readonly<User['balance']>) => void
+}
+
+/** Fetching user. */
+const fetchUser = async (id: Readonly<User['id']>): Promise<BackendUser> | never => {
+  const userResponse = await fetch(`https://dummyjson.com/users/${id}`)
+  const userJson = await userResponse.json()
+
+  const user = userJson as unknown as BackendUser
+
+  return user
 }
 
 /** Getting a random integer between two values. */
@@ -67,24 +77,19 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
         this.user = { ...user, balance }
       }
     },
-    async fetchUser(id, onError, changeLoading) {
+    async getUser(id, onError, changeLoading) {
       try {
         changeLoading()
 
-        const userResponse = await fetch(`https://dummyjson.com/users/${id}`)
-        const userJson = await userResponse.json()
+        const backendUser = await fetchUser(id)
 
-        if (userJson) {
-          const user = userJson as unknown as BackendUser
-
-          if (isValidUser(user)) {
-            this.user = {
-              avatar: user.image,
-              balance: getRandomNumber(0, 1_000),
-              firstName: user.firstName,
-              id: user.id,
-              lastName: user.lastName
-            }
+        if (isValidUser(backendUser)) {
+          this.user = {
+            avatar: backendUser.image,
+            balance: getRandomNumber(0, 1_000),
+            firstName: backendUser.firstName,
+            id: backendUser.id,
+            lastName: backendUser.lastName
           }
         }
       } catch (exception: unknown) {
