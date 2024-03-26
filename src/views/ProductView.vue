@@ -15,8 +15,8 @@
         </v-card-item>
 
         <v-card-actions>
-          <v-btn :title="productStatus" color="primary" variant="tonal" @click="handleBuyClick">{{
-            productStatus
+          <v-btn :title="titleByStatus" color="primary" variant="tonal" @click="handleBuyClick">{{
+            titleByStatus
           }}</v-btn>
         </v-card-actions>
       </v-card>
@@ -57,7 +57,7 @@ const { id } = defineProps<Props>()
 
 const productStore = useProductStore()
 
-const { product, productStatus } = storeToRefs(productStore)
+const { product, titleByStatus } = storeToRefs(productStore)
 const { getProduct } = productStore
 
 const { selectRoute } = useNavigationDrawerStore()

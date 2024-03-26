@@ -13,7 +13,7 @@ type State = {
 }
 
 type Getters = {
-  productStatus: (state: State) => string | null
+  titleByStatus: (state: State) => string | null
 }
 
 type Actions = {
@@ -44,7 +44,7 @@ export const useProductStore = defineStore<Id, State, Getters, Actions>('product
     product: null
   }),
   getters: {
-    productStatus(state) {
+    titleByStatus(state) {
       if (state.product) {
         switch (state.product.status) {
           case ProductStatus.FREE: {
