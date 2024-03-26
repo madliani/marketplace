@@ -1,7 +1,7 @@
 <template>
   <MainLayout>
     <template #content>
-      <span class="text-h4 mb-8">Purchase order</span>
+      <span class="text-h4 mb-8" title="Purchase order">Purchase order</span>
 
       <OrderTable />
     </template>
