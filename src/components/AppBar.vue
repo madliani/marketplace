@@ -49,6 +49,7 @@
         @click="handleCartClick"
         prepend-icon="mdi-cart"
         title="Shopping cart"
+        v-if="shoppingCart.length"
       />
 
       <v-list-item
@@ -56,6 +57,7 @@
         @click="handleOrderClick"
         prepend-icon="mdi-receipt"
         title="Purchase order"
+        v-if="purchaseOrder"
       />
     </v-list>
   </v-navigation-drawer>
@@ -69,6 +71,8 @@ import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
 
 import { gotoHomepage, gotoMarketplace, gotoPurchaseOrder, gotoShoppingCart } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
+import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
+import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { useUserStore } from '@/stores/user'
 import { Route } from '@/types/route'
 
@@ -81,6 +85,14 @@ const navigationDrawerStore = useNavigationDrawerStore()
 
 const { selectedItem } = storeToRefs(navigationDrawerStore)
 const { selectItem } = navigationDrawerStore
+
+const shoppingCartStore = useShoppingCartStore()
+
+const { shoppingCart } = storeToRefs(shoppingCartStore)
+
+const purchaseOrderStore = usePurchaseOrderStore()
+
+const { purchaseOrder } = purchaseOrderStore
 
 const drawer = ref(true)
 
