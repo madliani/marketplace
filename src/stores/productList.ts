@@ -24,21 +24,25 @@ type Actions = {
 }
 
 /** Backend product images validating. */
-const isValidImages = (images: Readonly<BackendProduct['images']>) =>
-  images.every((image) => typeof image === 'string')
+const isValidImages = (images: Readonly<BackendProduct['images']>) => {
+  return images.every((image) => typeof image === 'string')
+}
 
 /** Backend products validating. */
-const isValidProducts = (products: Readonly<BackendProduct[]>) =>
-  typeof products === 'object' &&
-  products.every(
-    (product) =>
-      typeof product === 'object' &&
-      typeof product.description === 'string' &&
-      typeof product.id === 'number' &&
-      typeof product.thumbnail === 'string' &&
-      typeof product.title === 'string' &&
-      isValidImages(product.images)
+const isValidProducts = (products: Readonly<BackendProduct[]>) => {
+  return (
+    typeof products === 'object' &&
+    products.every(
+      (product) =>
+        typeof product === 'object' &&
+        typeof product.description === 'string' &&
+        typeof product.id === 'number' &&
+        typeof product.thumbnail === 'string' &&
+        typeof product.title === 'string' &&
+        isValidImages(product.images)
+    )
   )
+}
 
 /** Fetching products. */
 const fetchProducts = async (): Promise<Products> | never => {
