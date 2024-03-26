@@ -36,18 +36,21 @@
         prepend-icon="mdi-home"
         title="Homepage"
       />
+
       <v-list-item
         :active="selectedItem === Route.MARKETPLACE"
         @click="handleMarketplaceClick"
         prepend-icon="mdi-shopping"
         title="Marketplace"
       />
+
       <v-list-item
         :active="selectedItem === Route.SHOPPING_CART"
         @click="handleCartClick"
         prepend-icon="mdi-cart"
         title="Shopping cart"
       />
+
       <v-list-item
         :active="selectedItem === Route.PURCHASE_ORDER"
         @click="handleOrderClick"
