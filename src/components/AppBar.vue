@@ -116,6 +116,7 @@ const handleLogoutClick = () => {
   clearPurchaseOrder()
   clearProductList()
   clearProduct()
+
   selectRoute(Route.HOMEPAGE)
 }
 
