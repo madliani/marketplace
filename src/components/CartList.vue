@@ -10,6 +10,14 @@
       <v-list-item :title="`Total price: ${totalCost} $`" class="text-right" />
     </v-list>
 
+    <AlertError
+      v-if="error"
+      class="mb-4"
+      title="Not enough funds!"
+      text="The total cost of the items in the shopping cart is greater than the balance."
+      :on-close="handleCloseClick"
+    />
+
     <v-btn-group>
       <v-btn color="primary" title="Place an order" variant="outlined" @click="handlePlaceClick"
         >Place an order</v-btn
@@ -27,12 +35,15 @@
 </template>
 
 <script lang="ts" setup>
+import AlertError from '@/components/AlertError.vue'
 import CartItem from '@/components/CartItem.vue'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
+import { useUserStore } from '@/stores/user'
 import { Route } from '@/types/route'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 const shoppingCartStore = useShoppingCartStore()
 
@@ -43,8 +54,28 @@ const { place } = usePurchaseOrderStore()
 
 const { selectRoute } = useNavigationDrawerStore()
 
+const userStore = useUserStore()
+
+const { user } = storeToRefs(userStore)
+
+const error = ref(false)
+
+const handleCloseClick = () => {
+  error.value = false
+}
+
 const handlePlaceClick = () => {
-  place()
+  if (user.value) {
+    const balance = user.value.balance - totalCost.value
+
+    if (balance < 0) {
+      error.value = true
+
+      return
+    }
+
+    place()
+  }
 }
 
 const handleClear = () => {
