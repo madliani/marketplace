@@ -31,7 +31,6 @@ import { storeToRefs } from 'pinia'
 
 import CartItem from '@/components/CartItem.vue'
 
-import { gotoMarketplace } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
@@ -44,7 +43,7 @@ const { clear } = shoppingCartStore
 
 const { place } = usePurchaseOrderStore()
 
-const { selectItem } = useNavigationDrawerStore()
+const { selectRoute } = useNavigationDrawerStore()
 
 const handlePlaceClick = () => {
   place()
@@ -52,6 +51,6 @@ const handlePlaceClick = () => {
 
 const handleClear = () => {
   clear()
-  selectItem(Route.MARKETPLACE, gotoMarketplace)
+  selectRoute(Route.MARKETPLACE)
 }
 </script>

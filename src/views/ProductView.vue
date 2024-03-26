@@ -48,7 +48,6 @@ import MainLayout from '@/layouts/MainLayout.vue'
 
 import { ProductStatus, type Product } from '@/types/products'
 
-import { gotoHomepage } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductStore } from '@/stores/product'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
@@ -65,7 +64,7 @@ const productStore = useProductStore()
 const { product } = storeToRefs(productStore)
 const { getProduct } = productStore
 
-const { selectItem } = useNavigationDrawerStore()
+const { selectRoute } = useNavigationDrawerStore()
 
 const { addItem, deleteItem } = useShoppingCartStore()
 
@@ -82,7 +81,7 @@ const handleError = (msg: string) => {
 }
 
 const handleClose = () => {
-  selectItem(Route.HOMEPAGE, gotoHomepage)
+  selectRoute(Route.HOMEPAGE)
 }
 
 const handleBuyClick = () => {

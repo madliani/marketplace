@@ -33,21 +33,21 @@
   <v-navigation-drawer v-if="user" v-model="drawer">
     <v-list nav>
       <v-list-item
-        :active="selectedItem === Route.HOMEPAGE"
+        :active="selectedRoute === Route.HOMEPAGE"
         @click="handleHomepageClick"
         prepend-icon="mdi-home"
         title="Homepage"
       />
 
       <v-list-item
-        :active="selectedItem === Route.MARKETPLACE"
+        :active="selectedRoute === Route.MARKETPLACE"
         @click="handleMarketplaceClick"
         prepend-icon="mdi-shopping"
         title="Marketplace"
       />
 
       <v-list-item
-        :active="selectedItem === Route.SHOPPING_CART"
+        :active="selectedRoute === Route.SHOPPING_CART"
         @click="handleCartClick"
         prepend-icon="mdi-cart"
         title="Shopping cart"
@@ -55,7 +55,7 @@
       />
 
       <v-list-item
-        :active="selectedItem === Route.PURCHASE_ORDER"
+        :active="selectedRoute === Route.PURCHASE_ORDER"
         @click="handleOrderClick"
         prepend-icon="mdi-receipt"
         title="Purchase order"
@@ -71,7 +71,6 @@ import { ref } from 'vue'
 
 import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
 
-import { gotoHomepage, gotoMarketplace, gotoPurchaseOrder, gotoShoppingCart } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductStore } from '@/stores/product'
 import { useProductListStore } from '@/stores/productList'
@@ -87,8 +86,8 @@ const { clear: clearUser } = userStore
 
 const navigationDrawerStore = useNavigationDrawerStore()
 
-const { selectedItem } = storeToRefs(navigationDrawerStore)
-const { clear: clearNavigationDrawer, selectItem } = navigationDrawerStore
+const { selectedRoute } = storeToRefs(navigationDrawerStore)
+const { clear: clearNavigationDrawer, selectRoute } = navigationDrawerStore
 
 const shoppingCartStore = useShoppingCartStore()
 
@@ -117,22 +116,22 @@ const handleLogoutClick = () => {
   clearPurchaseOrder()
   clearProductList()
   clearProduct()
-  selectItem(Route.HOMEPAGE, gotoHomepage)
+  selectRoute(Route.HOMEPAGE)
 }
 
 const handleHomepageClick = () => {
-  selectItem(Route.HOMEPAGE, gotoHomepage)
+  selectRoute(Route.HOMEPAGE)
 }
 
 const handleMarketplaceClick = () => {
-  selectItem(Route.MARKETPLACE, gotoMarketplace)
+  selectRoute(Route.MARKETPLACE)
 }
 
 const handleCartClick = () => {
-  selectItem(Route.SHOPPING_CART, gotoShoppingCart)
+  selectRoute(Route.SHOPPING_CART)
 }
 
 const handleOrderClick = () => {
-  selectItem(Route.PURCHASE_ORDER, gotoPurchaseOrder)
+  selectRoute(Route.PURCHASE_ORDER)
 }
 </script>

@@ -1,19 +1,18 @@
 import { defineStore } from 'pinia'
 
+import { gotoHomepage, gotoMarketplace, gotoPurchaseOrder, gotoShoppingCart } from '@/router/router'
 import { Route } from '@/types/route'
-
-type GoToHandler = () => void
 
 type Id = 'navigationDrawer'
 
 type State = {
-  selectedItem: Route
+  selectedRoute: Route
 }
 
 type Getters = {}
 
 type Actions = {
-  selectItem: (item: Readonly<Route>, goto: GoToHandler) => void
+  selectRoute: (route: Readonly<Route>) => void
   clear: () => void
 }
 
@@ -24,16 +23,37 @@ export const useNavigationDrawerStore = defineStore<Id, State, Getters, Actions>
   'navigationDrawer',
   {
     state: () => ({
-      selectedItem
+      selectedRoute: selectedItem
     }),
     actions: {
-      selectItem(item, goto) {
-        this.selectedItem = item
+      selectRoute(route) {
+        this.selectedRoute = route
 
-        goto()
+        switch (route) {
+          case Route.HOMEPAGE: {
+            gotoHomepage()
+
+            return
+          }
+          case Route.MARKETPLACE: {
+            gotoMarketplace()
+
+            return
+          }
+          case Route.PURCHASE_ORDER: {
+            gotoPurchaseOrder()
+
+            return
+          }
+          case Route.SHOPPING_CART: {
+            gotoShoppingCart()
+
+            return
+          }
+        }
       },
       clear() {
-        this.selectedItem = selectedItem
+        this.selectedRoute = selectedItem
       }
     },
     persist: true
