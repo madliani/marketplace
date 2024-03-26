@@ -51,6 +51,10 @@ const { handleSubmit } = useForm<Form>({
   },
   validationSchema: {
     userBalance(value: Readonly<Form['userBalance']>) {
+      /**
+       * `Number` instead of `parseFloat` is chosen because
+       * it handles strings with mixed content (e.g. "1a") without error.
+       */
       const balance = value !== '' ? Number(value) : NaN
 
       if (!Number.isNaN(balance) && balance > 0) {
