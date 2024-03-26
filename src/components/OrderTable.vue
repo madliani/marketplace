@@ -35,9 +35,10 @@
 
   <AlertSuccess
     v-if="success"
+    class="mb-4"
     :on-close="handleCloseClick"
     title="Congratulations!"
-    text="Order has been paid."
+    text="Purchase order has been paid."
   />
 
   <v-btn-group>
@@ -83,6 +84,8 @@ const handlePayClick = () => {
     const balance = user.value.balance - purchaseOrder.value.totalCost
 
     updateBalance(balance)
+
+    success.value = true
   }
 }
 </script>
