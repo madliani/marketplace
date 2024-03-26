@@ -11,11 +11,11 @@
     </v-list>
 
     <v-btn-group>
-      <v-btn color="primary" title="Place an order" variant="elevated" @click="handlePlaceClick"
+      <v-btn color="primary" title="Place an order" variant="outlined" @click="handlePlaceClick"
         >Place an order</v-btn
       >
 
-      <v-btn color="secondary" title="Empty a cart" variant="elevated" @click="handleClear"
+      <v-btn color="secondary" title="Empty a cart" variant="outlined" @click="handleClear"
         >Empty a cart</v-btn
       >
     </v-btn-group>
