@@ -22,12 +22,9 @@ type Actions = {
   place: () => void
 }
 
-/** Purchase order default value. */
-const purchaseOrder: Readonly<PurchaseOrder | null> = null
-
 export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('purchaseOrder', {
   state: () => ({
-    purchaseOrder
+    purchaseOrder: null
   }),
   actions: {
     cancel(onSuccess) {
@@ -37,7 +34,7 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
       onSuccess()
     },
     clear() {
-      this.purchaseOrder = purchaseOrder
+      this.purchaseOrder = null
     },
     pay(onSuccess) {
       const { user, updateBalance } = useUserStore()

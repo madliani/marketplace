@@ -82,17 +82,14 @@ const injectStatus = (products: Products) => {
   })
 }
 
-/** Product list store default value. */
-const productList: Products = []
-
 export const useProductListStore = defineStore<Id, State, Getters, Actions>('productList', {
   state: () => ({
-    productList,
+    productList: [],
     loading: false
   }),
   actions: {
     clear() {
-      this.productList = productList
+      this.productList = []
     },
     async getProducts(onError, changeLoading) {
       try {
@@ -102,7 +99,7 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
 
         this.productList = injectStatus(products)
       } catch (exception: unknown) {
-        this.productList = productList
+        this.productList = []
 
         onError('Check your Internet connection or contact technical support.')
 

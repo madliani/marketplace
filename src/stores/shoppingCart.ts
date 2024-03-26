@@ -23,12 +23,9 @@ type Actions = {
   updateQuantity: (id: Readonly<CartItem['id']>, quantity: Readonly<CartItem['quantity']>) => void
 }
 
-/** Shopping cart default value. */
-const shoppingCart: ShoppingCart = []
-
 export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('shoppingCart', {
   state: () => ({
-    shoppingCart
+    shoppingCart: []
   }),
   getters: {
     totalCost(state) {
@@ -64,7 +61,7 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
       }
     },
     clear() {
-      this.shoppingCart = shoppingCart
+      this.shoppingCart = []
     },
     deleteItem(id) {
       const { updateStatus } = useProductStore()

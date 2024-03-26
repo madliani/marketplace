@@ -38,16 +38,13 @@ const fetchProduct = async (id: Product['id']): Promise<Product> | never => {
   return Promise.resolve(product)
 }
 
-/** Product store default value. */
-const product: Readonly<Product | null> = null
-
 export const useProductStore = defineStore<Id, State, Getters, Actions>('product', {
   state: () => ({
-    product
+    product: null
   }),
   actions: {
     clear() {
-      this.product = product
+      this.product = null
     },
     async getProduct(id, onError, changeLoading) {
       changeLoading()
@@ -55,7 +52,7 @@ export const useProductStore = defineStore<Id, State, Getters, Actions>('product
       try {
         this.product = await fetchProduct(id)
       } catch (exception: unknown) {
-        this.product = product
+        this.product = null
 
         onError('Check your Internet connection or contact technical support.')
 

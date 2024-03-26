@@ -42,18 +42,15 @@ const isValidUser = (user: Readonly<BackendUser>) => {
   )
 }
 
-/** User default value. */
-const user: Readonly<User | null> = null
-
 export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
   state: () => ({
     balanceBackup: 0,
-    user,
+    user: null,
     loading: false
   }),
   actions: {
     clear() {
-      this.user = user
+      this.user = null
     },
     restoreBalance() {
       if (this.user) {
@@ -89,7 +86,7 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
           }
         }
       } catch (exception: unknown) {
-        this.user = user
+        this.user = null
 
         onError('Check your Internet connection or contact technical support.')
 
