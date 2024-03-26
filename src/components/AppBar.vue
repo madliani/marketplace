@@ -10,7 +10,7 @@
         width="48px"
       />
 
-      <v-app-bar-nav-icon v-if="user" class="cursor-pointer" @click="draw" />
+      <v-app-bar-nav-icon v-if="user" class="cursor-pointer" @click="changeDrawer" />
     </template>
 
     <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
@@ -103,7 +103,7 @@ const { clear: clearProduct } = useProductStore()
 
 const drawer = ref(true)
 
-const draw = () => {
+const changeDrawer = () => {
   drawer.value = !drawer.value
 }
 
