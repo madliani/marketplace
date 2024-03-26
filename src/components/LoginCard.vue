@@ -27,7 +27,7 @@
 
   <AlertError
     v-if="error"
-    :on-close="handleClose"
+    :on-close="handleCloseClick"
     :text="error.message"
     title="Authorization failed!"
   />
@@ -91,7 +91,7 @@ const handleError = (msg: Readonly<string>) => {
   error.value = new Error(msg)
 }
 
-const handleClose = () => {
+const handleCloseClick = () => {
   error.value = null
 }
 
