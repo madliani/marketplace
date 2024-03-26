@@ -16,19 +16,16 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { onBeforeMount, ref } from 'vue'
-
 import AlertError from '@/components/AlertError.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
-
-import type { Product } from '@/types/products'
-
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductStore } from '@/stores/product'
+import type { Product } from '@/types/products'
 import { Route } from '@/types/route'
+import { storeToRefs } from 'pinia'
+import { onBeforeMount, ref } from 'vue'
 
 type Props = Readonly<{
   id: Product['id']

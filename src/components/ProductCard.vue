@@ -22,10 +22,8 @@
 
 <script lang="ts" setup>
 import CarouselCycle from '@/components/CarouselCycle.vue'
-
-import type { Product } from '@/types/products'
-
 import { useShoppingCartStore } from '@/stores/shoppingCart'
+import type { Product } from '@/types/products'
 import { ProductStatus } from '@/types/products'
 
 type Props = Readonly<{
