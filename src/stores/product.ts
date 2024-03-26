@@ -31,9 +31,7 @@ const fetchProduct = async (id: Product['id']): Promise<BackendProduct> | never 
   const productResponse = await fetch(`https://dummyjson.com/products/${id}`)
   const productJSON = await productResponse.json()
 
-  const product = productJSON as unknown as BackendProduct
-
-  return product
+  return productJSON as unknown as BackendProduct
 }
 
 /** Backend product images validating. */

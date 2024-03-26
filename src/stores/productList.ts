@@ -46,9 +46,7 @@ const fetchProducts = async (): Promise<BackendProducts> | never => {
   const productResponse = await fetch('https://dummyjson.com/products')
   const productJson = await productResponse.json()
 
-  const products = productJson as unknown as BackendProducts
-
-  return products
+  return productJson as unknown as BackendProducts
 }
 
 /** Injecting statuses into products. */

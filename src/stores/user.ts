@@ -21,7 +21,7 @@ type Actions = {
     id: Readonly<User['id']>,
     onError: ErrorHandler,
     changeLoading: LoadingChanger
-  ) => Promise<void> | never
+  ) => Promise<void>
   restoreBalance: () => void
   updateBalance: (balance: Readonly<User['balance']>) => void
 }
@@ -31,9 +31,7 @@ const fetchUser = async (id: Readonly<User['id']>): Promise<BackendUser> | never
   const userResponse = await fetch(`https://dummyjson.com/users/${id}`)
   const userJson = await userResponse.json()
 
-  const user = userJson as unknown as BackendUser
-
-  return user
+  return userJson as unknown as BackendUser
 }
 
 /** Getting a random integer between two values. */
