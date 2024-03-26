@@ -11,7 +11,7 @@
 
   <AlertError
     v-if="error"
-    :on-close="handleClose"
+    :on-close="handleCloseClick"
     :text="error.message"
     title="Connection error!"
   />
@@ -46,7 +46,7 @@ const handleError = (msg: Readonly<string>) => {
   error.value = new Error(msg)
 }
 
-const handleClose = () => {
+const handleCloseClick = () => {
   selectRoute(Route.HOMEPAGE)
 }
 
