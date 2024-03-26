@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import type { OrderUser, PurchaseOrder } from '@/types/purchaseOrder'
+import type { OrderItem, OrderProduct, OrderUser, PurchaseOrder } from '@/types/purchaseOrder'
 
 import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { useUserStore } from '@/stores/user'
@@ -58,6 +58,21 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
       if (user) {
         const departureDate = new Date()
 
+        const items = shoppingCart.map<OrderItem>((item) => {
+          const product: Readonly<OrderProduct> = {
+            id: item.product.id,
+            title: item.product.title,
+            price: item.product.price
+          }
+
+          return {
+            cost: item.cost,
+            id: item.id,
+            quantity: item.quantity,
+            product
+          }
+        })
+
         const buyer: Readonly<OrderUser> = {
           firstName: user.firstName,
           id: user.id,
@@ -66,7 +81,7 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
 
         this.purchaseOrder = {
           departureDate,
-          items: shoppingCart,
+          items,
           totalCost,
           buyer
         }
