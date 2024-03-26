@@ -51,6 +51,7 @@ const handlePlaceClick = () => {
 
 const handleClear = () => {
   clear()
+
   selectRoute(Route.MARKETPLACE)
 }
 </script>
