@@ -83,14 +83,16 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
 
         const backendUser = await fetchUser(id)
 
-        if (isValidUser(backendUser)) {
-          this.user = {
-            avatar: backendUser.image,
-            balance: getRandomNumber(0, 1_000),
-            firstName: backendUser.firstName,
-            id: backendUser.id,
-            lastName: backendUser.lastName
-          }
+        if (!isValidUser(backendUser)) {
+          throw new Error('User is not valid.')
+        }
+
+        this.user = {
+          avatar: backendUser.image,
+          balance: getRandomNumber(0, 1_000),
+          firstName: backendUser.firstName,
+          id: backendUser.id,
+          lastName: backendUser.lastName
         }
       } catch (exception: unknown) {
         this.user = null
