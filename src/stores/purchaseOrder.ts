@@ -3,8 +3,6 @@ import { useUserStore } from '@/stores/user'
 import type { OrderItem, OrderProduct, OrderUser, PurchaseOrder } from '@/types/purchaseOrder'
 import { defineStore } from 'pinia'
 
-type SuccessHandler = () => void
-
 type Id = 'purchaseOrder'
 
 type State = {
@@ -14,9 +12,7 @@ type State = {
 type Getters = {}
 
 type Actions = {
-  cancel: (onSuccess: SuccessHandler) => void
   clear: () => void
-  pay: (onSuccess: SuccessHandler) => void
   place: () => void
 }
 
@@ -25,25 +21,8 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
     purchaseOrder: null
   }),
   actions: {
-    cancel(onSuccess) {
-      const { restoreBalance } = useUserStore()
-
-      restoreBalance()
-      onSuccess()
-    },
     clear() {
       this.purchaseOrder = null
-    },
-    pay(onSuccess) {
-      const { user, updateBalance } = useUserStore()
-
-      if (user && this.purchaseOrder) {
-        const balance = user.balance - this.purchaseOrder.totalCost
-
-        updateBalance(balance)
-
-        onSuccess()
-      }
     },
     place() {
       const { shoppingCart, totalCost } = useShoppingCartStore()

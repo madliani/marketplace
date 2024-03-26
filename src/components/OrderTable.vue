@@ -53,7 +53,7 @@
 
   <AlertSuccess
     v-if="success"
-    :on-close="handleClose"
+    :on-close="handleCloseClick"
     title="Congratulations!"
     text="Order has been paid."
   />
@@ -72,29 +72,35 @@
 <script lang="ts" setup>
 import AlertSuccess from '@/components/AlertSuccess.vue'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
+import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
 const purchaseOrderStore = usePurchaseOrderStore()
 
 const { purchaseOrder } = storeToRefs(purchaseOrderStore)
-const { pay, cancel } = purchaseOrderStore
+
+const userStore = useUserStore()
+
+const { user } = storeToRefs(userStore)
+
+const { updateBalance } = userStore
 
 const success = ref(false)
 
-const handleSuccess = () => {
-  success.value = true
-}
-
-const handleClose = () => {
+const handleCloseClick = () => {
   success.value = false
 }
 
-const handlePayClick = () => {
-  pay(handleSuccess)
+const handleCancelClick = () => {
+  success.value = true
 }
 
-const handleCancelClick = () => {
-  cancel(handleSuccess)
+const handlePayClick = () => {
+  if (user.value && purchaseOrder.value) {
+    const balance = user.value.balance - purchaseOrder.value.totalCost
+
+    updateBalance(balance)
+  }
 }
 </script>
