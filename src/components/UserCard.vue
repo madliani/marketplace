@@ -17,12 +17,7 @@
         />
 
         <v-card-actions>
-          <v-btn
-            :disabled="isDisabled"
-            color="primary"
-            type="submit"
-            title="Update"
-            variant="elevated"
+          <v-btn :disabled="isDisabled" color="primary" type="submit" title="Update" variant="tonal"
             >Update</v-btn
           >
 
@@ -31,7 +26,7 @@
             @click="handleReset"
             color="secondary"
             title="Reset"
-            variant="elevated"
+            variant="tonal"
             >Reset</v-btn
           >
         </v-card-actions>
