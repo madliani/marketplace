@@ -57,7 +57,7 @@ const { handleSubmit } = useForm<Form>({
        */
       const balance = value !== '' ? Number(value) : NaN
 
-      if (!Number.isNaN(balance) && balance > 0) {
+      if (!Number.isNaN(balance) && balance >= 0) {
         isDisabled.value = false
 
         return true
