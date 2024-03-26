@@ -21,14 +21,7 @@
             >Update</v-btn
           >
 
-          <v-btn
-            :disabled="isDisabled"
-            color="secondary"
-            title="Reset"
-            variant="tonal"
-            @click="handleReset"
-            >Reset</v-btn
-          >
+          <v-btn color="secondary" title="Reset" variant="tonal" @click="handleReset">Reset</v-btn>
         </v-card-actions>
       </v-form>
     </v-card-item>
@@ -58,7 +51,7 @@ const { handleSubmit } = useForm<Form>({
   },
   validationSchema: {
     userBalance(value: Readonly<Form['userBalance']>) {
-      const balance = Number(value)
+      const balance = value !== '' ? Number(value) : NaN
 
       if (!Number.isNaN(balance)) {
         isDisabled.value = false
