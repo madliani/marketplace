@@ -9,14 +9,10 @@
     >
 
     <v-card-actions>
-      <v-btn
-        :title="getTitleByStatus(product.status)"
-        @click="handleBuyClick"
-        color="primary"
-        variant="tonal"
-        >{{ getTitleByStatus(product.status) }}</v-btn
-      >
-      <v-btn @click="handleCardClick" color="secondary" title="Details" variant="tonal"
+      <v-btn :title="productStatus" @click="handleBuyClick" color="primary" variant="tonal">{{
+        productStatus
+      }}</v-btn>
+      <v-btn color="secondary" title="Details" variant="tonal" @click="handleCardClick"
         >Details</v-btn
       >
     </v-card-actions>
@@ -31,6 +27,7 @@ import { ProductStatus } from '@/types/products'
 
 type Props = Readonly<{
   product: Product
+  productStatus: ProductStatus
 }>
 
 const { product } = defineProps<Props>()
@@ -58,24 +55,6 @@ const handleBuyClick = () => {
     }
     case ProductStatus.PURCHASED: {
       return
-    }
-  }
-}
-
-/** Getting button title by product status. */
-const getTitleByStatus = (status: Readonly<ProductStatus>) => {
-  switch (status) {
-    case ProductStatus.FREE: {
-      return 'Buy'
-    }
-    case ProductStatus.IN_CART: {
-      return 'In cart'
-    }
-    case ProductStatus.ORDERED: {
-      return 'Ordered'
-    }
-    case ProductStatus.PURCHASED: {
-      return 'Purchased'
     }
   }
 }
