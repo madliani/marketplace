@@ -37,9 +37,9 @@ const fetchUser = async (id: Readonly<User['id']>): Promise<BackendUser> | never
 /** Getting a random integer between two values. */
 const getRandomNumber = (min: Readonly<number>, max: Readonly<number>) => {
   const randomNumber = Math.random() * (max - min) + min
-  const fixedPoint = randomNumber.toFixed(2)
+  const fixedNumber = randomNumber.toFixed(2)
 
-  return parseFloat(fixedPoint)
+  return parseFloat(fixedNumber)
 }
 
 /** Backend user validating. */
@@ -71,8 +71,10 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
       const user = this.user
 
       if (user) {
-        this.balanceBackup = user.balance
-        this.user = { ...user, balance }
+        const fixedNumber = parseFloat(balance.toFixed(2))
+
+        this.balanceBackup = fixedNumber
+        this.user = { ...user, balance: fixedNumber }
       }
     },
     async getUser(id, onError, changeLoading) {
