@@ -25,11 +25,6 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
   state: () => ({
     shoppingCart: []
   }),
-  getters: {
-    totalCost(state) {
-      return state.shoppingCart.reduce((cost, item) => cost + item.cost, 0)
-    }
-  },
   actions: {
     addItem(id) {
       const { productList } = useProductListStore()
@@ -79,6 +74,11 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
 
         this.shoppingCart = cart
       }
+    }
+  },
+  getters: {
+    totalCost(state) {
+      return state.shoppingCart.reduce((cost, item) => cost + item.cost, 0)
     }
   },
   persist: true
