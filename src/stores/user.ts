@@ -32,12 +32,15 @@ const getRandomNumber = (min: Readonly<number>, max: Readonly<number>) => {
 }
 
 /** Backend user validating. */
-const isValidUser = (user: Readonly<BackendUser>) =>
-  typeof user === 'object' &&
-  typeof user.firstName === 'string' &&
-  typeof user.id === 'number' &&
-  typeof user.image === 'string' &&
-  typeof user.lastName === 'string'
+const isValidUser = (user: Readonly<BackendUser>) => {
+  return (
+    typeof user === 'object' &&
+    typeof user.firstName === 'string' &&
+    typeof user.id === 'number' &&
+    typeof user.image === 'string' &&
+    typeof user.lastName === 'string'
+  )
+}
 
 /** User default value. */
 const user: Readonly<User | null> = null
