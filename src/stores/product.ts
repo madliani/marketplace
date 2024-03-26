@@ -57,28 +57,6 @@ export const useProductStore = defineStore<Id, State, Getters, Actions>('product
   state: () => ({
     product: null
   }),
-  getters: {
-    titleByStatus(state) {
-      if (state.product) {
-        switch (state.product.status) {
-          case ProductStatus.FREE: {
-            return 'Buy'
-          }
-          case ProductStatus.IN_CART: {
-            return 'In cart'
-          }
-          case ProductStatus.ORDERED: {
-            return 'Ordered'
-          }
-          case ProductStatus.PURCHASED: {
-            return 'Purchased'
-          }
-        }
-      }
-
-      return null
-    }
-  },
   actions: {
     clear() {
       this.product = null
@@ -124,6 +102,28 @@ export const useProductStore = defineStore<Id, State, Getters, Actions>('product
 
         updateProducts(products)
       }
+    }
+  },
+  getters: {
+    titleByStatus(state) {
+      if (state.product) {
+        switch (state.product.status) {
+          case ProductStatus.FREE: {
+            return 'Buy'
+          }
+          case ProductStatus.IN_CART: {
+            return 'In cart'
+          }
+          case ProductStatus.ORDERED: {
+            return 'Ordered'
+          }
+          case ProductStatus.PURCHASED: {
+            return 'Purchased'
+          }
+        }
+      }
+
+      return null
     }
   },
   persist: true
