@@ -15,9 +15,9 @@
 
 <script lang="ts" setup>
 type Props = Readonly<{
-  onClose?: () => void
-  text?: string
-  title?: string
+  onClose: () => void
+  text: string
+  title: string
 }>
 
 defineProps<Props>()
