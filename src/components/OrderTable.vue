@@ -59,11 +59,11 @@
   />
 
   <v-btn-group>
-    <v-btn color="primary" title="Pay an order" variant="elevated" @click="handlePayClick"
+    <v-btn color="primary" title="Pay an order" variant="outlined" @click="handlePayClick"
       >Pay an order</v-btn
     >
 
-    <v-btn color="secondary" title="Cancel an order" variant="elevated" @click="handleCancelClick"
+    <v-btn color="secondary" title="Cancel an order" variant="outlined" @click="handleCancelClick"
       >Cancel an order</v-btn
     >
   </v-btn-group>
