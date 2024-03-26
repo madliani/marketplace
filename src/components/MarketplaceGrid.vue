@@ -2,7 +2,7 @@
   <v-container v-if="!loading && !error">
     <v-row>
       <v-col v-for="product in productList" :key="product.id">
-        <ProductCard :product="product" />
+        <MarketplaceCard :product="product" />
       </v-col>
     </v-row>
   </v-container>
@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import AlertError from '@/components/AlertError.vue'
-import ProductCard from '@/components/ProductCard.vue'
+import MarketplaceCard from '@/components/MarketplaceCard.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductListStore } from '@/stores/productList'
