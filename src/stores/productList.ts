@@ -17,7 +17,7 @@ type Getters = {}
 
 type Actions = {
   clear: () => void
-  getProducts: (onError: ErrorHandler, changeLoading: LoadingChanger) => Promise<void> | never
+  getProducts: (onError: ErrorHandler, changeLoading: LoadingChanger) => Promise<void>
   updateProducts: (products: Products) => void
 }
 
