@@ -10,7 +10,6 @@ type Id = 'productList'
 
 type State = {
   productList: Products
-  loading: boolean
 }
 
 type Getters = {}
@@ -70,8 +69,7 @@ const injectStatus = (products: Products) => {
 
 export const useProductListStore = defineStore<Id, State, Getters, Actions>('productList', {
   state: () => ({
-    productList: [],
-    loading: false
+    productList: []
   }),
   actions: {
     clear() {
