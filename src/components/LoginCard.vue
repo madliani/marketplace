@@ -83,7 +83,7 @@ const { handleReset, handleSubmit } = useForm<Form>({
 
 const userId = useField<Form['userId']>('userId')
 
-const handleError = (msg: string) => {
+const handleError = (msg: Readonly<string>) => {
   error.value = new Error(msg)
 }
 

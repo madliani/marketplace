@@ -51,7 +51,7 @@ const changeLoading = () => {
   loading.value = !loading.value
 }
 
-const handleError = (msg: string) => {
+const handleError = (msg: Readonly<string>) => {
   error.value = new Error(msg)
 }
 
