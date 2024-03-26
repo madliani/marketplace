@@ -53,7 +53,7 @@ const { handleSubmit } = useForm<Form>({
     userBalance(value: Readonly<Form['userBalance']>) {
       const balance = value !== '' ? Number(value) : NaN
 
-      if (!Number.isNaN(balance)) {
+      if (!Number.isNaN(balance) && balance > 0) {
         isDisabled.value = false
 
         return true
@@ -61,7 +61,7 @@ const { handleSubmit } = useForm<Form>({
 
       isDisabled.value = true
 
-      return 'The user balance must be a floating-point number.'
+      return 'The user balance must be a positive floating-point number.'
     }
   }
 })
