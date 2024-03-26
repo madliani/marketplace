@@ -2,7 +2,7 @@
   <v-container v-if="!loading && !error">
     <v-row>
       <v-col v-for="product in productList" :key="product.id">
-        <ProductCard :product="product" :product-status="product.status" />
+        <ProductCard :product="product" />
       </v-col>
     </v-row>
   </v-container>
