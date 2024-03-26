@@ -24,10 +24,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { Product } from '@/types/products'
-
 import { gotoProduct } from '@/router/router'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
+import type { Product } from '@/types/products'
 import { ProductStatus } from '@/types/products'
 
 type Props = Readonly<{

@@ -1,7 +1,6 @@
-import { defineStore } from 'pinia'
-
 import { gotoHomepage, gotoMarketplace, gotoPurchaseOrder, gotoShoppingCart } from '@/router/router'
 import { Route } from '@/types/route'
+import { defineStore } from 'pinia'
 
 type Id = 'navigationDrawer'
 

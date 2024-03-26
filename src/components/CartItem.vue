@@ -36,9 +36,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { CartItem } from '@/types/shoppingCart'
-
 import { useShoppingCartStore } from '@/stores/shoppingCart'
+import type { CartItem } from '@/types/shoppingCart'
 
 type Props = Readonly<{
   item: CartItem

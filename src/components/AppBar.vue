@@ -66,11 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
-
 import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
-
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductStore } from '@/stores/product'
 import { useProductListStore } from '@/stores/productList'
@@ -78,6 +74,8 @@ import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { useUserStore } from '@/stores/user'
 import { Route } from '@/types/route'
+import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 const userStore = useUserStore()
 

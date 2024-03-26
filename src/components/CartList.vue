@@ -27,14 +27,12 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-
 import CartItem from '@/components/CartItem.vue'
-
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { Route } from '@/types/route'
+import { storeToRefs } from 'pinia'
 
 const shoppingCartStore = useShoppingCartStore()
 

@@ -1,9 +1,7 @@
-import { defineStore } from 'pinia'
-
-import type { Product } from '@/types/products'
-
 import { useProductListStore } from '@/stores/productList'
+import type { Product } from '@/types/products'
 import { ProductStatus } from '@/types/products'
+import { defineStore } from 'pinia'
 
 type ErrorHandler = (msg: Readonly<string>) => void
 type LoadingChanger = () => void

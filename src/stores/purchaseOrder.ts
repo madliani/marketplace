@@ -1,9 +1,7 @@
-import { defineStore } from 'pinia'
-
-import type { OrderItem, OrderProduct, OrderUser, PurchaseOrder } from '@/types/purchaseOrder'
-
 import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { useUserStore } from '@/stores/user'
+import type { OrderItem, OrderProduct, OrderUser, PurchaseOrder } from '@/types/purchaseOrder'
+import { defineStore } from 'pinia'
 
 type SuccessHandler = () => void
 

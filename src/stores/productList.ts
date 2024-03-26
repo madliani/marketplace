@@ -1,8 +1,6 @@
-import { defineStore } from 'pinia'
-
 import type { BackendProduct, BackendProducts, Products } from '@/types/products'
-
 import { ProductStatus } from '@/types/products'
+import { defineStore } from 'pinia'
 import { useShoppingCartStore } from './shoppingCart'
 
 type ErrorHandler = (msg: Readonly<string>) => void

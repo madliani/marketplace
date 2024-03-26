@@ -1,16 +1,12 @@
-import type { RouteRecordRaw, RouterHistory, RouterOptions } from 'vue-router'
-
-import { createRouter, createWebHistory } from 'vue-router'
-
+import type { Product } from '@/types/products'
+import { Route } from '@/types/route'
 import CartView from '@/views/CartView.vue'
 import HomepageView from '@/views/HomepageView.vue'
 import MarketplaceView from '@/views/MarketplaceView.vue'
 import OrderView from '@/views/OrderView.vue'
 import ProductView from '@/views/ProductView.vue'
-
-import type { Product } from '@/types/products'
-
-import { Route } from '@/types/route'
+import type { RouteRecordRaw, RouterHistory, RouterOptions } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const history: Readonly<RouterHistory> = createWebHistory(import.meta.env.BASE_URL)
 

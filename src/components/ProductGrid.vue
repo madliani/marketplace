@@ -18,16 +18,14 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { onBeforeMount, ref } from 'vue'
-
 import AlertError from '@/components/AlertError.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
-
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductListStore } from '@/stores/productList'
 import { Route } from '@/types/route'
+import { storeToRefs } from 'pinia'
+import { onBeforeMount, ref } from 'vue'
 
 const productListStore = useProductListStore()
 

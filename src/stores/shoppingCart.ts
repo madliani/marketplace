@@ -1,10 +1,8 @@
-import { defineStore } from 'pinia'
-
-import type { CartItem, CartProduct, ShoppingCart } from '@/types/shoppingCart'
-
 import { useProductStore } from '@/stores/product'
 import { useProductListStore } from '@/stores/productList'
 import { ProductStatus } from '@/types/products'
+import type { CartItem, CartProduct, ShoppingCart } from '@/types/shoppingCart'
+import { defineStore } from 'pinia'
 
 type Id = 'shoppingCart'
 

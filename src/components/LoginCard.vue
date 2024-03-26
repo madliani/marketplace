@@ -43,14 +43,12 @@
 </template>
 
 <script lang="ts" setup>
+import AlertError from '@/components/AlertError.vue'
+import ProgressCircular from '@/components/ProgressCircular.vue'
+import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import { ref } from 'vue'
-
-import AlertError from '@/components/AlertError.vue'
-import ProgressCircular from '@/components/ProgressCircular.vue'
-
-import { useUserStore } from '@/stores/user'
 
 type Form = Readonly<{
   userId: string
