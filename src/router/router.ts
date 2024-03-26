@@ -44,7 +44,7 @@ const options: Readonly<RouterOptions> = {
   routes
 }
 
-const router = createRouter(options)
+export const router = createRouter(options)
 
 const goto = (path: Readonly<Route>) => () => router.push(path)
 
@@ -56,5 +56,3 @@ export const gotoPurchaseOrder = goto(Route.PURCHASE_ORDER)
 export const gotoProduct = (id: Product['id']) => {
   router.push(`${Route.MARKETPLACE}/${id}`)
 }
-
-export default router
