@@ -18,15 +18,6 @@
           <v-btn :disabled="isDisabled" color="primary" title="Login" type="submit" variant="tonal"
             >Login</v-btn
           >
-
-          <v-btn
-            :disabled="isDisabled"
-            color="secondary"
-            title="Clear"
-            variant="tonal"
-            @click="handleReset"
-            >Clear</v-btn
-          >
         </v-card-actions>
       </v-form>
     </v-card-item>
