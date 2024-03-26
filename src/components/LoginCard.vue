@@ -1,7 +1,7 @@
 <template>
   <v-card v-if="!loading && !error" variant="elevated">
     <v-card-item>
-      <form @submit.prevent="submit">
+      <v-form @submit.prevent="submit">
         <v-card-title class="text-center mb-2" title="Authorization">Authorization</v-card-title>
 
         <v-text-field
@@ -28,7 +28,7 @@
             >Clear</v-btn
           >
         </v-card-actions>
-      </form>
+      </v-form>
     </v-card-item>
   </v-card>
 
