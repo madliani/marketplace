@@ -73,6 +73,8 @@ import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
 
 import { gotoHomepage, gotoMarketplace, gotoPurchaseOrder, gotoShoppingCart } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
+import { useProductStore } from '@/stores/product'
+import { useProductListStore } from '@/stores/productList'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { useUserStore } from '@/stores/user'
@@ -81,20 +83,26 @@ import { Route } from '@/types/route'
 const userStore = useUserStore()
 
 const { user, username } = storeToRefs(userStore)
-const { clear } = userStore
+const { clear: clearUser } = userStore
 
 const navigationDrawerStore = useNavigationDrawerStore()
 
 const { selectedItem } = storeToRefs(navigationDrawerStore)
-const { selectItem } = navigationDrawerStore
+const { clear: clearNavigationDrawer, selectItem } = navigationDrawerStore
 
 const shoppingCartStore = useShoppingCartStore()
 
 const { shoppingCart } = storeToRefs(shoppingCartStore)
+const { clear: clearShoppingCart } = shoppingCartStore
 
 const purchaseOrderStore = usePurchaseOrderStore()
 
-const { purchaseOrder } = purchaseOrderStore
+const { purchaseOrder } = storeToRefs(purchaseOrderStore)
+const { clear: clearPurchaseOrder } = purchaseOrderStore
+
+const { clear: clearProductList } = useProductListStore()
+
+const { clear: clearProduct } = useProductStore()
 
 const drawer = ref(true)
 
@@ -103,7 +111,12 @@ const draw = () => {
 }
 
 const handleLogoutClick = () => {
-  clear()
+  clearUser()
+  clearNavigationDrawer()
+  clearShoppingCart()
+  clearPurchaseOrder()
+  clearProductList()
+  clearProduct()
   selectItem(Route.HOMEPAGE, gotoHomepage)
 }
 
