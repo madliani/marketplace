@@ -3,13 +3,14 @@
     <template v-slot:prepend>
       <v-img
         :src="MarketplaceLogo"
-        @click="draw"
         alt="Marketplace logo"
-        class="cursor-pointer"
         height="48px"
         title="Marketplace"
+        v-if="!user"
         width="48px"
       />
+
+      <v-app-bar-nav-icon @click="draw" class="cursor-pointer" v-if="user" />
     </template>
 
     <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
@@ -27,7 +28,7 @@
     </template>
   </v-app-bar>
 
-  <v-navigation-drawer v-model="drawer">
+  <v-navigation-drawer v-if="user" v-model="drawer">
     <v-list nav>
       <v-list-item
         :active="selectedItem === Route.HOMEPAGE"
