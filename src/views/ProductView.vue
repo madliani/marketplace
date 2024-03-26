@@ -1,19 +1,17 @@
 <template>
   <MainLayout>
-    <ProductCard
-      v-if="product && !loading && error"
-      :product="product"
-      :title-by-status="titleByStatus"
-    />
+    <template #content>
+      <ProductCard v-if="product" :product="product" :title-by-status="titleByStatus" />
 
-    <ProgressCircular v-if="loading && !error" />
+      <ProgressCircular v-if="loading" />
 
-    <AlertError
-      v-if="error && !loading"
-      :on-close="handleClose"
-      :text="error.message"
-      title="Connection error!"
-    />
+      <AlertError
+        v-if="error"
+        :on-close="handleClose"
+        :text="error.message"
+        title="Connection error!"
+      />
+    </template>
   </MainLayout>
 </template>
 
@@ -21,7 +19,9 @@
 import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref } from 'vue'
 
+import AlertError from '@/components/AlertError.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import ProgressCircular from '@/components/ProgressCircular.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 
 import type { Product } from '@/types/products'

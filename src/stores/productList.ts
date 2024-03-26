@@ -1,4 +1,4 @@
-import type { BackendProduct, BackendProducts, Products } from '@/types/products'
+import type { BackendProduct, BackendProducts, Product, Products } from '@/types/products'
 import { ProductStatus } from '@/types/products'
 import { defineStore } from 'pinia'
 import { useShoppingCartStore } from './shoppingCart'
@@ -27,10 +27,10 @@ const isValidImages = (images: Readonly<BackendProduct['images']>) => {
 }
 
 /** Backend products validating. */
-const isValidProducts = (products: Readonly<BackendProduct[]>) => {
+const isValidProducts = (backendProducts: Readonly<BackendProducts>) => {
   return (
-    typeof products === 'object' &&
-    products.every(
+    typeof backendProducts.products === 'object' &&
+    backendProducts.products.every(
       (product) =>
         typeof product === 'object' &&
         typeof product.description === 'string' &&
@@ -43,25 +43,13 @@ const isValidProducts = (products: Readonly<BackendProduct[]>) => {
 }
 
 /** Fetching products. */
-const fetchProducts = async (): Promise<Products> | never => {
+const fetchProducts = async (): Promise<BackendProducts> | never => {
   const productResponse = await fetch('https://dummyjson.com/products')
   const productJson = await productResponse.json()
 
   const products = productJson as unknown as BackendProducts
 
-  if (!isValidProducts(products.products)) {
-    throw new Error('Products are not valid.')
-  }
-
-  return products.products.map((product) => ({
-    description: product.description,
-    id: product.id.toString(),
-    images: product.images,
-    price: product.price,
-    status: ProductStatus.FREE,
-    thumbnail: product.thumbnail,
-    title: product.title
-  }))
+  return products
 }
 
 /** Injecting statuses into products. */
@@ -93,7 +81,21 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
       try {
         changeLoading()
 
-        const products = await fetchProducts()
+        const backendProducts = await fetchProducts()
+
+        if (!isValidProducts(backendProducts)) {
+          throw new Error('Products are not valid.')
+        }
+
+        const products = backendProducts.products.map<Product>((product) => ({
+          description: product.description,
+          id: product.id.toString(),
+          images: product.images,
+          price: product.price,
+          status: ProductStatus.FREE,
+          thumbnail: product.thumbnail,
+          title: product.title
+        }))
 
         this.productList = injectStatus(products)
       } catch (exception: unknown) {
