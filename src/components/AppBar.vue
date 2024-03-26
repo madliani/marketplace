@@ -2,8 +2,8 @@
   <v-app-bar>
     <template v-slot:prepend>
       <v-img
-        @click="draw"
         :src="MarketplaceLogo"
+        @click="draw"
         alt="Marketplace logo"
         class="cursor-pointer"
         height="48px"
@@ -47,6 +47,12 @@
         prepend-icon="mdi-cart"
         title="Shopping cart"
       />
+      <v-list-item
+        :active="selectedItem === Route.PURCHASE_ORDER"
+        @click="handleOrderClick"
+        prepend-icon="mdi-receipt"
+        title="Purchase order"
+      />
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -57,7 +63,7 @@ import { ref } from 'vue'
 
 import MarketplaceLogo from '@/assets/icons/marketplace-logo.png'
 
-import { gotoHomepage, gotoMarketplace, gotoShoppingCart } from '@/router/router'
+import { gotoHomepage, gotoMarketplace, gotoPurchaseOrder, gotoShoppingCart } from '@/router/router'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useUserStore } from '@/stores/user'
 import { Route } from '@/types/route'
@@ -88,5 +94,9 @@ const handleMarketplaceClick = () => {
 
 const handleCartClick = () => {
   selectItem(Route.SHOPPING_CART, gotoShoppingCart)
+}
+
+const handleOrderClick = () => {
+  selectItem(Route.PURCHASE_ORDER, gotoPurchaseOrder)
 }
 </script>

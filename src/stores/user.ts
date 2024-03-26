@@ -7,6 +7,7 @@ type ErrorHandler = (msg: Readonly<string>) => void
 type Id = 'user'
 
 type State = {
+  balanceBackup: User['balance']
   user: User | null
   loading: boolean
 }
@@ -18,6 +19,7 @@ type Getters = {
 type Actions = {
   clear: () => void
   fetchUser: (id: Readonly<User['id']>, onError: ErrorHandler) => Promise<void> | never
+  restoreBalance: () => void
   updateBalance: (balance: Readonly<User['balance']>) => void
 }
 
@@ -42,6 +44,7 @@ const user: Readonly<User | null> = null
 
 export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
   state: () => ({
+    balanceBackup: 0,
     user,
     loading: false
   }),
@@ -49,10 +52,16 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
     clear() {
       this.user = user
     },
+    restoreBalance() {
+      if (this.user) {
+        this.user.balance = this.balanceBackup
+      }
+    },
     updateBalance(balance) {
       const user = this.user
 
       if (user) {
+        this.balanceBackup = user.balance
         this.user = { ...user, balance }
       }
     },

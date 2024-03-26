@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import CartView from '@/views/CartView.vue'
 import HomepageView from '@/views/HomepageView.vue'
 import MarketplaceView from '@/views/MarketplaceView.vue'
+import OrderView from '@/views/OrderView.vue'
 import ProductView from '@/views/ProductView.vue'
 
 import type { Product } from '@/types/products'
@@ -34,6 +35,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
     component: CartView,
     name: 'shopping-cart',
     path: Route.SHOPPING_CART
+  },
+  {
+    component: OrderView,
+    name: 'purchase-order',
+    path: Route.PURCHASE_ORDER
   }
 ]
 
@@ -49,6 +55,7 @@ const goto = (path: Readonly<Route>) => () => router.push(path)
 export const gotoHomepage = goto(Route.HOMEPAGE)
 export const gotoMarketplace = goto(Route.MARKETPLACE)
 export const gotoShoppingCart = goto(Route.SHOPPING_CART)
+export const gotoPurchaseOrder = goto(Route.PURCHASE_ORDER)
 
 export const gotoProduct = (id: Product['id']) => {
   router.push(`${Route.MARKETPLACE}/${id}`)
