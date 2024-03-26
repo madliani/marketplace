@@ -2,13 +2,13 @@ import type { BackendUser, User } from '@/types/user'
 import { defineStore } from 'pinia'
 
 type ErrorHandler = (msg: Readonly<string>) => void
+type LoadingChanger = () => void
 
 type Id = 'user'
 
 type State = {
   balanceBackup: User['balance']
   user: User | null
-  loading: boolean
 }
 
 type Getters = {
@@ -17,7 +17,11 @@ type Getters = {
 
 type Actions = {
   clear: () => void
-  fetchUser: (id: Readonly<User['id']>, onError: ErrorHandler) => Promise<void> | never
+  fetchUser: (
+    id: Readonly<User['id']>,
+    onError: ErrorHandler,
+    changeLoading: LoadingChanger
+  ) => Promise<void> | never
   restoreBalance: () => void
   updateBalance: (balance: Readonly<User['balance']>) => void
 }
@@ -44,8 +48,7 @@ const isValidUser = (user: Readonly<BackendUser>) => {
 export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
   state: () => ({
     balanceBackup: 0,
-    user: null,
-    loading: false
+    user: null
   }),
   actions: {
     clear() {
@@ -64,9 +67,9 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
         this.user = { ...user, balance }
       }
     },
-    async fetchUser(id, onError) {
+    async fetchUser(id, onError, changeLoading) {
       try {
-        this.loading = true
+        changeLoading()
 
         const userResponse = await fetch(`https://dummyjson.com/users/${id}`)
         const userJson = await userResponse.json()
@@ -91,7 +94,7 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
 
         console.error(exception)
       } finally {
-        this.loading = false
+        changeLoading()
       }
     }
   },

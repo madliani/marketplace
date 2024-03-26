@@ -37,7 +37,6 @@
 import AlertError from '@/components/AlertError.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import { useUserStore } from '@/stores/user'
-import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import { ref } from 'vue'
 
@@ -47,10 +46,11 @@ type Form = Readonly<{
 
 const userStore = useUserStore()
 
-const { loading } = storeToRefs(userStore)
 const { fetchUser } = userStore
 
 const isDisabled = ref(true)
+
+const loading = ref(false)
 
 const error = ref<Error | null>(null)
 
@@ -83,6 +83,10 @@ const { handleReset, handleSubmit } = useForm<Form>({
 
 const userId = useField<Form['userId']>('userId')
 
+const changeLoading = () => {
+  loading.value = !loading.value
+}
+
 const handleError = (msg: Readonly<string>) => {
   error.value = new Error(msg)
 }
@@ -94,7 +98,7 @@ const handleClose = () => {
 const submit = handleSubmit(async (values) => {
   const id = parseInt(values.userId)
 
-  await fetchUser(id, handleError)
+  await fetchUser(id, handleError, changeLoading)
 
   handleReset()
 })
