@@ -9,7 +9,7 @@
     >
 
     <v-card-actions>
-      <v-btn :title="productStatus" @click="handleBuyClick" color="primary" variant="tonal">{{
+      <v-btn :title="productStatus" color="primary" variant="tonal" @click="handleBuyClick">{{
         productStatus
       }}</v-btn>
       <v-btn color="secondary" title="Details" variant="tonal" @click="handleCardClick"

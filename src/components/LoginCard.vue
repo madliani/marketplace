@@ -5,12 +5,12 @@
         <v-card-title class="text-center mb-2" title="Authorization">Authorization</v-card-title>
 
         <v-text-field
+          v-model="userId.value.value"
           :error-messages="userId.errorMessage.value"
           class="mb-2"
           clearable
           label="User id"
           title="User id"
-          v-model="userId.value.value"
           variant="outlined"
         />
 
@@ -21,10 +21,10 @@
 
           <v-btn
             :disabled="isDisabled"
-            @click="handleReset"
             color="secondary"
             title="Clear"
             variant="tonal"
+            @click="handleReset"
             >Clear</v-btn
           >
         </v-card-actions>
@@ -35,10 +35,10 @@
   <ProgressCircular v-if="loading && !error" />
 
   <AlertError
+    v-if="error && !loading"
     :on-close="handleClose"
     :text="error.message"
     title="Authorization failed!"
-    v-if="error && !loading"
   />
 </template>
 

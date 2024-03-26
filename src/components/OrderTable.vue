@@ -52,18 +52,18 @@
   </template>
 
   <AlertSuccess
+    v-if="success"
     :on-close="handleClose"
     title="Congratulations!"
     text="Order has been paid."
-    v-if="success"
   />
 
   <v-btn-group>
-    <v-btn @click="handlePayClick" color="primary" title="Pay an order" variant="elevated"
+    <v-btn color="primary" title="Pay an order" variant="elevated" @click="handlePayClick"
       >Pay an order</v-btn
     >
 
-    <v-btn @click="handleCancelClick" color="secondary" title="Cancel an order" variant="elevated"
+    <v-btn color="secondary" title="Cancel an order" variant="elevated" @click="handleCancelClick"
       >Cancel an order</v-btn
     >
   </v-btn-group>

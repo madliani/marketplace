@@ -1,7 +1,7 @@
 <template>
   <v-container v-if="!loading && !error">
     <v-row>
-      <v-col :key="product.id" v-for="product in productList">
+      <v-col v-for="product in productList" :key="product.id">
         <ProductCard :product="product" :product-status="product.status" />
       </v-col>
     </v-row>
@@ -10,10 +10,10 @@
   <ProgressCircular v-if="loading" />
 
   <AlertError
+    v-if="error"
     :on-close="handleClose"
     :text="error.message"
     title="Connection error!"
-    v-if="error"
   />
 </template>
 

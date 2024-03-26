@@ -1,21 +1,21 @@
 <template>
   <v-app-bar>
-    <template v-slot:prepend>
+    <template #prepend>
       <v-img
+        v-if="!user"
         :src="MarketplaceLogo"
         alt="Marketplace logo"
         height="48px"
         title="Marketplace"
-        v-if="!user"
         width="48px"
       />
 
-      <v-app-bar-nav-icon @click="draw" class="cursor-pointer" v-if="user" />
+      <v-app-bar-nav-icon v-if="user" class="cursor-pointer" @click="draw" />
     </template>
 
     <v-app-bar-title title="Marketplace">Marketplace</v-app-bar-title>
 
-    <template v-if="user && username" v-slot:append>
+    <template v-if="user && username" #append>
       <v-avatar :image="user.avatar" :title="username" alt="User avatar" size="32px" />
 
       <span :title="username" class="d-none d-sm-inline mx-2">{{ username }}</span>
@@ -24,7 +24,7 @@
         >{{ user.balance }} &dollar;</span
       >
 
-      <v-btn @click="handleLogoutClick" class="ml-2" color="red" title="Logout" variant="tonal"
+      <v-btn class="ml-2" color="red" title="Logout" variant="tonal" @click="handleLogoutClick"
         >Logout</v-btn
       >
     </template>
@@ -34,32 +34,32 @@
     <v-list nav>
       <v-list-item
         :active="selectedRoute === Route.HOMEPAGE"
-        @click="handleHomepageClick"
         prepend-icon="mdi-home"
         title="Homepage"
+        @click="handleHomepageClick"
       />
 
       <v-list-item
         :active="selectedRoute === Route.MARKETPLACE"
-        @click="handleMarketplaceClick"
         prepend-icon="mdi-shopping"
         title="Marketplace"
+        @click="handleMarketplaceClick"
       />
 
       <v-list-item
+        v-if="shoppingCart.length"
         :active="selectedRoute === Route.SHOPPING_CART"
-        @click="handleCartClick"
         prepend-icon="mdi-cart"
         title="Shopping cart"
-        v-if="shoppingCart.length"
+        @click="handleCartClick"
       />
 
       <v-list-item
+        v-if="purchaseOrder"
         :active="selectedRoute === Route.PURCHASE_ORDER"
-        @click="handleOrderClick"
         prepend-icon="mdi-receipt"
         title="Purchase order"
-        v-if="purchaseOrder"
+        @click="handleOrderClick"
       />
     </v-list>
   </v-navigation-drawer>

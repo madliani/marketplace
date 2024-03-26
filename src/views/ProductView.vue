@@ -1,7 +1,7 @@
 <template>
   <MainLayout>
     <template #content>
-      <v-card class="h-80 w-75" v-if="product && !loading && !error" variant="elevated">
+      <v-card v-if="product && !loading && !error" class="h-80 w-75" variant="elevated">
         <CarouselCycle :images="product.images" :title="product.title" height="350px" />
 
         <v-card-title :title="product.title">{{ product.title }}</v-card-title>
@@ -15,7 +15,7 @@
         </v-card-item>
 
         <v-card-actions>
-          <v-btn :title="productStatus" @click="handleBuyClick" color="primary" variant="tonal">{{
+          <v-btn :title="productStatus" color="primary" variant="tonal" @click="handleBuyClick">{{
             productStatus
           }}</v-btn>
         </v-card-actions>
@@ -24,10 +24,10 @@
       <ProgressCircular v-if="loading && !error" />
 
       <AlertError
+        v-if="error && !loading"
         :on-close="handleClose"
         :text="error.message"
         title="Connection error!"
-        v-if="error && !loading"
       />
     </template>
   </MainLayout>

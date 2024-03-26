@@ -4,10 +4,10 @@
       <v-alert
         :text="text"
         :title="title"
-        @click:close="onClose"
         closable
         type="success"
         variant="elevated"
+        @click:close="onClose"
       />
     </v-card-item>
   </v-card>

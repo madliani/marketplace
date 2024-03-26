@@ -1,7 +1,7 @@
 <template>
   <template v-if="shoppingCart.length">
     <v-list class="mx-4 mb-4">
-      <template :key="item.id" v-for="item in shoppingCart">
+      <template v-for="item in shoppingCart" :key="item.id">
         <CartItem :item="item" />
 
         <v-divider class="mb-2" />
@@ -11,11 +11,11 @@
     </v-list>
 
     <v-btn-group>
-      <v-btn @click="handlePlaceClick" color="primary" title="Place an order" variant="elevated"
+      <v-btn color="primary" title="Place an order" variant="elevated" @click="handlePlaceClick"
         >Place an order</v-btn
       >
 
-      <v-btn @click="handleClear" color="secondary" title="Empty a cart" variant="elevated"
+      <v-btn color="secondary" title="Empty a cart" variant="elevated" @click="handleClear"
         >Empty a cart</v-btn
       >
     </v-btn-group>

@@ -8,11 +8,11 @@
         <v-card-title :title="username" class="text-center mb-2">{{ username }}</v-card-title>
 
         <v-text-field
+          v-model="userBalance.value.value"
           :error-messages="userBalance.errorMessage.value"
           :title="`Balance: ${userBalance.value.value} $`"
           class="mb-2"
           label="Balance"
-          v-model="userBalance.value.value"
           variant="outlined"
         />
 
@@ -23,10 +23,10 @@
 
           <v-btn
             :disabled="isDisabled"
-            @click="handleReset"
             color="secondary"
             title="Reset"
             variant="tonal"
+            @click="handleReset"
             >Reset</v-btn
           >
         </v-card-actions>
