@@ -10,9 +10,15 @@
       <v-list-item :title="`Total price: ${totalCost} $`" class="text-right" />
     </v-list>
 
-    <v-btn @click="handlePlaceClick" color="primary" title="Place an order" variant="elevated"
-      >Place an order</v-btn
-    >
+    <v-btn-group>
+      <v-btn @click="handlePlaceClick" color="primary" title="Place an order" variant="elevated"
+        >Place an order</v-btn
+      >
+
+      <v-btn @click="handleClear" color="secondary" title="Empty a cart" variant="elevated"
+        >Empty a cart</v-btn
+      >
+    </v-btn-group>
   </template>
 
   <v-card v-if="!shoppingCart.length" type="info" variant="elevated">
@@ -25,16 +31,27 @@ import { storeToRefs } from 'pinia'
 
 import CartItem from '@/components/CartItem.vue'
 
+import { gotoMarketplace } from '@/router/router'
+import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
+import { Route } from '@/types/route'
 
 const shoppingCartStore = useShoppingCartStore()
 
 const { shoppingCart, totalCost } = storeToRefs(shoppingCartStore)
+const { clear } = shoppingCartStore
 
 const { place } = usePurchaseOrderStore()
 
+const { selectItem } = useNavigationDrawerStore()
+
 const handlePlaceClick = () => {
   place()
+}
+
+const handleClear = () => {
+  clear()
+  selectItem(Route.MARKETPLACE, gotoMarketplace)
 }
 </script>
