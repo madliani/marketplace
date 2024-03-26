@@ -24,7 +24,9 @@
         >{{ user.balance }} &dollar;</span
       >
 
-      <v-btn @click="clear" class="ml-2" color="red" title="Logout" variant="tonal">Logout</v-btn>
+      <v-btn @click="handleLogoutClick" class="ml-2" color="red" title="Logout" variant="tonal"
+        >Logout</v-btn
+      >
     </template>
   </v-app-bar>
 
@@ -98,6 +100,11 @@ const drawer = ref(true)
 
 const draw = () => {
   drawer.value = !drawer.value
+}
+
+const handleLogoutClick = () => {
+  clear()
+  selectItem(Route.HOMEPAGE, gotoHomepage)
 }
 
 const handleHomepageClick = () => {
