@@ -43,8 +43,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
+import { Route } from '@/types/route'
 import type { CartItem } from '@/types/shoppingCart'
 import { storeToRefs } from 'pinia'
 
@@ -56,13 +58,20 @@ const { item } = defineProps<Props>()
 
 const shoppingCartStore = useShoppingCartStore()
 
+const { shoppingCart } = storeToRefs(shoppingCartStore)
 const { deleteItem, updateQuantity } = shoppingCartStore
 
 const purchaseOrderStore = usePurchaseOrderStore()
 
 const { purchaseOrder } = storeToRefs(purchaseOrderStore)
 
+const { selectRoute } = useNavigationDrawerStore()
+
 const handleDeleteItem = () => {
+  if (shoppingCart.value.length === 1) {
+    selectRoute(Route.MARKETPLACE)
+  }
+
   deleteItem(item.id)
 }
 
