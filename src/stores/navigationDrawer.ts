@@ -15,14 +15,11 @@ type Actions = {
   empty: () => void
 }
 
-/** Navigation drawer store default value. */
-const selectedItem: Readonly<Route> = Route.HOMEPAGE
-
 export const useNavigationDrawerStore = defineStore<Id, State, Getters, Actions>(
   'navigationDrawer',
   {
     state: () => ({
-      selectedRoute: selectedItem
+      selectedRoute: Route.HOMEPAGE
     }),
     actions: {
       selectRoute(route) {
@@ -52,7 +49,7 @@ export const useNavigationDrawerStore = defineStore<Id, State, Getters, Actions>
         }
       },
       empty() {
-        this.selectedRoute = selectedItem
+        this.selectedRoute = Route.HOMEPAGE
       }
     },
     persist: true
