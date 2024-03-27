@@ -1,7 +1,7 @@
 <template>
   <MainLayout>
     <template #content>
-      <span class="text-h4 mb-8" title="Shopping cart">Shopping cart</span>
+      <span class="text-h4 mb-4" title="Shopping cart">Shopping cart</span>
 
       <CartList />
     </template>
