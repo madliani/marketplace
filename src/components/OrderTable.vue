@@ -44,7 +44,12 @@
   </template>
 
   <template v-if="success">
-    <AlertSuccess class="mb-4" title="Congratulations!" text="Purchase order has been paid." />
+    <AlertCard
+      class="mb-4"
+      title="Congratulations!"
+      text="Purchase order has been paid."
+      type="success"
+    />
 
     <v-btn-group>
       <v-btn color="primary" title="Continue shopping" variant="tonal" @click="handleContinueClick"
@@ -59,7 +64,7 @@
 </template>
 
 <script lang="ts" setup>
-import AlertSuccess from '@/components/AlertSuccess.vue'
+import AlertCard from '@/components/AlertCard.vue'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'

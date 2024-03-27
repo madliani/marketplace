@@ -5,18 +5,19 @@
 
       <ProgressCircular v-if="loading" />
 
-      <AlertError
+      <AlertCard
         v-if="error"
         :on-close="handleCloseClick"
         :text="error.message"
         title="Connection error!"
+        type="error"
       />
     </template>
   </MainLayout>
 </template>
 
 <script lang="ts" setup>
-import AlertError from '@/components/AlertError.vue'
+import AlertCard from '@/components/AlertCard.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import MainLayout from '@/layouts/MainLayout.vue'

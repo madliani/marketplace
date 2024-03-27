@@ -25,16 +25,17 @@
 
   <ProgressCircular v-if="loading" />
 
-  <AlertError
+  <AlertCard
     v-if="error"
     :on-close="handleCloseClick"
     :text="error.message"
     title="Authorization failed!"
+    type="error"
   />
 </template>
 
 <script lang="ts" setup>
-import AlertError from '@/components/AlertError.vue'
+import AlertCard from '@/components/AlertCard.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import { useUserStore } from '@/stores/user'
 import { useField, useForm } from 'vee-validate'

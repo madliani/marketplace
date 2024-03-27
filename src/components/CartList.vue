@@ -9,11 +9,12 @@
     <v-list-item :title="`Total price: ${totalCost} $`" class="text-right" />
   </v-list>
 
-  <AlertError
+  <AlertCard
     v-if="error"
     class="mb-4"
     title="Not enough funds!"
     text="The total cost of the items in the shopping cart is greater than the balance."
+    type="error"
     :on-close="handleCloseClick"
   />
 
@@ -39,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import AlertError from '@/components/AlertError.vue'
+import AlertCard from '@/components/AlertCard.vue'
 import CartItem from '@/components/CartItem.vue'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'

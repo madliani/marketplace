@@ -3,9 +3,9 @@
     <v-card-item>
       <v-alert
         :text="text"
+        :closable="!!onClose"
         :title="title"
-        closable
-        type="error"
+        :type="type"
         variant="elevated"
         @click:close="onClose"
       />
@@ -15,9 +15,10 @@
 
 <script lang="ts" setup>
 type Props = Readonly<{
-  onClose: () => void
   text: string
   title: string
+  type: 'error' | 'info' | 'success'
+  onClose?: () => void
 }>
 
 defineProps<Props>()

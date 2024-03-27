@@ -9,16 +9,17 @@
 
   <ProgressCircular v-if="loading" />
 
-  <AlertError
+  <AlertCard
     v-if="error"
     :on-close="handleCloseClick"
     :text="error.message"
     title="Connection error!"
+    type="error"
   />
 </template>
 
 <script lang="ts" setup>
-import AlertError from '@/components/AlertError.vue'
+import AlertCard from '@/components/AlertCard.vue'
 import MarketplaceCard from '@/components/MarketplaceCard.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
