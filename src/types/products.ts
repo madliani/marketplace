@@ -1,8 +1,6 @@
 export const enum ProductStatus {
   FREE,
-  IN_CART,
-  ORDERED,
-  PURCHASED
+  IN_CART
 }
 
 export type BackendProduct = {

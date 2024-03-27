@@ -58,12 +58,6 @@ const handleBuyClick = () => {
 
       return
     }
-    case ProductStatus.ORDERED: {
-      return
-    }
-    case ProductStatus.PURCHASED: {
-      return
-    }
   }
 }
 </script>
