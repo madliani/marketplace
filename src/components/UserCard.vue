@@ -3,13 +3,13 @@
     <v-card-item class="v-card__item-avatar">
       <v-avatar :image="user.avatar" :title="username" alt="User avatar" size="128px" />
     </v-card-item>
+
     <v-card-item class="v-card__item-info">
-      <v-form @submit.prevent="submit">
+      <v-form :disabled="!!purchaseOrder" @submit.prevent="submit">
         <v-card-title :title="username" class="text-center mb-2">{{ username }}</v-card-title>
 
         <v-text-field
           v-model="userBalance.value.value"
-          :disabled="!!purchaseOrder"
           :error-messages="userBalance.errorMessage.value"
           :title="`Balance: ${userBalance.value.value} $`"
           class="mb-2"
