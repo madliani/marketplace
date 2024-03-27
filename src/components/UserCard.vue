@@ -9,6 +9,7 @@
 
         <v-text-field
           v-model="userBalance.value.value"
+          :disabled="!!purchaseOrder"
           :error-messages="userBalance.errorMessage.value"
           :title="`Balance: ${userBalance.value.value} $`"
           class="mb-2"
@@ -17,11 +18,23 @@
         />
 
         <v-card-actions>
-          <v-btn :disabled="isDisabled" color="primary" type="submit" title="Update" variant="tonal"
+          <v-btn
+            :disabled="isDisabled || !!purchaseOrder"
+            color="primary"
+            type="submit"
+            title="Update"
+            variant="tonal"
             >Update</v-btn
           >
 
-          <v-btn color="secondary" title="Reset" variant="tonal" @click="handleReset">Reset</v-btn>
+          <v-btn
+            :disabled="!!purchaseOrder"
+            color="secondary"
+            title="Reset"
+            variant="tonal"
+            @click="handleReset"
+            >Reset</v-btn
+          >
         </v-card-actions>
       </v-form>
     </v-card-item>
@@ -29,6 +42,7 @@
 </template>
 
 <script lang="ts" setup>
+import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
@@ -42,6 +56,10 @@ const userStore = useUserStore()
 
 const { user, username } = storeToRefs(userStore)
 const { updateBalance } = userStore
+
+const purchaseOrderStore = usePurchaseOrderStore()
+
+const { purchaseOrder } = storeToRefs(purchaseOrderStore)
 
 const isDisabled = ref(false)
 
