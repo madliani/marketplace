@@ -38,7 +38,6 @@ type Props = Readonly<{
 }>
 
 const { product } = defineProps<Props>()
-
 const { addItem, deleteItem } = useShoppingCartStore()
 
 const purchaseOrderStore = usePurchaseOrderStore()

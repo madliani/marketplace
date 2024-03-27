@@ -59,7 +59,6 @@ const purchaseOrderStore = usePurchaseOrderStore()
 
 const { purchaseOrder } = storeToRefs(purchaseOrderStore)
 const { place } = purchaseOrderStore
-
 const { selectRoute } = useNavigationDrawerStore()
 
 const userStore = useUserStore()

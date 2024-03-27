@@ -27,11 +27,9 @@ import { onBeforeMount, ref } from 'vue'
 const productListStore = useProductListStore()
 
 const { getProducts } = productListStore
-
 const { selectRoute } = useNavigationDrawerStore()
 
 const loading = ref(false)
-
 const error = ref<Error | null>(null)
 
 const changeLoading = () => {

@@ -64,7 +64,6 @@ const { deleteItem, updateQuantity } = shoppingCartStore
 const purchaseOrderStore = usePurchaseOrderStore()
 
 const { purchaseOrder } = storeToRefs(purchaseOrderStore)
-
 const { selectRoute } = useNavigationDrawerStore()
 
 const handleDeleteItem = () => {

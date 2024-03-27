@@ -81,11 +81,8 @@ const { empty: emptyOrder } = purchaseOrderStore
 const userStore = useUserStore()
 
 const { user } = storeToRefs(userStore)
-
 const { updateBalance, restoreBalance } = userStore
-
 const { selectRoute } = useNavigationDrawerStore()
-
 const { empty: emptyCart } = useShoppingCartStore()
 
 const success = ref(false)

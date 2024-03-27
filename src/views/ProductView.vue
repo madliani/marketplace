@@ -38,11 +38,9 @@ const productStore = useProductStore()
 
 const { product, titleByStatus } = storeToRefs(productStore)
 const { getProduct } = productStore
-
 const { selectRoute } = useNavigationDrawerStore()
 
 const loading = ref(false)
-
 const error = ref<Error | null>(null)
 
 const changeLoading = () => {

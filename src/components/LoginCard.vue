@@ -50,9 +50,7 @@ const userStore = useUserStore()
 const { getUser } = userStore
 
 const isDisabled = ref(true)
-
 const loading = ref(false)
-
 const error = ref<Error | null>(null)
 
 const { handleReset, handleSubmit } = useForm<Form>({

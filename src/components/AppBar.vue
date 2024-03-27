@@ -96,9 +96,7 @@ const purchaseOrderStore = usePurchaseOrderStore()
 
 const { purchaseOrder } = storeToRefs(purchaseOrderStore)
 const { empty: emptyPurchaseOrder } = purchaseOrderStore
-
 const { empty: emptyProductList } = useProductListStore()
-
 const { empty: emptyProduct } = useProductStore()
 
 const drawer = ref(true)
