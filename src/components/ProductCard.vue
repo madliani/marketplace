@@ -13,18 +13,25 @@
     </v-card-item>
 
     <v-card-actions>
-      <v-btn :title="titleByStatus" color="primary" variant="tonal" @click="handleBuyClick">{{
-        titleByStatus
-      }}</v-btn>
+      <v-btn
+        :disabled="!!purchaseOrder"
+        :title="titleByStatus"
+        color="primary"
+        variant="tonal"
+        @click="handleBuyClick"
+        >{{ titleByStatus }}</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
 
 <script lang="ts" setup>
 import CarouselCycle from '@/components/CarouselCycle.vue'
+import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
 import type { Product } from '@/types/products'
 import { ProductStatus } from '@/types/products'
+import { storeToRefs } from 'pinia'
 
 type Props = Readonly<{
   product: Product
@@ -34,6 +41,10 @@ type Props = Readonly<{
 const { product } = defineProps<Props>()
 
 const { addItem, deleteItem } = useShoppingCartStore()
+
+const purchaseOrderStore = usePurchaseOrderStore()
+
+const { purchaseOrder } = storeToRefs(purchaseOrderStore)
 
 const handleBuyClick = () => {
   switch (product.status) {

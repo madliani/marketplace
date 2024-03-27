@@ -9,9 +9,15 @@
     >
 
     <v-card-actions>
-      <v-btn :title="getTitleByStatus()" color="primary" variant="tonal" @click="handleBuyClick">{{
-        getTitleByStatus()
-      }}</v-btn>
+      <v-btn
+        :disabled="!!purchaseOrder"
+        :title="getTitleByStatus()"
+        color="primary"
+        variant="tonal"
+        @click="handleBuyClick"
+        >{{ getTitleByStatus() }}</v-btn
+      >
+
       <v-btn color="secondary" title="Details" variant="tonal" @click="handleCardClick"
         >Details</v-btn
       >
@@ -21,9 +27,11 @@
 
 <script lang="ts" setup>
 import { gotoProduct } from '@/router/router'
+import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
 import type { Product } from '@/types/products'
 import { ProductStatus } from '@/types/products'
+import { storeToRefs } from 'pinia'
 
 type Props = Readonly<{
   product: Product
@@ -32,6 +40,10 @@ type Props = Readonly<{
 const { product } = defineProps<Props>()
 
 const { addItem, deleteItem } = useShoppingCartStore()
+
+const purchaseOrderStore = usePurchaseOrderStore()
+
+const { purchaseOrder } = storeToRefs(purchaseOrderStore)
 
 const handleCardClick = () => {
   gotoProduct(product.id)

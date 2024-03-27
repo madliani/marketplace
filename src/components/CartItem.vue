@@ -6,7 +6,7 @@
   >
     <template #append>
       <v-btn
-        :disabled="item.quantity === 1"
+        :disabled="item.quantity === 1 || !!purchaseOrder"
         class="ml-4"
         color="secondary"
         title="Less"
@@ -17,13 +17,20 @@
 
       <span :title="`${item.quantity} piece`" class="ml-2">{{ item.quantity }} piece</span>
 
-      <v-btn class="ml-2" color="secondary" title="More" variant="tonal" @click="handleMoreClick"
+      <v-btn
+        :disabled="!!purchaseOrder"
+        class="ml-2"
+        color="secondary"
+        title="More"
+        variant="tonal"
+        @click="handleMoreClick"
         >+</v-btn
       >
 
       <span :title="`Price: ${item.cost} $`" class="ml-4">{{ item.cost }} &dollar;</span>
 
       <v-btn
+        :disabled="!!purchaseOrder"
         class="ml-4"
         color="red"
         icon="mdi-delete"
@@ -36,8 +43,10 @@
 </template>
 
 <script lang="ts" setup>
+import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useShoppingCartStore } from '@/stores/shoppingCart'
 import type { CartItem } from '@/types/shoppingCart'
+import { storeToRefs } from 'pinia'
 
 type Props = Readonly<{
   item: CartItem
@@ -48,6 +57,10 @@ const { item } = defineProps<Props>()
 const shoppingCartStore = useShoppingCartStore()
 
 const { deleteItem, updateQuantity } = shoppingCartStore
+
+const purchaseOrderStore = usePurchaseOrderStore()
+
+const { purchaseOrder } = storeToRefs(purchaseOrderStore)
 
 const handleDeleteItem = () => {
   deleteItem(item.id)
