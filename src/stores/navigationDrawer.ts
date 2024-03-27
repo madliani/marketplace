@@ -12,7 +12,7 @@ type Getters = {}
 
 type Actions = {
   selectRoute: (route: Readonly<Route>) => void
-  clear: () => void
+  empty: () => void
 }
 
 /** Navigation drawer store default value. */
@@ -51,7 +51,7 @@ export const useNavigationDrawerStore = defineStore<Id, State, Getters, Actions>
           }
         }
       },
-      clear() {
+      empty() {
         this.selectedRoute = selectedItem
       }
     },

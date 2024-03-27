@@ -16,7 +16,7 @@ type Getters = {
 
 type Actions = {
   addItem: (id: Readonly<CartItem['id']>) => void
-  clear: () => void
+  empty: () => void
   deleteItem: (id: Readonly<CartItem['id']>) => void
   updateQuantity: (id: Readonly<CartItem['id']>, quantity: Readonly<CartItem['quantity']>) => void
 }
@@ -53,7 +53,7 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
         updateStatus(id, ProductStatus.IN_CART)
       }
     },
-    clear() {
+    empty() {
       this.shoppingCart = []
     },
     deleteItem(id) {

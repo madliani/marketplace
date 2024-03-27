@@ -16,7 +16,7 @@ type Getters = {
 }
 
 type Actions = {
-  clear: () => void
+  empty: () => void
   getUser: (
     id: Readonly<User['id']>,
     onError: ErrorHandler,
@@ -59,7 +59,7 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
     user: null
   }),
   actions: {
-    clear() {
+    empty() {
       this.user = null
     },
     restoreBalance() {

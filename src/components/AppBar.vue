@@ -80,26 +80,26 @@ import { ref } from 'vue'
 const userStore = useUserStore()
 
 const { user, username } = storeToRefs(userStore)
-const { clear: clearUser } = userStore
+const { empty: emptyUser } = userStore
 
 const navigationDrawerStore = useNavigationDrawerStore()
 
 const { selectedRoute } = storeToRefs(navigationDrawerStore)
-const { clear: clearNavigationDrawer, selectRoute } = navigationDrawerStore
+const { empty: emptyNavigationDrawer, selectRoute } = navigationDrawerStore
 
 const shoppingCartStore = useShoppingCartStore()
 
 const { shoppingCart } = storeToRefs(shoppingCartStore)
-const { clear: clearShoppingCart } = shoppingCartStore
+const { empty: emptyShoppingCart } = shoppingCartStore
 
 const purchaseOrderStore = usePurchaseOrderStore()
 
 const { purchaseOrder } = storeToRefs(purchaseOrderStore)
-const { clear: clearPurchaseOrder } = purchaseOrderStore
+const { empty: emptyPurchaseOrder } = purchaseOrderStore
 
-const { clear: clearProductList } = useProductListStore()
+const { empty: emptyProductList } = useProductListStore()
 
-const { clear: clearProduct } = useProductStore()
+const { empty: emptyProduct } = useProductStore()
 
 const drawer = ref(true)
 
@@ -108,12 +108,12 @@ const changeDrawer = () => {
 }
 
 const handleLogoutClick = () => {
-  clearUser()
-  clearNavigationDrawer()
-  clearShoppingCart()
-  clearPurchaseOrder()
-  clearProductList()
-  clearProduct()
+  emptyUser()
+  emptyNavigationDrawer()
+  emptyShoppingCart()
+  emptyPurchaseOrder()
+  emptyProductList()
+  emptyProduct()
 
   selectRoute(Route.HOMEPAGE)
 }

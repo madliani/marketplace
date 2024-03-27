@@ -12,7 +12,7 @@ type State = {
 type Getters = {}
 
 type Actions = {
-  clear: () => void
+  empty: () => void
   place: () => void
 }
 
@@ -21,7 +21,7 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
     purchaseOrder: null
   }),
   actions: {
-    clear() {
+    empty() {
       this.purchaseOrder = null
     },
     place() {

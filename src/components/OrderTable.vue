@@ -76,7 +76,7 @@ import { ref } from 'vue'
 const purchaseOrderStore = usePurchaseOrderStore()
 
 const { purchaseOrder } = storeToRefs(purchaseOrderStore)
-const { clear: clearOrder } = purchaseOrderStore
+const { empty: emptyOrder } = purchaseOrderStore
 
 const userStore = useUserStore()
 
@@ -86,7 +86,7 @@ const { updateBalance, restoreBalance } = userStore
 
 const { selectRoute } = useNavigationDrawerStore()
 
-const { clear: clearCart } = useShoppingCartStore()
+const { empty: emptyCart } = useShoppingCartStore()
 
 const success = ref(false)
 
@@ -101,14 +101,14 @@ const handlePayClick = () => {
 }
 
 const handleChangeClick = () => {
-  clearOrder()
+  emptyOrder()
 
   selectRoute(Route.SHOPPING_CART)
 }
 
 const handleContinueClick = () => {
-  clearOrder()
-  clearCart()
+  emptyOrder()
+  emptyCart()
 
   selectRoute(Route.MARKETPLACE)
 }

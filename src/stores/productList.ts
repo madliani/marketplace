@@ -15,7 +15,7 @@ type State = {
 type Getters = {}
 
 type Actions = {
-  clear: () => void
+  empty: () => void
   getProducts: (onError: ErrorHandler, changeLoading: LoadingChanger) => Promise<void>
   updateProducts: (products: Products) => void
 }
@@ -70,7 +70,7 @@ export const useProductListStore = defineStore<Id, State, Getters, Actions>('pro
     productList: []
   }),
   actions: {
-    clear() {
+    empty() {
       this.productList = []
     },
     async getProducts(onError, changeLoading) {

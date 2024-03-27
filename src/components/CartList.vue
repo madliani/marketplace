@@ -53,7 +53,7 @@ import { ref } from 'vue'
 const shoppingCartStore = useShoppingCartStore()
 
 const { shoppingCart, totalCost } = storeToRefs(shoppingCartStore)
-const { clear } = shoppingCartStore
+const { empty } = shoppingCartStore
 
 const purchaseOrderStore = usePurchaseOrderStore()
 
@@ -89,7 +89,7 @@ const handlePlaceClick = () => {
 }
 
 const handleEmptyClick = () => {
-  clear()
+  empty()
 
   selectRoute(Route.MARKETPLACE)
 }

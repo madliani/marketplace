@@ -17,7 +17,7 @@ type Getters = {
 }
 
 type Actions = {
-  clear: () => void
+  empty: () => void
   getProduct: (
     id: Readonly<Product['id']>,
     onError: ErrorHandler,
@@ -56,7 +56,7 @@ export const useProductStore = defineStore<Id, State, Getters, Actions>('product
     product: null
   }),
   actions: {
-    clear() {
+    empty() {
       this.product = null
     },
     async getProduct(id, onError, changeLoading) {
