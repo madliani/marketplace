@@ -7,20 +7,26 @@ type Id = 'purchaseOrder'
 
 type State = {
   purchaseOrder: PurchaseOrder | null
+  success: boolean | null
 }
 
 type Getters = {}
 
 type Actions = {
+  changeSuccess: (success: boolean) => void
   empty: () => void
   place: () => void
 }
 
 export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('purchaseOrder', {
   state: () => ({
-    purchaseOrder: null
+    purchaseOrder: null,
+    success: null
   }),
   actions: {
+    changeSuccess(success) {
+      this.success = success
+    },
     empty() {
       this.purchaseOrder = null
     },

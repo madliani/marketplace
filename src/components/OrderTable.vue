@@ -67,12 +67,11 @@ import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { useUserStore } from '@/stores/user'
 import { Route } from '@/types/route'
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
 
 const purchaseOrderStore = usePurchaseOrderStore()
 
-const { purchaseOrder } = storeToRefs(purchaseOrderStore)
-const { empty: emptyOrder } = purchaseOrderStore
+const { purchaseOrder, success } = storeToRefs(purchaseOrderStore)
+const { changeSuccess, empty: emptyOrder } = purchaseOrderStore
 
 const userStore = useUserStore()
 
@@ -81,15 +80,13 @@ const { updateBalance, restoreBalance } = userStore
 const { selectRoute } = useNavigationDrawerStore()
 const { empty: emptyCart } = useShoppingCartStore()
 
-const success = ref(false)
-
 const handlePayClick = () => {
   if (user.value && purchaseOrder.value) {
     const balance = user.value.balance - purchaseOrder.value.totalCost
 
     updateBalance(balance)
 
-    success.value = true
+    changeSuccess(true)
   }
 }
 
@@ -109,6 +106,6 @@ const handleContinueClick = () => {
 const handleCancelClick = () => {
   restoreBalance()
 
-  success.value = false
+  changeSuccess(false)
 }
 </script>
