@@ -1,10 +1,6 @@
 <template>
   <template v-if="purchaseOrder && purchaseOrder.buyer && purchaseOrder.departureDate && !success">
     <v-table class="w-75 mb-2" fixed-header>
-      <caption class="text-h6">
-        Item list
-      </caption>
-
       <thead>
         <tr>
           <th class="text-left">#</th>
