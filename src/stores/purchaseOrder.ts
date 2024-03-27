@@ -30,7 +30,7 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
       const { user } = useUserStore()
 
       if (user) {
-        const departureDate = new Date()
+        const departureDate = new Date().toISOString()
 
         const items = shoppingCart.map<OrderItem>((item) => {
           const product: Readonly<OrderProduct> = {

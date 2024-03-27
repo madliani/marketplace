@@ -25,7 +25,7 @@
           <td>{{ item.quantity }}</td>
           <td>{{ item.cost }} &dollar;</td>
           <td>{{ purchaseOrder.buyer.firstName }} {{ purchaseOrder.buyer.lastName }}</td>
-          <td>{{ purchaseOrder.departureDate.toDateString() }}</td>
+          <td>{{ new Date(purchaseOrder.departureDate).toUTCString() }}</td>
         </tr>
       </tbody>
     </v-table>

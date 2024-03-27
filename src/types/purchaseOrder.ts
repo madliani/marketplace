@@ -17,7 +17,7 @@ export type OrderItem = Omit<CartItem, 'product'> & { product: OrderProduct }
 export type OrderUser = Omit<Omit<User, 'avatar'>, 'balance'>
 
 export type PurchaseOrder = {
-  departureDate: Date | null
+  departureDate: string | null
   items: OrderItem[]
   totalCost: OrderItem['cost']
   buyer: OrderUser | null
