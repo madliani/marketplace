@@ -9,10 +9,10 @@ export type CartProduct = Omit<Omit<Product, 'status'>, 'images'>
  * Shopping cart item.
  */
 export type CartItem = {
-  quantity: number
+  cost: CartProduct['price']
   id: string
-  cost: Product['price']
   product: CartProduct
+  quantity: number
 }
 
 export type ShoppingCart = CartItem[]

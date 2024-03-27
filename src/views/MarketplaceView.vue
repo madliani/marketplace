@@ -1,7 +1,7 @@
 <template>
   <MainLayout>
     <template #content>
-      <ProductCard v-if="product" :product="product" :title-by-status="titleByStatus" />
+      <MarketplaceGrid v-if="!loading && !error" />
 
       <ProgressCircular v-if="loading" />
 
@@ -18,26 +18,17 @@
 
 <script lang="ts" setup>
 import AlertCard from '@/components/AlertCard.vue'
-import ProductCard from '@/components/ProductCard.vue'
+import MarketplaceGrid from '@/components/MarketplaceGrid.vue'
 import ProgressCircular from '@/components/ProgressCircular.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
-import { useProductStore } from '@/stores/product'
-import type { Product } from '@/types/products'
+import { useProductListStore } from '@/stores/productList'
 import { Route } from '@/types/route'
-import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref } from 'vue'
 
-type Props = Readonly<{
-  id: Product['id']
-}>
+const productListStore = useProductListStore()
 
-const { id } = defineProps<Props>()
-
-const productStore = useProductStore()
-
-const { product, titleByStatus } = storeToRefs(productStore)
-const { getProduct } = productStore
+const { getProducts } = productListStore
 const { selectRoute } = useNavigationDrawerStore()
 
 const loading = ref(false)
@@ -56,6 +47,6 @@ const handleCloseClick = () => {
 }
 
 onBeforeMount(async () => {
-  await getProduct(id, handleError, changeLoading)
+  await getProducts(handleError, changeLoading)
 })
 </script>

@@ -1,10 +1,8 @@
-import { defineStore } from 'pinia'
-
-import type { CartItem, CartProduct, ShoppingCart } from '@/types/shoppingCart'
-
 import { useProductStore } from '@/stores/product'
 import { useProductListStore } from '@/stores/productList'
 import { ProductStatus } from '@/types/products'
+import type { CartItem, CartProduct, ShoppingCart } from '@/types/shoppingCart'
+import { defineStore } from 'pinia'
 
 type Id = 'shoppingCart'
 
@@ -18,23 +16,15 @@ type Getters = {
 
 type Actions = {
   addItem: (id: Readonly<CartItem['id']>) => void
-  clear: () => void
+  empty: () => void
   deleteItem: (id: Readonly<CartItem['id']>) => void
   updateQuantity: (id: Readonly<CartItem['id']>, quantity: Readonly<CartItem['quantity']>) => void
 }
 
-/** Shopping cart default value. */
-const shoppingCart: ShoppingCart = []
-
 export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('shoppingCart', {
   state: () => ({
-    shoppingCart
+    shoppingCart: []
   }),
-  getters: {
-    totalCost(state) {
-      return state.shoppingCart.reduce((cost, item) => cost + item.cost, 0)
-    }
-  },
   actions: {
     addItem(id) {
       const { productList } = useProductListStore()
@@ -63,8 +53,8 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
         updateStatus(id, ProductStatus.IN_CART)
       }
     },
-    clear() {
-      this.shoppingCart = shoppingCart
+    empty() {
+      this.shoppingCart = []
     },
     deleteItem(id) {
       const { updateStatus } = useProductStore()
@@ -84,6 +74,11 @@ export const useShoppingCartStore = defineStore<Id, State, Getters, Actions>('sh
 
         this.shoppingCart = cart
       }
+    }
+  },
+  getters: {
+    totalCost(state) {
+      return state.shoppingCart.reduce((cost, item) => cost + item.cost, 0)
     }
   },
   persist: true

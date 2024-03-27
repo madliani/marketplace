@@ -1,38 +1,34 @@
+import { useShoppingCartStore } from '@/stores/shoppingCart'
+import { useUserStore } from '@/stores/user'
+import type { OrderItem, OrderProduct, OrderUser, PurchaseOrder } from '@/types/purchaseOrder'
 import { defineStore } from 'pinia'
-
-import type { OrderUser, PurchaseOrder } from '@/types/purchaseOrder'
-
-import { useShoppingCartStore } from './shoppingCart'
-import { useUserStore } from './user'
 
 type Id = 'purchaseOrder'
 
 type State = {
-  purchaseOrder: PurchaseOrder
+  purchaseOrder: PurchaseOrder | null
+  success: boolean | null
 }
 
 type Getters = {}
 
 type Actions = {
-  clear: () => void
+  changeSuccess: (success: boolean) => void
+  empty: () => void
   place: () => void
-}
-
-/** Purchase order default value. */
-const purchaseOrder: Readonly<PurchaseOrder> = {
-  departureDate: null,
-  shoppingCart: [],
-  totalCost: 0,
-  user: null
 }
 
 export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('purchaseOrder', {
   state: () => ({
-    purchaseOrder
+    purchaseOrder: null,
+    success: null
   }),
   actions: {
-    clear() {
-      this.purchaseOrder = purchaseOrder
+    changeSuccess(success) {
+      this.success = success
+    },
+    empty() {
+      this.purchaseOrder = null
     },
     place() {
       const { shoppingCart, totalCost } = useShoppingCartStore()
@@ -40,9 +36,24 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
       const { user } = useUserStore()
 
       if (user) {
-        const departureDate = new Date()
+        const departureDate = new Date().toISOString()
 
-        const orderUser: Readonly<OrderUser> = {
+        const items = shoppingCart.map<OrderItem>((item) => {
+          const product: Readonly<OrderProduct> = {
+            id: item.product.id,
+            title: item.product.title,
+            price: item.product.price
+          }
+
+          return {
+            cost: item.cost,
+            id: item.id,
+            quantity: item.quantity,
+            product
+          }
+        })
+
+        const buyer: Readonly<OrderUser> = {
           firstName: user.firstName,
           id: user.id,
           lastName: user.lastName
@@ -50,9 +61,9 @@ export const usePurchaseOrderStore = defineStore<Id, State, Getters, Actions>('p
 
         this.purchaseOrder = {
           departureDate,
-          shoppingCart,
+          items,
           totalCost,
-          user: orderUser
+          buyer
         }
       }
     }

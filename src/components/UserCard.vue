@@ -3,49 +3,50 @@
     <v-card-item class="v-card__item-avatar">
       <v-avatar :image="user.avatar" :title="username" alt="User avatar" size="128px" />
     </v-card-item>
+
     <v-card-item class="v-card__item-info">
-      <form @submit.prevent="submit">
+      <v-form :disabled="!!purchaseOrder" @submit.prevent="submit">
         <v-card-title :title="username" class="text-center mb-2">{{ username }}</v-card-title>
 
         <v-text-field
+          v-model="userBalance.value.value"
           :error-messages="userBalance.errorMessage.value"
           :title="`Balance: ${userBalance.value.value} $`"
           class="mb-2"
           label="Balance"
-          v-model="userBalance.value.value"
           variant="outlined"
         />
 
         <v-card-actions>
           <v-btn
-            :disabled="isDisabled"
+            :disabled="isDisabled || !!purchaseOrder"
             color="primary"
             type="submit"
             title="Update"
-            variant="elevated"
+            variant="tonal"
             >Update</v-btn
           >
 
           <v-btn
-            :disabled="isDisabled"
-            @click="handleReset"
+            :disabled="!!purchaseOrder"
             color="secondary"
             title="Reset"
-            variant="elevated"
+            variant="tonal"
+            @click="handleReset"
             >Reset</v-btn
           >
         </v-card-actions>
-      </form>
+      </v-form>
     </v-card-item>
   </v-card>
 </template>
 
 <script lang="ts" setup>
+import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
+import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import { ref } from 'vue'
-
-import { useUserStore } from '@/stores/user'
 
 type Form = Readonly<{
   userBalance: string
@@ -56,6 +57,10 @@ const userStore = useUserStore()
 const { user, username } = storeToRefs(userStore)
 const { updateBalance } = userStore
 
+const purchaseOrderStore = usePurchaseOrderStore()
+
+const { purchaseOrder } = storeToRefs(purchaseOrderStore)
+
 const isDisabled = ref(false)
 
 const { handleSubmit } = useForm<Form>({
@@ -64,9 +69,13 @@ const { handleSubmit } = useForm<Form>({
   },
   validationSchema: {
     userBalance(value: Readonly<Form['userBalance']>) {
-      const balance = Number(value)
+      /**
+       * `Number` instead of `parseFloat` is chosen because
+       * it handles strings with mixed content (e.g. "1a") with error.
+       */
+      const balance = value !== '' ? Number(value) : NaN
 
-      if (!Number.isNaN(balance)) {
+      if (!Number.isNaN(balance) && balance >= 0) {
         isDisabled.value = false
 
         return true
@@ -74,7 +83,7 @@ const { handleSubmit } = useForm<Form>({
 
       isDisabled.value = true
 
-      return 'The user balance must be a floating-point number.'
+      return 'The user balance must be a positive floating-point number.'
     }
   }
 })

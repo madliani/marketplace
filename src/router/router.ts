@@ -1,39 +1,41 @@
-import type { RouteRecordRaw, RouterHistory, RouterOptions } from 'vue-router'
-
-import { createRouter, createWebHistory } from 'vue-router'
-
-import HomeView from '@/views/HomeView.vue'
-import ProductView from '@/views/ProductView.vue'
-import ProductsView from '@/views/ProductsView.vue'
-
 import type { Product } from '@/types/products'
-
 import { Route } from '@/types/route'
 import CartView from '@/views/CartView.vue'
+import HomepageView from '@/views/HomepageView.vue'
+import MarketplaceView from '@/views/MarketplaceView.vue'
+import OrderView from '@/views/OrderView.vue'
+import ProductView from '@/views/ProductView.vue'
+import type { RouteRecordRaw, RouterHistory, RouterOptions } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const history: Readonly<RouterHistory> = createWebHistory(import.meta.env.BASE_URL)
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
-    component: HomeView,
-    name: 'home',
-    path: Route.HOME
+    component: HomepageView,
+    name: 'homepage',
+    path: Route.HOMEPAGE
   },
   {
-    component: ProductsView,
-    name: 'products',
-    path: Route.PRODUCTS
+    component: MarketplaceView,
+    name: 'marketplace',
+    path: Route.MARKETPLACE
   },
   {
     component: ProductView,
     name: 'product',
-    path: `${Route.PRODUCTS}/:id`,
+    path: `${Route.MARKETPLACE}/:id`,
     props: true
   },
   {
     component: CartView,
-    name: 'cart',
-    path: Route.CART
+    name: 'shopping-cart',
+    path: Route.SHOPPING_CART
+  },
+  {
+    component: OrderView,
+    name: 'purchase-order',
+    path: Route.PURCHASE_ORDER
   }
 ]
 
@@ -42,16 +44,15 @@ const options: Readonly<RouterOptions> = {
   routes
 }
 
-const router = createRouter(options)
+export const router = createRouter(options)
 
 const goto = (path: Readonly<Route>) => () => router.push(path)
 
-export const gotoMarketplace = goto(Route.HOME)
-export const gotoProductsPage = goto(Route.PRODUCTS)
-export const gotoCartPage = goto(Route.CART)
+export const gotoHomepage = goto(Route.HOMEPAGE)
+export const gotoMarketplace = goto(Route.MARKETPLACE)
+export const gotoShoppingCart = goto(Route.SHOPPING_CART)
+export const gotoPurchaseOrder = goto(Route.PURCHASE_ORDER)
 
-export const gotoProductPage = (id: Product['id']) => {
-  router.push(`${Route.PRODUCTS}/${id}`)
+export const gotoProduct = (id: Product['id']) => {
+  router.push(`${Route.MARKETPLACE}/${id}`)
 }
-
-export default router

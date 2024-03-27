@@ -1,61 +1,45 @@
 <template>
   <v-card v-if="!loading && !error" variant="elevated">
     <v-card-item>
-      <form @submit.prevent="submit">
+      <v-form @submit.prevent="submit">
         <v-card-title class="text-center mb-2" title="Authorization">Authorization</v-card-title>
 
         <v-text-field
+          v-model="userId.value.value"
           :error-messages="userId.errorMessage.value"
           class="mb-2"
           clearable
           label="User id"
           title="User id"
-          v-model="userId.value.value"
           variant="outlined"
         />
 
         <v-card-actions>
-          <v-btn
-            :disabled="isDisabled"
-            color="primary"
-            title="Login"
-            type="submit"
-            variant="elevated"
+          <v-btn :disabled="isDisabled" color="primary" title="Login" type="submit" variant="tonal"
             >Login</v-btn
           >
-
-          <v-btn
-            :disabled="isDisabled"
-            @click="handleReset"
-            color="secondary"
-            title="Clear"
-            variant="elevated"
-            >Clear</v-btn
-          >
         </v-card-actions>
-      </form>
+      </v-form>
     </v-card-item>
   </v-card>
 
-  <ProgressCircular v-if="loading && !error" />
+  <ProgressCircular v-if="loading" />
 
-  <AlertError
-    :on-close="handleClose"
+  <AlertCard
+    v-if="error"
+    :on-close="handleCloseClick"
     :text="error.message"
     title="Authorization failed!"
-    v-if="error && !loading"
+    type="error"
   />
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
+import AlertCard from '@/components/AlertCard.vue'
+import ProgressCircular from '@/components/ProgressCircular.vue'
+import { useUserStore } from '@/stores/user'
 import { useField, useForm } from 'vee-validate'
 import { ref } from 'vue'
-
-import AlertError from '@/components/AlertError.vue'
-import ProgressCircular from '@/components/ProgressCircular.vue'
-
-import { useUserStore } from '@/stores/user'
 
 type Form = Readonly<{
   userId: string
@@ -63,11 +47,10 @@ type Form = Readonly<{
 
 const userStore = useUserStore()
 
-const { loading } = storeToRefs(userStore)
-const { fetchUser } = userStore
+const { getUser } = userStore
 
 const isDisabled = ref(true)
-
+const loading = ref(false)
 const error = ref<Error | null>(null)
 
 const { handleReset, handleSubmit } = useForm<Form>({
@@ -76,7 +59,11 @@ const { handleReset, handleSubmit } = useForm<Form>({
   },
   validationSchema: {
     userId(value: Readonly<Form['userId']>) {
-      const id = Number(value)
+      /**
+       * `Number` instead of `parseInt` is chosen because
+       * it handles strings with mixed content (e.g. "1a") with error.
+       */
+      const id = value !== '' ? Number(value) : NaN
       const minValue = 1
       const maxValue = 100
 
@@ -95,18 +82,22 @@ const { handleReset, handleSubmit } = useForm<Form>({
 
 const userId = useField<Form['userId']>('userId')
 
-const handleError = (msg: string) => {
+const changeLoading = () => {
+  loading.value = !loading.value
+}
+
+const handleError = (msg: Readonly<string>) => {
   error.value = new Error(msg)
 }
 
-const handleClose = () => {
+const handleCloseClick = () => {
   error.value = null
 }
 
 const submit = handleSubmit(async (values) => {
   const id = parseInt(values.userId)
 
-  await fetchUser(id, handleError)
+  await getUser(id, handleError, changeLoading)
 
   handleReset()
 })

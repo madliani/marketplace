@@ -1,8 +1,8 @@
-import { fileURLToPath, URL } from 'node:url'
-
 import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
 import VueDevTools from 'vite-plugin-vue-devtools'
+
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [vue(), VueDevTools()],

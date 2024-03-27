@@ -1,14 +1,14 @@
+import type { BackendUser, User } from '@/types/user'
 import { defineStore } from 'pinia'
 
-import type { BackendUser, User } from '@/types/user'
-
 type ErrorHandler = (msg: Readonly<string>) => void
+type LoadingChanger = () => void
 
 type Id = 'user'
 
 type State = {
+  balanceBackup: User['balance'] | null
   user: User | null
-  loading: boolean
 }
 
 type Getters = {
@@ -16,74 +16,90 @@ type Getters = {
 }
 
 type Actions = {
-  clear: () => void
-  fetchUser: (id: Readonly<User['id']>, onError: ErrorHandler) => Promise<void> | never
+  empty: () => void
+  getUser: (
+    id: Readonly<User['id']>,
+    onError: ErrorHandler,
+    changeLoading: LoadingChanger
+  ) => Promise<void>
+  restoreBalance: () => void
   updateBalance: (balance: Readonly<User['balance']>) => void
 }
 
-/** Getting a random integer between two values. */
-const getRandomNumber = (min: Readonly<number>, max: Readonly<number>) => {
-  const randomNumber = Math.random() * (max - min) + min
-  const fixedPoint = randomNumber.toFixed(2)
+/** Fetching user. */
+const fetchUser = async (id: Readonly<User['id']>): Promise<BackendUser> | never => {
+  const userResponse = await fetch(`https://dummyjson.com/users/${id}`)
+  const userJson = await userResponse.json()
 
-  return parseFloat(fixedPoint)
+  return userJson as unknown as BackendUser
+}
+
+/** Getting a random balance. */
+const getRandomBalance = (min: Readonly<number> = 0, max: Readonly<number> = 100) => {
+  const randomNumber = Math.random() * (max - min) + min
+  const fixedNumber = randomNumber.toFixed(2)
+
+  return parseFloat(fixedNumber)
 }
 
 /** Backend user validating. */
-const isValidUser = (user: Readonly<BackendUser>) =>
-  typeof user === 'object' &&
-  typeof user.firstName === 'string' &&
-  typeof user.id === 'number' &&
-  typeof user.image === 'string' &&
-  typeof user.lastName === 'string'
-
-/** User default value. */
-const user: Readonly<User | null> = null
+const isValidUser = (user: Readonly<BackendUser>) => {
+  return (
+    typeof user === 'object' &&
+    typeof user.firstName === 'string' &&
+    typeof user.id === 'number' &&
+    typeof user.image === 'string' &&
+    typeof user.lastName === 'string'
+  )
+}
 
 export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
   state: () => ({
-    user,
-    loading: false
+    balanceBackup: null,
+    user: null
   }),
   actions: {
-    clear() {
-      this.user = user
+    empty() {
+      this.user = null
     },
-    updateBalance(balance) {
-      const user = this.user
-
-      if (user) {
-        this.user = { ...user, balance }
+    restoreBalance() {
+      if (this.user && this.balanceBackup) {
+        this.user.balance = this.balanceBackup
       }
     },
-    async fetchUser(id, onError) {
+    updateBalance(balance) {
+      if (this.user) {
+        const fixedNumber = parseFloat(balance.toFixed(2))
+
+        this.balanceBackup = this.user.balance
+        this.user = { ...this.user, balance: fixedNumber }
+      }
+    },
+    async getUser(id, onError, changeLoading) {
       try {
-        this.loading = true
+        changeLoading()
 
-        const userResponse = await fetch(`https://dummyjson.com/users/${id}`)
-        const userJson = await userResponse.json()
+        const backendUser = await fetchUser(id)
 
-        if (userJson) {
-          const user = userJson as unknown as BackendUser
+        if (!isValidUser(backendUser)) {
+          throw new Error('User is not valid.')
+        }
 
-          if (isValidUser(user)) {
-            this.user = {
-              avatar: user.image,
-              balance: getRandomNumber(0, 1_000),
-              firstName: user.firstName,
-              id: user.id,
-              lastName: user.lastName
-            }
-          }
+        this.user = {
+          avatar: backendUser.image,
+          balance: getRandomBalance(),
+          firstName: backendUser.firstName,
+          id: backendUser.id,
+          lastName: backendUser.lastName
         }
       } catch (exception: unknown) {
-        this.user = user
+        this.user = null
 
         onError('Check your Internet connection or contact technical support.')
 
         console.error(exception)
       } finally {
-        this.loading = false
+        changeLoading()
       }
     }
   },

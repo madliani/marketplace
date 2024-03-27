@@ -1,5 +1,15 @@
+import type { CartItem, CartProduct } from '@/types/shoppingCart'
 import type { User } from '@/types/user'
-import type { CartItem, ShoppingCart } from './shoppingCart'
+
+/**
+ * Purchase order product.
+ */
+export type OrderProduct = Omit<Omit<CartProduct, 'description'>, 'thumbnail'>
+
+/**
+ * Purchase order item.
+ */
+export type OrderItem = Omit<CartItem, 'product'> & { product: OrderProduct }
 
 /**
  * Purchase order user.
@@ -7,8 +17,8 @@ import type { CartItem, ShoppingCart } from './shoppingCart'
 export type OrderUser = Omit<Omit<User, 'avatar'>, 'balance'>
 
 export type PurchaseOrder = {
-  departureDate: Date | null
-  shoppingCart: ShoppingCart
-  totalCost: CartItem['cost']
-  user: OrderUser | null
+  departureDate: string | null
+  items: OrderItem[]
+  totalCost: OrderItem['cost']
+  buyer: OrderUser | null
 }

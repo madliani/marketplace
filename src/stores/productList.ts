@@ -1,8 +1,6 @@
-import { defineStore } from 'pinia'
-
-import type { BackendProduct, BackendProducts, Products } from '@/types/products'
-
+import type { BackendProduct, BackendProducts, Product, Products } from '@/types/products'
 import { ProductStatus } from '@/types/products'
+import { defineStore } from 'pinia'
 import { useShoppingCartStore } from './shoppingCart'
 
 type ErrorHandler = (msg: Readonly<string>) => void
@@ -12,54 +10,43 @@ type Id = 'productList'
 
 type State = {
   productList: Products
-  loading: boolean
 }
 
 type Getters = {}
 
 type Actions = {
-  clear: () => void
-  getProducts: (onError: ErrorHandler, changeLoading: LoadingChanger) => Promise<void> | never
+  empty: () => void
+  getProducts: (onError: ErrorHandler, changeLoading: LoadingChanger) => Promise<void>
   updateProducts: (products: Products) => void
 }
 
 /** Backend product images validating. */
-const isValidImages = (images: Readonly<BackendProduct['images']>) =>
-  images.every((image) => typeof image === 'string')
+const isValidImages = (images: Readonly<BackendProduct['images']>) => {
+  return images.every((image) => typeof image === 'string')
+}
 
 /** Backend products validating. */
-const isValidProducts = (products: Readonly<BackendProduct[]>) =>
-  typeof products === 'object' &&
-  products.every(
-    (product) =>
-      typeof product === 'object' &&
-      typeof product.description === 'string' &&
-      typeof product.id === 'number' &&
-      typeof product.thumbnail === 'string' &&
-      typeof product.title === 'string' &&
-      isValidImages(product.images)
+const isValidProducts = (backendProducts: Readonly<BackendProducts>) => {
+  return (
+    typeof backendProducts.products === 'object' &&
+    backendProducts.products.every(
+      (product) =>
+        typeof product === 'object' &&
+        typeof product.description === 'string' &&
+        typeof product.id === 'number' &&
+        typeof product.thumbnail === 'string' &&
+        typeof product.title === 'string' &&
+        isValidImages(product.images)
+    )
   )
+}
 
 /** Fetching products. */
-const fetchProducts = async (): Promise<Products> | never => {
+const fetchProducts = async (): Promise<BackendProducts> | never => {
   const productResponse = await fetch('https://dummyjson.com/products')
   const productJson = await productResponse.json()
 
-  const products = productJson as unknown as BackendProducts
-
-  if (!isValidProducts(products.products)) {
-    throw new Error('Products are not valid.')
-  }
-
-  return products.products.map((product) => ({
-    description: product.description,
-    id: product.id.toString(),
-    images: product.images,
-    price: product.price,
-    status: ProductStatus.FREE,
-    thumbnail: product.thumbnail,
-    title: product.title
-  }))
+  return productJson as unknown as BackendProducts
 }
 
 /** Injecting statuses into products. */
@@ -78,27 +65,37 @@ const injectStatus = (products: Products) => {
   })
 }
 
-/** Product list store default value. */
-const productList: Products = []
-
 export const useProductListStore = defineStore<Id, State, Getters, Actions>('productList', {
   state: () => ({
-    productList,
-    loading: false
+    productList: []
   }),
   actions: {
-    clear() {
-      this.productList = productList
+    empty() {
+      this.productList = []
     },
     async getProducts(onError, changeLoading) {
       try {
         changeLoading()
 
-        const products = await fetchProducts()
+        const backendProducts = await fetchProducts()
+
+        if (!isValidProducts(backendProducts)) {
+          throw new Error('Products are not valid.')
+        }
+
+        const products = backendProducts.products.map<Product>((product) => ({
+          description: product.description,
+          id: product.id.toString(),
+          images: product.images,
+          price: product.price,
+          status: ProductStatus.FREE,
+          thumbnail: product.thumbnail,
+          title: product.title
+        }))
 
         this.productList = injectStatus(products)
       } catch (exception: unknown) {
-        this.productList = productList
+        this.productList = []
 
         onError('Check your Internet connection or contact technical support.')
 
