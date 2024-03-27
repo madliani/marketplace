@@ -34,8 +34,8 @@ const fetchUser = async (id: Readonly<User['id']>): Promise<BackendUser> | never
   return userJson as unknown as BackendUser
 }
 
-/** Getting a random integer between two values. */
-const getRandomNumber = (min: Readonly<number>, max: Readonly<number>) => {
+/** Getting a random balance. */
+const getRandomBalance = (min: Readonly<number> = 0, max: Readonly<number> = 100) => {
   const randomNumber = Math.random() * (max - min) + min
   const fixedNumber = randomNumber.toFixed(2)
 
@@ -87,7 +87,7 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
 
         this.user = {
           avatar: backendUser.image,
-          balance: getRandomNumber(0, 1_000),
+          balance: getRandomBalance(),
           firstName: backendUser.firstName,
           id: backendUser.id,
           lastName: backendUser.lastName
