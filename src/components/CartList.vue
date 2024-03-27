@@ -18,11 +18,11 @@
   />
 
   <v-btn-group>
-    <v-btn color="primary" title="Place an order" variant="outlined" @click="handlePlaceClick"
+    <v-btn color="primary" title="Place an order" variant="tonal" @click="handlePlaceClick"
       >Place an order</v-btn
     >
 
-    <v-btn color="secondary" title="Empty a cart" variant="outlined" @click="handleClear"
+    <v-btn color="secondary" title="Empty a cart" variant="tonal" @click="handleEmptyClick"
       >Empty a cart</v-btn
     >
   </v-btn-group>
@@ -72,7 +72,7 @@ const handlePlaceClick = () => {
   }
 }
 
-const handleClear = () => {
+const handleEmptyClick = () => {
   clear()
 
   selectRoute(Route.MARKETPLACE)
