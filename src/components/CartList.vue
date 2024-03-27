@@ -40,13 +40,12 @@
     </v-btn-group>
   </template>
 
-  <v-card v-if="!shoppingCart.length" type="info" variant="elevated">
-    <v-alert
-      text="There are no items in shopping cart."
-      title="Shopping cart is empty!"
-      variant="elevated"
-    />
-  </v-card>
+  <AlertCard
+    v-if="!shoppingCart.length"
+    text="There are no items in shopping cart."
+    title="Shopping cart is empty!"
+    type="info"
+  />
 </template>
 
 <script lang="ts" setup>
