@@ -63,6 +63,8 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
       this.user = null
     },
     restoreBalance() {
+      console.log(this.user)
+
       if (this.user && this.balanceBackup) {
         this.user.balance = this.balanceBackup
       }

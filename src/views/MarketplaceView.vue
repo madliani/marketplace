@@ -17,7 +17,9 @@
 </template>
 
 <script lang="ts" setup>
+import AlertCard from '@/components/AlertCard.vue'
 import MarketplaceGrid from '@/components/MarketplaceGrid.vue'
+import ProgressCircular from '@/components/ProgressCircular.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { useProductListStore } from '@/stores/productList'
