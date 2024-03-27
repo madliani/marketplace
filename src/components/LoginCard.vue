@@ -62,7 +62,7 @@ const { handleReset, handleSubmit } = useForm<Form>({
     userId(value: Readonly<Form['userId']>) {
       /**
        * `Number` instead of `parseInt` is chosen because
-       * it handles strings with mixed content (e.g. "1a") without error.
+       * it handles strings with mixed content (e.g. "1a") with error.
        */
       const id = value !== '' ? Number(value) : NaN
       const minValue = 1
