@@ -42,11 +42,11 @@
   />
 
   <v-btn-group>
-    <v-btn color="primary" title="Pay an order" variant="outlined" @click="handlePayClick"
+    <v-btn color="primary" title="Pay an order" variant="tonal" @click="handlePayClick"
       >Pay an order</v-btn
     >
 
-    <v-btn color="secondary" title="Cancel an order" variant="outlined" @click="handleCancelClick"
+    <v-btn color="secondary" title="Cancel an order" variant="tonal" @click="handleCancelClick"
       >Cancel an order</v-btn
     >
   </v-btn-group>
@@ -54,14 +54,17 @@
 
 <script lang="ts" setup>
 import AlertSuccess from '@/components/AlertSuccess.vue'
+import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
 import { useUserStore } from '@/stores/user'
+import { Route } from '@/types/route'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
 const purchaseOrderStore = usePurchaseOrderStore()
 
 const { purchaseOrder } = storeToRefs(purchaseOrderStore)
+const { clear } = purchaseOrderStore
 
 const userStore = useUserStore()
 
@@ -69,14 +72,12 @@ const { user } = storeToRefs(userStore)
 
 const { updateBalance } = userStore
 
+const { selectRoute } = useNavigationDrawerStore()
+
 const success = ref(false)
 
 const handleCloseClick = () => {
   success.value = false
-}
-
-const handleCancelClick = () => {
-  success.value = true
 }
 
 const handlePayClick = () => {
@@ -87,5 +88,11 @@ const handlePayClick = () => {
 
     success.value = true
   }
+}
+
+const handleCancelClick = () => {
+  clear()
+
+  selectRoute(Route.SHOPPING_CART)
 }
 </script>
