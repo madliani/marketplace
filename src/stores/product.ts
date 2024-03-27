@@ -112,12 +112,6 @@ export const useProductStore = defineStore<Id, State, Getters, Actions>('product
           case ProductStatus.IN_CART: {
             return 'In cart'
           }
-          case ProductStatus.ORDERED: {
-            return 'Ordered'
-          }
-          case ProductStatus.PURCHASED: {
-            return 'Purchased'
-          }
         }
       }
 

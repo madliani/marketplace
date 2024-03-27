@@ -61,12 +61,6 @@ const handleBuyClick = () => {
 
       return
     }
-    case ProductStatus.ORDERED: {
-      return
-    }
-    case ProductStatus.PURCHASED: {
-      return
-    }
   }
 }
 
@@ -78,12 +72,6 @@ const getTitleByStatus = () => {
     }
     case ProductStatus.IN_CART: {
       return 'In cart'
-    }
-    case ProductStatus.ORDERED: {
-      return 'Ordered'
-    }
-    case ProductStatus.PURCHASED: {
-      return 'Purchased'
     }
   }
 }
