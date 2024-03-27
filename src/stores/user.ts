@@ -7,7 +7,7 @@ type LoadingChanger = () => void
 type Id = 'user'
 
 type State = {
-  balanceBackup: User['balance']
+  balanceBackup: User['balance'] | null
   user: User | null
 }
 
@@ -55,7 +55,7 @@ const isValidUser = (user: Readonly<BackendUser>) => {
 
 export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
   state: () => ({
-    balanceBackup: 0,
+    balanceBackup: null,
     user: null
   }),
   actions: {
@@ -63,18 +63,16 @@ export const useUserStore = defineStore<Id, State, Getters, Actions>('user', {
       this.user = null
     },
     restoreBalance() {
-      if (this.user) {
+      if (this.user && this.balanceBackup) {
         this.user.balance = this.balanceBackup
       }
     },
     updateBalance(balance) {
-      const user = this.user
-
-      if (user) {
+      if (this.user) {
         const fixedNumber = parseFloat(balance.toFixed(2))
 
-        this.balanceBackup = fixedNumber
-        this.user = { ...user, balance: fixedNumber }
+        this.balanceBackup = this.user.balance
+        this.user = { ...this.user, balance: fixedNumber }
       }
     },
     async getUser(id, onError, changeLoading) {

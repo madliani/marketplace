@@ -1,5 +1,5 @@
 <template>
-  <template v-if="purchaseOrder && purchaseOrder.buyer && purchaseOrder.departureDate">
+  <template v-if="purchaseOrder && purchaseOrder.buyer && purchaseOrder.departureDate && !success">
     <v-table class="w-75 mb-2" fixed-header>
       <caption class="text-h6">
         Item list
@@ -31,31 +31,38 @@
     </v-table>
 
     <span class="text-right w-75 mb-4">Total cost: {{ purchaseOrder.totalCost }} &dollar;</span>
+
+    <v-btn-group>
+      <v-btn color="primary" title="Pay an order" variant="tonal" @click="handlePayClick"
+        >Pay an order</v-btn
+      >
+
+      <v-btn color="secondary" title="Change an order" variant="tonal" @click="handleChangeClick"
+        >Change an order</v-btn
+      >
+    </v-btn-group>
   </template>
 
-  <AlertSuccess
-    v-if="success"
-    class="mb-4"
-    :on-close="handleCloseClick"
-    title="Congratulations!"
-    text="Purchase order has been paid."
-  />
+  <template v-if="success">
+    <AlertSuccess class="mb-4" title="Congratulations!" text="Purchase order has been paid." />
 
-  <v-btn-group>
-    <v-btn color="primary" title="Pay an order" variant="tonal" @click="handlePayClick"
-      >Pay an order</v-btn
-    >
+    <v-btn-group>
+      <v-btn color="primary" title="Continue shopping" variant="tonal" @click="handleContinueClick"
+        >Continue shopping</v-btn
+      >
 
-    <v-btn color="secondary" title="Cancel an order" variant="tonal" @click="handleCancelClick"
-      >Cancel an order</v-btn
-    >
-  </v-btn-group>
+      <v-btn color="secondary" title="Cancel an order" variant="tonal" @click="handleCancelClick"
+        >Cancel an order</v-btn
+      >
+    </v-btn-group>
+  </template>
 </template>
 
 <script lang="ts" setup>
 import AlertSuccess from '@/components/AlertSuccess.vue'
 import { useNavigationDrawerStore } from '@/stores/navigationDrawer'
 import { usePurchaseOrderStore } from '@/stores/purchaseOrder'
+import { useShoppingCartStore } from '@/stores/shoppingCart'
 import { useUserStore } from '@/stores/user'
 import { Route } from '@/types/route'
 import { storeToRefs } from 'pinia'
@@ -64,21 +71,19 @@ import { ref } from 'vue'
 const purchaseOrderStore = usePurchaseOrderStore()
 
 const { purchaseOrder } = storeToRefs(purchaseOrderStore)
-const { clear } = purchaseOrderStore
+const { clear: clearOrder } = purchaseOrderStore
 
 const userStore = useUserStore()
 
 const { user } = storeToRefs(userStore)
 
-const { updateBalance } = userStore
+const { updateBalance, restoreBalance } = userStore
 
 const { selectRoute } = useNavigationDrawerStore()
 
-const success = ref(false)
+const { clear: clearCart } = useShoppingCartStore()
 
-const handleCloseClick = () => {
-  success.value = false
-}
+const success = ref(false)
 
 const handlePayClick = () => {
   if (user.value && purchaseOrder.value) {
@@ -90,9 +95,22 @@ const handlePayClick = () => {
   }
 }
 
-const handleCancelClick = () => {
-  clear()
+const handleChangeClick = () => {
+  clearOrder()
 
   selectRoute(Route.SHOPPING_CART)
+}
+
+const handleContinueClick = () => {
+  clearOrder()
+  clearCart()
+
+  selectRoute(Route.MARKETPLACE)
+}
+
+const handleCancelClick = () => {
+  restoreBalance()
+
+  success.value = false
 }
 </script>
