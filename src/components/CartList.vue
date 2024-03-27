@@ -1,51 +1,42 @@
 <template>
-  <template v-if="shoppingCart.length">
-    <v-list class="mx-4 mb-4">
-      <template v-for="item in shoppingCart" :key="item.id">
-        <CartItem :item="item" />
+  <v-list class="mx-4 mb-4">
+    <template v-for="item in shoppingCart" :key="item.id">
+      <CartItem :item="item" />
 
-        <v-divider class="mb-2" />
-      </template>
+      <v-divider class="mb-2" />
+    </template>
 
-      <v-list-item :title="`Total price: ${totalCost} $`" class="text-right" />
-    </v-list>
-
-    <AlertCard
-      v-if="error"
-      class="mb-4"
-      title="Not enough funds!"
-      text="The total cost of the items in the shopping cart is greater than the balance."
-      type="error"
-      :on-close="handleCloseClick"
-    />
-
-    <v-btn-group>
-      <v-btn
-        :disabled="!!purchaseOrder"
-        color="primary"
-        title="Place an order"
-        variant="tonal"
-        @click="handlePlaceClick"
-        >Place an order</v-btn
-      >
-
-      <v-btn
-        :disabled="!!purchaseOrder"
-        color="secondary"
-        title="Empty a cart"
-        variant="tonal"
-        @click="handleEmptyClick"
-        >Empty a cart</v-btn
-      >
-    </v-btn-group>
-  </template>
+    <v-list-item :title="`Total price: ${totalCost} $`" class="text-right" />
+  </v-list>
 
   <AlertCard
-    v-if="!shoppingCart.length"
-    text="There are no items in shopping cart."
-    title="Shopping cart is empty!"
-    type="info"
+    v-if="error"
+    class="mb-4"
+    title="Not enough funds!"
+    text="The total cost of the items in the shopping cart is greater than the balance."
+    type="error"
+    :on-close="handleCloseClick"
   />
+
+  <v-btn-group>
+    <v-btn
+      :disabled="!!purchaseOrder"
+      color="primary"
+      title="Place an order"
+      variant="tonal"
+      @click="handlePlaceClick"
+      >Place an order</v-btn
+    >
+
+    <v-btn
+      :disabled="!!purchaseOrder"
+      color="secondary"
+      title="Empty a cart"
+      variant="tonal"
+      @click="handleEmptyClick"
+      >Empty a cart</v-btn
+    >
+  </v-btn-group>
 </template>
 
 <script lang="ts" setup>
