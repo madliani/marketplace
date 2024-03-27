@@ -82,6 +82,8 @@ const handlePlaceClick = () => {
     }
 
     place()
+
+    selectRoute(Route.PURCHASE_ORDER)
   }
 }
 
