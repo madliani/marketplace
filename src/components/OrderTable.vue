@@ -29,12 +29,12 @@
     <span class="text-right w-75 mb-4">Total cost: {{ purchaseOrder.totalCost }} &dollar;</span>
 
     <v-btn-group>
-      <v-btn color="primary" title="Pay an order" variant="tonal" @click="handlePayClick"
-        >Pay an order</v-btn
+      <v-btn color="primary" title="Pay order" variant="tonal" @click="handlePayClick"
+        >Pay order</v-btn
       >
 
-      <v-btn color="secondary" title="Change an order" variant="tonal" @click="handleChangeClick"
-        >Change an order</v-btn
+      <v-btn color="secondary" title="Change order" variant="tonal" @click="handleChangeClick"
+        >Change order</v-btn
       >
     </v-btn-group>
   </template>
@@ -52,8 +52,8 @@
         >Continue shopping</v-btn
       >
 
-      <v-btn color="secondary" title="Cancel an order" variant="tonal" @click="handleCancelClick"
-        >Cancel an order</v-btn
+      <v-btn color="secondary" title="Cancel order" variant="tonal" @click="handleCancelClick"
+        >Cancel order</v-btn
       >
     </v-btn-group>
   </template>

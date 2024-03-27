@@ -22,19 +22,19 @@
     <v-btn
       :disabled="!!purchaseOrder"
       color="primary"
-      title="Place an order"
+      title="Place order"
       variant="tonal"
       @click="handlePlaceClick"
-      >Place an order</v-btn
+      >Place order</v-btn
     >
 
     <v-btn
       :disabled="!!purchaseOrder"
       color="secondary"
-      title="Empty a cart"
+      title="Empty cart"
       variant="tonal"
       @click="handleEmptyClick"
-      >Empty a cart</v-btn
+      >Empty cart</v-btn
     >
   </v-btn-group>
 </template>
